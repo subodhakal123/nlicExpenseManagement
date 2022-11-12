@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>subodh</h1>
+
+@if(SignInManager.IsSignedIn(User)){
+    <h1>it's nlic</h1>
+}
+else
+{
+    <h1>it's not nlic</h1>
+}
+
+

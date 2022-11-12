@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "0f53dbe3-b2ba-4886-bab0-05487ae9e141": {
+      "ProjectGuid": "0f53dbe3-b2ba-4886-bab0-05487ae9e141",
+      "DisplayName": "ExpenseManagment.API",
+      "ColorIndex": 0
+    },
+    "1301b8c0-2508-4394-b72b-1aafdb1fa2f4": {
+      "ProjectGuid": "1301b8c0-2508-4394-b72b-1aafdb1fa2f4",
+      "DisplayName": "ExpenseManagement.BLL",
+      "ColorIndex": 1
+    },
+    "ea45a502-2e92-45e7-ba62-921f6aa0869c": {
+      "ProjectGuid": "ea45a502-2e92-45e7-ba62-921f6aa0869c",
+      "DisplayName": "ExpenseManagement.Model",
+      "ColorIndex": 2
+    },
+    "8d3b6374-4574-495d-b02a-1aaddb70a0d0": {
+      "ProjectGuid": "8d3b6374-4574-495d-b02a-1aaddb70a0d0",
+      "DisplayName": "ExpenseManagement.Web",
+      "ColorIndex": 3
+    },
+    "8703ce19-6303-48f3-8462-49512273546c": {
+      "ProjectGuid": "8703ce19-6303-48f3-8462-49512273546c",
+      "DisplayName": "ExpenseManagement.Web",
+      "ColorIndex": 4
+    },
+    "77c3f8db-5bd1-4557-9938-ebc32242613c": {
+      "ProjectGuid": "77c3f8db-5bd1-4557-9938-ebc32242613c",
+      "DisplayName": "ExpenseManagement.Web",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}

@@ -1,0 +1,23 @@
+﻿@using ExpenseManagement.Model
+@model UserModel
+
+
+<h1> nlic rocks !!!</h1>
+
+ @using (Html.BeginForm("LogIn", "Account", FormMethod.Post, new { id = "loginForm", @class = "form-horizontal" }))
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-group-custom mb-4">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Username" })
+                    </div>
+
+                    <div class="form-group form-group-custom mb-4">
+                        @Html.PasswordFor(m => m.Role, new { @class = "form-control", @placeholder = "Password" })
+                    </div>
+                    <div class="mt-4">
+                        <button id="btnSubmit" class="btn btn-success btn-block waves-effect waves-light" type="submit">Log In</button>
+                    </div>
+                </div>
+            </div>
+        }
