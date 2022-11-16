@@ -31,7 +31,6 @@ namespace ExpenseManagment.API.Controllers
                 model.access_token = _as.CreateToken(usr.UserName, usr.Password);
                 model.CultureCD = model.CultureCD ?? "ne-NP";
             }
-
             
             return model;
         }

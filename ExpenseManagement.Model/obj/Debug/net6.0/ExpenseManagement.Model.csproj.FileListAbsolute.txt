@@ -14,7 +14,6 @@ D:\New folder\ExpenseManagment\ExpenseManagement.Model\bin\Debug\net6.0\ExpenseM
 D:\New folder\ExpenseManagment\ExpenseManagement.Model\bin\Debug\net6.0\ExpenseManagement.Model.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.Model\bin\Debug\net6.0\ref\ExpenseManagement.Model.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.Model\bin\Debug\net6.0\ExpenseManagement.Model.pdb
-D:\New folder\ExpenseManagment\ExpenseManagement.Model\obj\Debug\net6.0\ExpenseManagement.Model.csproj.AssemblyReference.cache
 D:\New folder\ExpenseManagment\ExpenseManagement.Model\obj\Debug\net6.0\ExpenseManagement.Model.GeneratedMSBuildEditorConfig.editorconfig
 D:\New folder\ExpenseManagment\ExpenseManagement.Model\obj\Debug\net6.0\ExpenseManagement.Model.AssemblyInfoInputs.cache
 D:\New folder\ExpenseManagment\ExpenseManagement.Model\obj\Debug\net6.0\ExpenseManagement.Model.AssemblyInfo.cs
