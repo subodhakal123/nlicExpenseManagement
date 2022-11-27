@@ -9,8 +9,6 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
     [Area("Account")]
     public class AccountController : Controller
     {
-        
-        
 
         UserModel model = new UserModel()
         {

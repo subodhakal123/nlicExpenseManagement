@@ -20,7 +20,7 @@ namespace ExpenseManagement.BLL.Base
             {
                 if (string.IsNullOrEmpty(_connString))
                 {
-                    _connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+                    _connString = "Server=(localDb)\\ExpenseManagement;Database=ExpenseManagement;Trusted_Connection=True;";
                     return _connString;
                 }
                 else

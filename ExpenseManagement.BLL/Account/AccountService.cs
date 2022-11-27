@@ -1,8 +1,10 @@
-﻿using ExpenseManagement.BLL.Base;
+﻿using Dapper;
+using ExpenseManagement.BLL.Base;
 using ExpenseManagement.Model;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -42,13 +44,21 @@ namespace ExpenseManagement.BLL.Account
             {
                 UserModel model = new UserModel();
                 string conString = base.ConnectionString;
-                using (SqlConnection con = new SqlConnection(conString))
+                try
                 {
-                    con.Open();
-                    password = model.Role;
-                    con.Close();
+                    using (SqlConnection con = new SqlConnection(conString))
+                    {
+                        con.Open();
+                        model = con.Query<UserModel>("[USRS].[usp_ValidateLogin]", new { username = "string", password = "string" }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                        con.Close();
+
+                    }
                 }
-                return model;
+                catch (Exception ex)
+                {
+
+                }
+            return model;
             }
             catch (Exception ex)
             {
