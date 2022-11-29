@@ -13,6 +13,6 @@ namespace ExpenseManagement.Model
             Filters = new List<FilterParameterModel>();
         }
         public List<FilterParameterModel> Filters { get; set; }
-        public string Logic { get; set; }
+        public string? Logic { get; set; }
     }
 }

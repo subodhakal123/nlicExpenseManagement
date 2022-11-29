@@ -59,84 +59,96 @@
                 </div>
             </form>
         </div>*@
+        
+        <nav aria-label="breadcrumb" class="d-flex flex-row-reverse">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Expense</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Index</li>
+          </ol>
+        </nav>
+
         <div class="row">
-            <div id="ordersGrid"></div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div id="my-grid" class="card-body p-0 bdr-0"></div>
+                </div>
+            </div>
         </div>
+        
     </div>
 </div>
+
 <script>
-      $(function() {        
-        var orderData = [
-          { OrderID: 1, OrderDate: "2017-11-06T12:00:00", Freight: 12.34, ShipCity: "Antwerp", ShipCountry: "Belgium" },
-          { OrderID: 2, OrderDate: "2019-03-02T12:00:00", Freight: 23.45, ShipCity: "Singapore", ShipCountry: "Singapore" },
-          { OrderID: 3, OrderDate: "2019-06-26T12:00:00", Freight: 34.56, ShipCity: "Shanghai", ShipCountry: "China" },
-          { OrderID: 4, OrderDate: "2017-09-20T12:00:00", Freight: 45.67, ShipCity: "Hamburg", ShipCountry: "Germany" },
-          { OrderID: 5, OrderDate: "2017-12-12T12:00:00", Freight: 56.78, ShipCity: "Mumbai", ShipCountry: "India" },
-          { OrderID: 6, OrderDate: "2018-02-08T12:00:00", Freight: 67.89, ShipCity: "Shanghai", ShipCountry: "China" },
-          { OrderID: 7, OrderDate: "2018-05-05T12:00:00", Freight: 78.90, ShipCity: "Tokyo", ShipCountry: "Japan" },
-          { OrderID: 8, OrderDate: "2019-08-03T12:00:00", Freight: 89.01, ShipCity: "Port Klang", ShipCountry: "Malaysia" },
-          { OrderID: 9, OrderDate: "2018-10-29T12:00:00", Freight: 90.12, ShipCity: "Rotterdam", ShipCountry: "Netherlands" },
-          { OrderID: 10, OrderDate: "2018-01-23T12:00:00", Freight: 10.32, ShipCity: "Vancouver", ShipCountry: "Canada" },
-          { OrderID: 11, OrderDate: "2018-04-17T12:00:00", Freight: 21.43, ShipCity: "Colón", ShipCountry: "Panama" },
-          { OrderID: 12, OrderDate: "2017-07-11T12:00:00", Freight: 32.54, ShipCity: "Manila", ShipCountry: "Philippines" },
-          { OrderID: 13, OrderDate: "2017-10-24T12:00:00", Freight: 43.65, ShipCity: "Singapore", ShipCountry: "Singapore" },
-          { OrderID: 14, OrderDate: "2018-03-11T12:00:00", Freight: 54.76, ShipCity: "Busan", ShipCountry: "South Korea" },
-          { OrderID: 15, OrderDate: "2018-06-17T12:00:00", Freight: 65.87, ShipCity: "Shenzhen", ShipCountry: "China" },
-          { OrderID: 16, OrderDate: "2018-10-13T12:00:00", Freight: 76.98, ShipCity: "Hong Kong", ShipCountry: "China" },
-          { OrderID: 17, OrderDate: "2019-04-19T12:00:00", Freight: 87.09, ShipCity: "Dubai", ShipCountry: "UAE" },
-          { OrderID: 18, OrderDate: "2019-07-25T12:00:00", Freight: 98.21, ShipCity: "Felixstowe", ShipCountry: "UK" },
-          { OrderID: 19, OrderDate: "2017-09-22T12:00:00", Freight: 13.24, ShipCity: "Los Angeles", ShipCountry: "USA" },
-          { OrderID: 20, OrderDate: "2018-12-09T12:00:00", Freight: 35.46, ShipCity: "New York", ShipCountry: "USA" },
-          { OrderID: 21, OrderDate: "2018-02-04T12:00:00", Freight: 57.68, ShipCity: "Guangzhou", ShipCountry: "China" },
-          { OrderID: 22, OrderDate: "2019-05-16T12:00:00", Freight: 9.87, ShipCity: "Long Beach", ShipCountry: "USA" },
-          { OrderID: 23, OrderDate: "2019-08-18T12:00:00", Freight: 24.13, ShipCity: "Singapore", ShipCountry: "Singapore" }
-        ];
 
-        var gridDataSource = new kendo.data.DataSource({
-          data: orderData,
-          schema: {
-            model: {
-              fields: {
-                OrderID: { type: "number" },
-                Freight: { type: "number" },
-                OrderDate: { type: "date" },
-                ShipCountry: { type: "string" },
-                ShipCity: { type: "string" }
-              }
-            }
-          },
-          pageSize: 10,
-          sort: {
-            field: "OrderDate",
-            dir: "desc"
-          }
-        });  
-
-
-        $("#ordersGrid").kendoGrid({
-          dataSource: gridDataSource,          
-          height: 400,
-          pageable: true,
-          sortable: true,
-          filterable: true,
-          columns: [{
-            field:"OrderID",
-            title: "Order ID",
-            width: 160
-          }, {
-            field: "OrderDate",
-            title: "Order Date",
-            width: 200,
-            format: "{0:dd MMMM yyyy}"
-          }, {
-            field: "ShipCountry",
-            title: "Ship Country"
-          }, {
-            field: "ShipCity",
-            title: "Ship City"
-          }]
-        });
-
+      //let myDataArray = [
+      //  {ID: 1, Name: "Tom", Date: "10/15/2022"},
+      //  {ID: 2, Name: "John", Date: "11/25/2022"},
+      //  {ID: 3, Name: "Annie", Date: "05/09/2022"},
+      //  {ID: 4, Name: "Rachel", Date: "08/06/2022"},
+      //  {ID: 5, Name: "Klemens", Date: "10/07/2022"},
+      //  {ID: 6, Name: "Micah", Date: "05/19/2022"},
+      //  {ID: 7, Name: "Junie", Date: "04/04/2022"},
+      //  {ID: 8, Name: "Krishnah", Date: "07/19/2022"},
+      //  {ID: 9, Name: "Enrichetta", Date: "01/11/2022"},
+      //  {ID: 10, Name: "Marten", Date: "02/13/2022"},
+      //  {ID: 11, Name: "Rosmunda", Date: "08/15/2022"},
+      //];
+      let myDataArray = new kendo.data.DataSource({
+          transport: {
+                    read: {
+                        url: "https://localhost:7250/api/Expense/GetAllExpense",
+                        data: {},
+                        type: "POST",
+                        datatype: 'JSON',
+                        cache: false,
+                        contentType: "application/json"
+                    },
+                    parameterMap: function(data) {
+                        var returnData = JSON.stringify(data);
+                        return returnData
+                    }
+                },
+                schema: {
+                    total: function(data) {
+                        return data[1]
+                    },
+                    data: function(data) {
+                        return data[0]
+                    }
+                },
+                batch: true,
+                pageSize: 10,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
       });
 
-</script>
+
+       //Target the div element by using jQuery and then call the kendoGrid() method.
+      $("#my-grid").kendoGrid({
+        height: "400px",
+        columns: [
+          { field: "expenseId", title: "Expense Id"},
+          { field: "expenseDate", title: "Expense Date"},
+          { field: "branchName", title: "Branch Name"},
+          { field: "expenseType", title: "Expense Type"},
+          { field: "amount", title: "Amount"}
+        ],
+        // Enable the filtering functionality.
+        sortable: true,
+        filterable: {
+            extra: false
+        },
+        pageable: {
+            refresh: true,
+            pageSizes: 5, 
+            buttonCount: 5
+        },
+        // Enable the editing functionality (incell by default).
+        editable: false,
+        selectable: "single row",
+        dataSource: myDataArray
+      });
+    </script>
+

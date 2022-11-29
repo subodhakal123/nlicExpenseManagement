@@ -10,8 +10,6 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ExpenseMan
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ExpenseManagement.Web.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ref\ExpenseManagement.Web.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ExpenseManagement.Web.pdb
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Azure.Core.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Azure.Identity.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Dapper.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Humanizer.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\MessagePack.dll
@@ -52,7 +50,6 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Identity.Client.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
@@ -61,7 +58,6 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.OpenApi.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
@@ -93,7 +89,6 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Con
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Data.SqlClient.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Drawing.Common.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Memory.Data.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Runtime.Caching.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Security.Permissions.dll

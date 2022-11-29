@@ -1,4 +1,7 @@
 ﻿using ExpenseManagement.BLL.Account;
+using ExpenseManagement.BLL.Expense;
+using ItemManagement.BLL.Expense;
+using ItemManagement.BLL.Item;
 
 namespace ExpenseManagment.API.Extensions
 {
@@ -7,7 +10,10 @@ namespace ExpenseManagment.API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection Services)
         {
 
+            Services.AddScoped<IAccountService, AccountService>();
             Services.AddScoped<IRoleService, RoleService>();
+            Services.AddScoped<IExpenseService, ExpenseService>();
+            Services.AddScoped<IItemService, ItemService>();
             return Services;
         }
     }
