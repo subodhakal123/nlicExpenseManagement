@@ -290,3 +290,4 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ExpenseMan
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ref\ExpenseManagement.Web.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ExpenseManagement.Web.pdb
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ExpenseManagement.Web.genruntimeconfig.cache
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\RestSharp.dll

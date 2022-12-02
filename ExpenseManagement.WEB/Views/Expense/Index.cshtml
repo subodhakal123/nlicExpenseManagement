@@ -6,9 +6,16 @@
 
 
 <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.1109/styles/kendo.default-v2.min.css"/>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>
+<style>
+    .card-header{
+        font-size: 22px;
+        font-weight: bold;
+    }
+</style>
+
 <div class="container-fluid pt-4 px-4">
     <div class="col-sm-12 col-md-12 bg-light rounded p-4">
         @*<div class="row">
@@ -59,42 +66,86 @@
                 </div>
             </form>
         </div>*@
-        
-        <nav aria-label="breadcrumb" class="d-flex flex-row-reverse">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Expense</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Index</li>
-          </ol>
-        </nav>
 
+        <div class="row">
+            <nav aria-label="breadcrumb" class="d-flex flex-row-reverse">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Expense</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Index</li>
+              </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <p>
+              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Add
+              </a>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Edit
+              </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+              <div class="card text-center">
+                <div class="card-header">Expense Details</div>
+                <div class="card-body">
+                    <partial name="AddEditExpense"/>
+                </div>
+              </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div id="my-grid" class="card-body p-0 bdr-0"></div>
+                    <div id="expenseGrid" class="card-body p-0 bdr-0"></div>
                 </div>
             </div>
         </div>
         
     </div>
-</div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ItemModal" tabindex="-1" aria-labelledby="ItemModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ItemModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <script>
+    
+      GridImplementation();
+      RuntimeJquery();
 
-      //let myDataArray = [
-      //  {ID: 1, Name: "Tom", Date: "10/15/2022"},
-      //  {ID: 2, Name: "John", Date: "11/25/2022"},
-      //  {ID: 3, Name: "Annie", Date: "05/09/2022"},
-      //  {ID: 4, Name: "Rachel", Date: "08/06/2022"},
-      //  {ID: 5, Name: "Klemens", Date: "10/07/2022"},
-      //  {ID: 6, Name: "Micah", Date: "05/19/2022"},
-      //  {ID: 7, Name: "Junie", Date: "04/04/2022"},
-      //  {ID: 8, Name: "Krishnah", Date: "07/19/2022"},
-      //  {ID: 9, Name: "Enrichetta", Date: "01/11/2022"},
-      //  {ID: 10, Name: "Marten", Date: "02/13/2022"},
-      //  {ID: 11, Name: "Rosmunda", Date: "08/15/2022"},
-      //];
-      let myDataArray = new kendo.data.DataSource({
+      function RuntimeJquery(){
+          $("#btnExpenseAdd").off().on('click', function(){
+              loadAddEditExpense();
+          });
+          $("#btnExpenseEdit").off().on('click', function(){
+
+              //fetch grid single row data
+              var grid = $("#expenseGrid").data("kendoGrid");
+              var gridItem = grid.dataItem(grid.select());
+              console.log(gridItem);
+              loadAddEditExpense(gridItem.ExpenseId);
+              
+          });
+      }
+      function GridImplementation(){
+
+        let myDataArray = new kendo.data.DataSource({
           transport: {
                     read: {
                         url: "https://localhost:7250/api/Expense/GetAllExpense",
@@ -122,33 +173,63 @@
                 serverPaging: true,
                 serverFiltering: true,
                 serverSorting: true
-      });
+        });
 
-
-       //Target the div element by using jQuery and then call the kendoGrid() method.
-      $("#my-grid").kendoGrid({
+         //Target the div element by using jQuery and then call the kendoGrid() method.
+        $("#expenseGrid").kendoGrid({
         height: "400px",
-        columns: [
-          { field: "expenseId", title: "Expense Id"},
-          { field: "expenseDate", title: "Expense Date"},
-          { field: "branchName", title: "Branch Name"},
-          { field: "expenseType", title: "Expense Type"},
-          { field: "amount", title: "Amount"}
-        ],
-        // Enable the filtering functionality.
-        sortable: true,
-        filterable: {
-            extra: false
-        },
         pageable: {
             refresh: true,
             pageSizes: 5, 
             buttonCount: 5
         },
+        sortable: true,
+        // Enable the filtering functionality.
+        
+        filterable: {
+            extra: false,
+            operators: {
+                string: {
+                    contains: "Contains"
+                }
+            }
+        },
         // Enable the editing functionality (incell by default).
         editable: false,
         selectable: "single row",
-        dataSource: myDataArray
-      });
+        dataSource: myDataArray,
+        columns: [
+          { field: "expenseId", title: "Expense Id"},
+          { field: "expenseDate", title: "Expense Date"},
+          { field: "branchName", title: "Branch Name"},
+          { field: "expenseType", title: "Expense Type"},
+          { field: "totalAmount", title: "Amount"}
+        ]
+        });
+      };
+    
+      function loadAddEditExpense(ExpenseId){
+          $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Expense/AddEditExpense")',
+            data: { ExpenseId: ExpenseId },
+            success: function(data) {
+                $('.modal-body').empty();
+                $('#ItemModal .modal-body').html(data);
+
+                if(ExpenseId){
+                    $("#ItemModalLabel").html("Edit Expense");
+                }
+                else{
+                    $("#ItemModalLabel").html("Report Expense");
+                }
+                
+            },
+            error: function(res) {
+            },
+            failure: function(errMsg) {
+            }
+        });
+      };
     </script>
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TB0bCLrean3/eDJYJTy9ojV+VPXVHanZatQyqHF/4Vk=",
+  "Hash": "yGOOMLP6CHvpCxdHWWTELZE9VPYN0b3JNBB/sX0z2aU=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -265,6 +265,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\app.js"
+    },
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\js\\expenseDetail.js",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "js/expenseDetail.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\expenseDetail.js"
     },
     {
       "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\js\\site.js",

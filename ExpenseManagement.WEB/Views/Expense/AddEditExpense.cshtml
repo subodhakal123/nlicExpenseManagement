@@ -1,0 +1,347 @@
+﻿@model ExpenseManagement.Model.Expense.ItemExpenseModel;
+@{
+    ViewData["Title"] = "AddEditExpense";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!--for table add/edit/delete-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+    <!--kendo css-->
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.1109/styles/kendo.default-v2.min.css"/>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>
+
+
+
+    <style>
+        .table-wrapper {
+	    	margin: 10px auto;
+            background: #fff;
+            padding: 10px;	
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+        }
+        .table-title h2 {
+            margin: 6px 0 0;
+            font-size: 22px;
+        }
+        .table-title .add-new {
+            float: right;
+	    	height: 30px;
+	    	font-weight: bold;
+	    	font-size: 12px;
+	    	text-shadow: none;
+	    	min-width: 100px;
+	    	border-radius: 50px;
+	    	line-height: 13px;
+        }
+	    .table-title .add-new i {
+	    	margin-right: 4px;
+	    }
+        table.table {
+            table-layout: fixed;
+        }
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+        }
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        table.table th:last-child {
+            width: 100px;
+        }
+        table.table td a {
+	    	cursor: pointer;
+            display: inline-block;
+            margin: 0 5px;
+	    	min-width: 24px;
+        }    
+	    table.table td a.add {
+            color: #27C46B;
+        }
+        table.table td a.edit {
+            color: #FFC107;
+        }
+        table.table td a.delete {
+            color: #E34724;
+        }
+        table.table td i {
+            font-size: 19px;
+        }
+	    table.table td a.add i {
+            font-size: 24px;
+        	margin-right: -1px;
+            position: relative;
+            top: 3px;
+        }    
+        table.table .form-control {
+            height: 32px;
+            line-height: 32px;
+            box-shadow: none;
+            border-radius: 2px;
+        }
+	    table.table .form-control.error {
+	    	border-color: #f50000;
+	    }
+	    table.table td .add {
+	    	display: none;
+	    }
+    </style>
+
+</head>
+<body>
+    <!--<div class="bg-light rounded">
+        <div class="row" id="itemId">
+            <div class="col-md-2">
+            <label asp-for="Item1.ItemName" class="form-label">Name</label>
+            <input asp-for="Item1.ItemName" type="text" class="form-control" id="itemNameId"/>
+            </div>
+            <div class="col-md-2">
+            <label asp-for="Expense1.ExpenseType" class="form-label">Type</label>
+            <input asp-for="Expense1.ExpenseType" type="text" class="form-control" id="ExpenseTypeId"/>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Expense1.ExpenseSubType" class="form-label">SubType</label>
+                <input asp-for="Expense1.ExpenseSubType" type="text" class="form-control" id="ExpenseSubTypeId"/>
+            </div>
+            <div class="col-md-1">
+                <label asp-for="Item1.ItemQuantity" class="form-label">Quantity</label>
+                <input asp-for="Item1.ItemQuantity" type="number" class="form-control" id="itemQuantityId"/>
+            </div>
+            <div class="col-md-1">
+                <label asp-for="Item1.ItemPrice" class="form-label">Price</label>
+                <input asp-for="Item1.ItemPrice" type="number" class="form-control" id="itemPriceId"/>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Item1.ItemDesc" class="form-label">Description</label>
+                <input asp-for="Item1.ItemDesc" type="text" class="form-control" id="itemDescId"/>
+            </div>
+    </div>-->
+
+   
+    <div class="container-fluid bg-light rounded">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ItemName</th>
+                        <th>Type</th>
+                        <th>SubType</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!--<td><input asp-for="Item1[0].ItemName" type="text" class="form-control" id="ItemNameId"/></td>
+                        <td><input asp-for="Expense1.ExpenseType" type="text" class="form-control" id="ExpenseTypeId"/></td>
+                        <td><input asp-for="Expense1.ExpenseSubType" type="text" class="form-control" id="ExpenseSubTypeId"/></td>
+                        <td><input asp-for="Item1[0].ItemQuantity" type="text" class="form-control" id="ItemQuantityId"/></td>
+                        <td><input asp-for="Item1[0].ItemPrice" type="text" class="form-control" id="ItemPriceId"/></td>-->
+                        <td></td>
+                        <td><input type="text" asp-for="@Model.Expense.ExpenseType" id="ExpenseTypeId"/></td>
+                        <td><input type="text" asp-for="@Model.Expense.ExpenseSubType" id="ExpenseSubTypeId"/></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>  
+
+
+</body>
+
+<script>
+    
+    function loadDropdown(typeId, subTypeId){
+        console.log("printed");
+        console.log(typeId);
+        console.log(subTypeId);
+        $(typeId).kendoDropDownList({
+            optionLabel: "Select Item Type...",
+            height: 310,
+            footerTemplate: 'Please ensure the type selected is correct',
+            dataSource:{
+                transport: {
+                    read: {
+                        url: "https://localhost:7250/api/Common/GetDropDownList",
+                        type: "Post",
+                        contentType: "application/json",
+                        data: {mode: "ExpenseType",condition1: "",condition2: ""},
+                        dataType: 'json'
+                    },
+                    parameterMap: function (data) {
+                        var returnData = JSON.stringify(data);
+                        return returnData
+                    }
+                }
+            },
+            dataTextField: "ddlText",
+            dataValueField: "ddlVal"
+        }).data("kendoDropDownList");
+
+        $(subTypeId).kendoDropDownList({
+                optionLabel: "Select SubType...",
+                height: 310,
+                footerTemplate: 'Please ensure the subtype selected is correct',
+                dataSource:{
+                    transport: {
+                        read: {
+                            url: "https://localhost:7250/api/Common/GetDropDownList",
+                            type: "Post",
+                            contentType: "application/json",
+                            data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
+                            dataType: 'json'
+                        },
+                        parameterMap: function (data) {
+                            var returnData = JSON.stringify(data);
+                            return returnData
+                        }
+                    }
+                },
+                dataTextField: "ddlText",
+                dataValueField: "ddlVal"
+            }).data("kendoDropDownList");
+
+         //$("#ExpenseTypeId1").kendoDropDownList({
+         //optionLabel: "Select Item Type...",
+         //height: 310,
+         //footerTemplate: 'Please ensure the type selected is correct',
+         //dataSource:{
+         //     transport: {
+         //         read: {
+         //             url: "https://localhost:7250/api/Common/GetDropDownList",
+         //             type: "Post",
+         //             contentType: "application/json",
+         //             data: {mode: "ExpenseType",condition1: "",condition2: ""},
+         //             dataType: 'json'
+         //         },
+         //         parameterMap: function (data) {
+         //             var returnData = JSON.stringify(data);
+         //             return returnData
+         //         }
+         //     }
+         // },
+         // dataTextField: "ddlText",
+         // dataValueField: "ddlVal"
+         //}).data("kendoDropDownList");
+     };
+    
+     $(document).ready(function(){
+         
+	//$('[data-toggle="tooltip"]').tooltip();
+    fnAddNew();
+	var actions = $("table td:last-child").html();
+	
+	// Add row on add button click
+	$(document).on("click", ".add", function(){
+		var empty = false;
+		var input = $(this).parents("tr").find('input[type="text"]');
+        input.each(function(){
+			if(!$(this).val()){
+				$(this).addClass("error");
+				empty = true;
+			} else{
+                $(this).removeClass("error");
+            }
+		});
+		$(this).parents("tr").find(".error").first().focus();
+		if(!empty){
+			input.each(function(){
+				$(this).parent("td").html($(this).val());
+			});			
+			$(this).parents("tr").find(".add, .edit").toggle();
+			$(".add-new").removeAttr("disabled");
+		}		
+    });
+	// Edit row on edit button click
+	$(document).on("click", ".edit", function(){		
+        $(this).parents("tr").find("td:not(:last-child)").each(function(){
+			$(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+		});		
+		$(this).parents("tr").find(".add, .edit").toggle();
+		$(".add-new").attr("disabled", "disabled");
+    });
+	// Delete row on delete button click
+	$(document).on("click", ".delete", function(){
+        $(this).parents("tr").remove();
+		$(".add-new").removeAttr("disabled");
+    });
+
+    function fnAddNew(){
+        // Append table with add row form on add new button click
+        $(".add-new").click(function(){
+	    	$(this).attr("disabled", "disabled");
+	    	var index = $("table tbody tr:last-child").index();
+            index = index+1;
+            var row = '<tr>' +
+                '<td>' + fnAddElement("Item["+index+"].ItemName","ItemNameId"+index) + '</td>' +
+                '<td>' + fnAddElement("@Model.Expense.ExpenseType","ExpenseTypeId"+index) + '</td>' +
+                '<td>' + fnAddElement("@Model.Expense.ExpenseSubType","ExpenseSubTypeId"+index) + '</td>' +
+                '<td>' + fnAddElement("Item["+index+"].ItemQuantity","ItemQuantityId"+index) + '</td>' +
+                '<td>' + fnAddElement("Item["+index+"].ItemPrice","ItemPriceIdSubodh"+index) + '</td>' +
+	    		'<td>' + actions + '</td>' +
+            '</tr>';
+            
+            var typeId = "#ExpenseTypeId"+index;
+            var subTypeId = "#ExpenseSubTypeId"+index;
+            // "ExpenseTypeId"+index;
+            //d = "ExpenseSubTypeId" + index;
+            //(typeId,subTypeId);
+
+        	$("table").append(row);		
+	    	$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+            //$('[data-toggle="tooltip"]').tooltip();
+
+            loadDropdown(typeId,subTypeId);
+        });
+    }
+
+    function fnAddElement(model, Id) {
+        var ele = "<input type='text' class='form-control' asp-for='" + model + "' id='" + Id + "' />";
+        return ele;
+    };
+
+    
+});
+    
+    loadDropdown("#ExpenseTypeId","#ExpenseSubTypeId");
+</script>
+</html>
