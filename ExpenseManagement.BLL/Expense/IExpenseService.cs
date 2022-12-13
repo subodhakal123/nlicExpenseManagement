@@ -12,8 +12,8 @@ namespace ExpenseManagement.BLL.Expense
     public interface IExpenseService
     {
         ArrayList GetAllExpense(FilterSortModel model);
-        ExpenseModel GetExpenseById(int ExpenseId);
-        string SaveExpense(ExpenseModel model);
+        List<ItemModel> GetExpenseById(int ExpenseId);
+        string SaveExpense(ItemExpenseModel model);
         string DeleteExpense(int ExpenseId);
     }
 }

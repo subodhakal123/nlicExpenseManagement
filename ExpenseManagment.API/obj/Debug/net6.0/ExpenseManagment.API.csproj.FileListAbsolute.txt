@@ -526,3 +526,4 @@ D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseMana
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ref\ExpenseManagment.API.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.pdb
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.genruntimeconfig.cache
+D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\ExpenseManagment.API.staticwebassets.runtime.json

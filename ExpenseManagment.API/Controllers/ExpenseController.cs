@@ -24,14 +24,14 @@ namespace ExpenseManagment.API.Controllers
 		}
 
 		[HttpPost("GetExpenseById")]
-		public ExpenseModel GetExpenseById(ExpenseModel model)
+		public List<ItemModel> GetExpenseById(ExpenseModel model)
 		{
-			var dm = _es.GetExpenseById(model.ExpenseId);
+			List<ItemModel> dm = _es.GetExpenseById(model.ExpenseId);
 			return dm;
 		}
 
 		[HttpPost("SaveExpense")]
-		public string SaveExpense(ExpenseModel model)
+		public string SaveExpense(ItemExpenseModel model)
 		{
 			string msg = _es.SaveExpense(model);
 			return msg;

@@ -35,7 +35,7 @@ namespace ExpenseManagement.BLL.Base
             {
                 if (string.IsNullOrEmpty(_key))
                 {
-                    _key = System.Configuration.ConfigurationManager.AppSettings["TokenKey"].ToString();
+                    _key = "sdfsdsfsd34rsedrsf";
                     return _key;
                 }
                 else

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,30 +62,32 @@ namespace ExpenseManagement.BLL.Expense
             return al;
         }
 
-        public ExpenseModel GetExpenseById(int ExpenseId)
+        public List<ItemModel> GetExpenseById(int ExpenseId)
         {
-            ExpenseModel model = new ExpenseModel();
-            model = db.Query<ExpenseModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return model;
+            var list = new List<ItemModel>();
+            try
+            {
+                list = db.Query<ItemModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+            return list;
         }
 
-        public string SaveExpense(ExpenseModel model)
+        public string SaveExpense(ItemExpenseModel model)
         {
             string strReturnMsg = "";
             try
             {
+                DataTable udtExpenseDetail = ListToDataTable(model.Item);
+                Console.WriteLine(udtExpenseDetail);
                 var dp = new DynamicParameters();
+                dp.Add("@ExpenseId", model.Expense.ExpenseId);
+                dp.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail1]"));
                 dp.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
-                dp.Add("@Expense_ID", model.ExpenseId);
-                dp.Add("@Expense_Date", model.ExpenseDate);
-                dp.Add("@Branch_Name", model.BranchName);
-                dp.Add("@Expense_Type", model.ExpenseType);
-                dp.Add("@Expense_SubType", model.ExpenseSubType);
-                dp.Add("@Amount", model.Amount);
-                dp.Add("@Total_Amount", model.TotalAmount);
-                dp.Add("@Is_Recommended", model.IsRecommended);
-                dp.Add("@Department_Name", model.DepartmentName);
-                dp.Add("@Comment", model.Comment);
                 var affectedRows = db.Query("[EXP].[usp_Expense_InsUpd]", dp, commandType: CommandType.StoredProcedure);
                 strReturnMsg = dp.Get<string>("retMsg");
             }
@@ -93,6 +96,35 @@ namespace ExpenseManagement.BLL.Expense
                 strReturnMsg = "Error: " + ex.Message.ToString();
             }
             return strReturnMsg;
+        }
+
+        public DataTable ListToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable("dt");
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name);
+            }
+            if (items != null)
+            {
+                foreach (T item in items)
+                {
+                    var values = new object[Props.Length];
+                    for (int i = 0; i < Props.Length; i++)
+                    {
+                        //inserting property values to datatable rows
+                        values[i] = Props[i].GetValue(item, null);
+                    }
+                    dataTable.Rows.Add(values);
+                }
+            }
+            dataTable.AcceptChanges();
+            //put a breakpoint here and check datatable
+            return dataTable;
         }
     }
 }

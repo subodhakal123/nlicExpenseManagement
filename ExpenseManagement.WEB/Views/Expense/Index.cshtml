@@ -9,6 +9,8 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>
 
+
+
 <style>
     .card-header{
         font-size: 22px;
@@ -70,9 +72,9 @@
         <div class="row">
             <nav aria-label="breadcrumb" class="d-flex flex-row-reverse">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Expense</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Index</li>
+                <li class="breadcrumb-item"><button class="btn-primary"><i class="fa fa-home"></i>Home</button></li>
+                <li class="breadcrumb-item"><button class="btn-primary">Expense</button></li>
+                <li class="breadcrumb-item active" aria-current="page"><button class="btn-primary">Index</button></li>
               </ol>
             </nav>
         </div>
@@ -125,7 +127,7 @@
     </div>
 
 <script>
-    
+
       GridImplementation();
       RuntimeJquery();
 
@@ -174,7 +176,7 @@
                 serverFiltering: true,
                 serverSorting: true
         });
-
+        toastr.error('Are you the 6 fingered man?');
          //Target the div element by using jQuery and then call the kendoGrid() method.
         $("#expenseGrid").kendoGrid({
         height: "400px",

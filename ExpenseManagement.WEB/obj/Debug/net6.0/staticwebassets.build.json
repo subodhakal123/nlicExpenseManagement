@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yGOOMLP6CHvpCxdHWWTELZE9VPYN0b3JNBB/sX0z2aU=",
+  "Hash": "/MX0Jmf5ZN27goLgRmPf477cz9I8d6JSh4x9JlqLL74=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -24,6 +24,13 @@
       "Source": "ExpenseManagement.Web",
       "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\",
       "BasePath": "_content/ExpenseManagement.Web",
+      "Pattern": "**"
+    },
+    {
+      "Name": "ExpenseManagment.API\\wwwroot",
+      "Source": "ExpenseManagment.API",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagment.API",
       "Pattern": "**"
     }
   ],
@@ -38311,6 +38318,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\uploads\\common\\noimage.png",
+      "SourceId": "ExpenseManagment.API",
+      "SourceType": "Project",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagment.API",
+      "RelativePath": "uploads/common/noimage.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\common\\noimage.png"
     }
   ]
 }

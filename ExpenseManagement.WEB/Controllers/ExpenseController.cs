@@ -20,6 +20,7 @@ namespace ExpenseManagement.Web.Controllers
             {
                 //do nothing
             }
+            
             return PartialView(model);
         }
     }

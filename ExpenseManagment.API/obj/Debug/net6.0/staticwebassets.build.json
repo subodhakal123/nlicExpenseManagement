@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "AF1RLKP+T7EY/fVYFgycJ4rkp5ey1i+oEGop8N8Sb/4=",
+  "Hash": "3SJoVp2FqaEZ7PBSbemIIXuxryuHRlKJr9dr+byadGk=",
   "Source": "ExpenseManagment.API",
   "BasePath": "_content/ExpenseManagment.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "ExpenseManagment.API\\wwwroot",
+      "Source": "ExpenseManagment.API",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagment.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\uploads\\common\\noimage.png",
+      "SourceId": "ExpenseManagment.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagment.API",
+      "RelativePath": "uploads/common/noimage.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\common\\noimage.png"
+    }
+  ]
 }

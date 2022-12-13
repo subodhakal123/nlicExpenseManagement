@@ -49,7 +49,7 @@ namespace ExpenseManagement.BLL.Account
                     using (SqlConnection con = new SqlConnection(conString))
                     {
                         con.Open();
-                        model = con.Query<UserModel>("[USRS].[usp_ValidateLogin]", new { username = "string", password = "string" }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                        model = con.Query<UserModel>("[USRS].[usp_ValidateLogin]", new { username = username, password = password }, commandType: CommandType.StoredProcedure).FirstOrDefault();
                         con.Close();
 
                     }

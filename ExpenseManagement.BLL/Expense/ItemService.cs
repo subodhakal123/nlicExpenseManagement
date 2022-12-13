@@ -77,12 +77,10 @@ namespace ItemManagement.BLL.Expense
                 dp.Add("@Item_Id", model.ItemId);
                 dp.Add("@Expense_ID", model.ExpenseId);
                 dp.Add("@Item_Name", model.ItemName);
-                dp.Add("@Item_Type", model.ItemType);
-                dp.Add("@Item_Desc", model.ItemDesc);
                 dp.Add("@Item_Price", model.ItemPrice);
                 dp.Add("@Item_Quantity", model.ItemQuantity);
                 dp.Add("@Item_Amount", model.ItemAmount);
-                var affectedRows = db.Query("[EXP].[usp_Item_InsUpd]", dp, commandType: CommandType.StoredProcedure);
+                //var affectedRows = db.Query("[EXP].[usp_Item_InsUpd]", dp, commandType: CommandType.StoredProcedure);
                 strReturnMsg = dp.Get<string>("retMsg");
             }
             catch (Exception ex)
