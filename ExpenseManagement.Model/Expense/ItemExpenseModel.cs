@@ -8,7 +8,7 @@ namespace ExpenseManagement.Model.Expense
 {
     public class ItemExpenseModel
     {
-        public ExpenseModel Expense { get; set; }
+        public int ExpenseId { get; set; }
         public List<ItemModel> Item { get; set; }
     }
 }

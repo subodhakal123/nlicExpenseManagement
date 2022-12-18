@@ -1,5 +1,6 @@
 ﻿using ExpenseManagement.BLL.Account;
 using ExpenseManagement.BLL.Common;
+using ExpenseManagement.BLL.Document;
 using ExpenseManagement.BLL.Expense;
 using ItemManagement.BLL.Expense;
 using ItemManagement.BLL.Item;
@@ -16,6 +17,7 @@ namespace ExpenseManagment.API.Extensions
             Services.AddScoped<IExpenseService, ExpenseService>();
             Services.AddScoped<IItemService, ItemService>();
             Services.AddScoped<IDropDownService, DropDownService>();
+            Services.AddScoped<IDocumentService, DocumentService>();
             return Services;
         }
     }

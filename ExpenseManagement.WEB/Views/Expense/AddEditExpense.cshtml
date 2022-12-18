@@ -150,31 +150,49 @@
                     <div class="col-md-7">
                     </div>
                     <div class="col-md-2">
-                        <label asp-for="@Model.Expense.TotalAmount">Total Amount: </label>
+                       <!-- <label asp-for="Model.Expense.TotalAmount">Total Amount: </label>-->
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="btn-info rounded-pill m-2" asp-for="@Model.Expense.TotalAmount" id="TotalAmountId" readonly/>
+                        <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
                     </div>
                 </div> 
                 <div class="row">
-                    @using (Html.BeginForm("Index", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))  
+                    <!--using (Html.BeginForm("Index", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))  
                     {   
                         <label> <b></b>Upload Receipts:<b></b></label>
                         <input type="file" name="images" value="" multiple="multiple" /> 
-                    } 
+                    } -->
+                    <form enctype="multipart/form-data" onsubmit="fileUpload(); return false;" method="post">
+                        <dl>
+                            <dt>
+                                <label for="FileUpload_FormFile">File</label>
+                            </dt>
+                            <dd>
+                                <input id="FileUpload_FormFile" type="file" 
+                                    name="formFile" multiple/>
+                            </dd>
+                        </dl>
+                    
+                        <input class="btn" type="submit" value="Upload" />
+                    
+                        <div style="margin-top:15px">
+                            <output name="result"></output>
+                        </div>
+                    </form>
                 </div>
                 <div class="row">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
                     </div>
                     <div class="col-md-1">
-                        <button type="button" class="btn btn-danger rounded-pill m-2">Close</button>
+                        <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2">Download</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>  
 
+   <!-- <partial name="_Document"/> -->
 
 </body>
 
@@ -185,7 +203,22 @@
      fnEditRow();
      fnDeleteRow();
 
-    
+     $("#downloadButton").click(function(){
+         $.ajax({  
+                url: '/Document/DownloadFileById',  
+                type: "POST",  
+                contentType: false, // Not to set any content header  
+                processData: false, // Not to process data  
+                data: {id: 2},  
+                success: function (result) {  
+                    alert(result);  
+                },  
+                error: function (err) {  
+                    alert(err.statusText);  
+                }  
+            });  
+     });
+
      //add a new row
     function fnAddNew(){
         // Append table with add row form on add new button click
@@ -390,12 +423,14 @@
         $("table tbody tr").each(function(index){
 
             var model = {
-                ItemName: $("table tbody tr").eq(index).find('input[type="text"]').eq(0).val(),
-                ExpenseType: $("table tbody tr").eq(index).find('input[type="text"]').eq(1).val(),
-                ExpenseSubType: $("table tbody tr").eq(index).find('input[type="text"]').eq(2).val(),
-                ItemQuantity: $("table tbody tr").eq(index).find('input[type="text"]').eq(3).val(),
-                ItemPrice: $("table tbody tr").eq(index).find('input[type="text"]').eq(4).val(),
-                ItemAmount: $("table tbody tr").eq(index).find('input[type="text"]').eq(5).val()
+                itemId: 1,
+                expenseId: 3024,
+                itemName: $("table tbody tr").eq(index).find('input[type="text"]').eq(0).val(),
+                expenseType: $("table tbody tr").eq(index).find('input[type="text"]').eq(1).val(),
+                expenseSubType: $("table tbody tr").eq(index).find('input[type="text"]').eq(2).val(),
+                itemPrice: $("table tbody tr").eq(index).find('input[type="text"]').eq(4).val(),
+                itemQuantity: $("table tbody tr").eq(index).find('input[type="text"]').eq(3).val(),
+                itemAmount: $("table tbody tr").eq(index).find('input[type="text"]').eq(5).val()
             };
             arrList.push(model);
         });
@@ -404,13 +439,90 @@
 
     function fnGetItemDetailModel(){
         var itemDetailData = JSON.stringify({
-            ItemModelList: fnGetModelList()
+            expenseId : 0,
+            item: fnGetModelList()
         });
         return itemDetailData;
     };
 
     function fnModelSave(){
-        fnGetModelList();
+
+        $.ajax({
+            url:"https://localhost:7250/api/Expense/SaveExpense",
+            type: 'POST',
+            datatype: 'json',
+            data: fnGetItemDetailModel(),
+            contentType: "application/json;charset=utf-8",
+            success: function(result) {
+            },
+            error: function(res) {
+            },
+            failure: function(errMsg) {
+            }
+
+        });
+        console.log(fnGetItemDetailModel());
     };
+
+    function fileUpload(){
+
+     //   var myfile = document.getElementById("FileUpload_FormFile");
+     //   var formData = new FormData();
+     //
+     //  if (myfile.files.length > 0) {
+     //      for (var i = 0; i < myfile.files.length; i++) {
+     //          formData.append('file-' + i, myfile.files[i]);
+     //      }
+     //  }
+     //
+     //  console.log(myfile.files[0]);
+     //  console.log(myfile.files[1]);
+     //
+     //  $.ajax({
+     //       url: 'Url.Content("~/Document/Index")',
+     //       success: function(data) {
+     //           
+     //       },
+     //       error: function(res) {
+     //       },
+     //       failure: function(errMsg) {
+     //       }
+     //   });
+
+
+     // Checking whether FormData is available in browser  
+        if (window.FormData !== undefined) {  
+  
+            var fileUpload = $("#FileUpload_FormFile").get(0);  
+            var files = fileUpload.files;  
+              
+            // Create FormData object  
+            var fileData = new FormData();  
+  
+            // Looping over all files and add it to FormData object  
+            for (var i = 0; i < files.length; i++) {  
+                fileData.append(files[i].name, files[i]);  
+            }  
+  
+            console.log(fileData);
+            $.ajax({  
+                url: '/Document/UploadFiles',  
+                type: "POST",  
+                contentType: false, // Not to set any content header  
+                processData: false, // Not to process data  
+                data: fileData,  
+                success: function (result) {  
+                    alert(result);  
+                },  
+                error: function (err) {  
+                    alert(err.statusText);  
+                }  
+            });  
+        } else {  
+            alert("FormData is not supported.");  
+        }  
+
+    };
+
 </script>
 </html>

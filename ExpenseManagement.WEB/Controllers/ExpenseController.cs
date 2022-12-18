@@ -15,7 +15,6 @@ namespace ExpenseManagement.Web.Controllers
         public ActionResult AddEditExpense(ItemExpenseModel model)
         {
             model.Item = new List<ItemModel>();
-            model.Expense = new ExpenseModel();
             if(model.Item.Count > 0)
             {
                 //do nothing
