@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using RestSharp;
 using System.Security.Claims;
 
 namespace ExpenseManagement.Web.Areas.Account.Controllers
@@ -9,40 +11,48 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
     [Area("Account")]
     public class AccountController : Controller
     {
-
-        UserModel model = new UserModel()
+        public async Task<ActionResult> LogIn(UserDto model)
         {
-            UserId = 1,
-            FirstName = "firstname",
-            LastName = "lastname",
-            EmailId = "email@id.com",
-            Mobile = "98798789798",
-            Role = "admin"
-        };
-        public IActionResult Index()
-        {
-            return View();
-        }
-        //public ActionResult LogIn()
-        //{
-        //    return PartialView(new UserModel());
-        //}
-        public ActionResult LogIn(AppUserModel usr)
-        {
-            UserModel model1 = new UserModel();
-            model1 = model;
-
-            var identity = new ClaimsIdentity(new[]
+            try
             {
-                new Claim(ClaimTypes.Name,model1.FirstName),
-                new Claim(ClaimTypes.Role,model1.Role)
-            },CookieAuthenticationDefaults.AuthenticationScheme,ClaimTypes.Name,ClaimTypes.Role);
+                AppUserModel usr = new AppUserModel();
+                usr.UserName = model.login.Username;
+                usr.Password = model.login.Password;
+                usr.Email = model.login.Username;
 
-            var principal = new ClaimsPrincipal(identity);
-            Thread.CurrentPrincipal = principal;
+                model.register = new UserViewModel();
+                
+                var client = new RestClient();
+                var request = new RestRequest();
+                request.Method = Method.Post;
+                request.Resource = "https://localhost:7250/api/Account/Token";
+                request.AddJsonBody(usr);
+                UserModel response =  await client.PostAsync<UserModel>(request);
+                //IRestResponse response = client.Execute(request);
+                if(response.UserName != null){
+                           var identity = new ClaimsIdentity(new[]
+                                                {
+                                                new Claim(ClaimTypes.Name,model.login.Username)
+                                            }, CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
 
-            var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal,new Microsoft.AspNetCore.Authentication.AuthenticationProperties { IsPersistent = true});
-            return View();
+                           var principal = new ClaimsPrincipal(identity);
+                           Thread.CurrentPrincipal = principal;
+
+                           var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new Microsoft.AspNetCore.Authentication.AuthenticationProperties { IsPersistent = true });
+
+                }
+                else
+                {
+                    //not authenticated
+                    return Redirect("/");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Redirect("/Expense");
         }
 
         public ActionResult LogOut()

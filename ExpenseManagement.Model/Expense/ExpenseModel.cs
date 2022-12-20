@@ -19,5 +19,6 @@ namespace ExpenseManagement.Model.Expense
         public string? DepartmentName { get; set; }
         public string? Comment { get; set; }
         public bool? IsDeleted { get; set; }
+        public bool? IsApproved { get; set; }
     }
 }

@@ -68,7 +68,7 @@
                 </div>
             </form>
         </div>*@
-
+        
         <div class="row">
             <nav aria-label="breadcrumb" class="d-flex flex-row-reverse">
               <ol class="breadcrumb">
@@ -128,6 +128,10 @@
 
 <script>
 
+        console.log('ramesh');
+        console.log('@this.User.Identity.Name');
+        console.log('dhakal');
+
       GridImplementation();
       //RuntimeJquery();
 
@@ -140,7 +144,6 @@
               //fetch grid single row data
               var grid = $("#expenseGrid").data("kendoGrid");
               var gridItem = grid.dataItem(grid.select());
-              console.log(gridItem);
               loadAddEditExpense(gridItem.ExpenseId);
               
           });
@@ -159,7 +162,8 @@
                     },
                     parameterMap: function(data) {
                         var returnData = JSON.stringify(data);
-                        return returnData
+                        return returnData;
+                        
                     }
                 },
                 schema: {
@@ -176,8 +180,9 @@
                 serverFiltering: true,
                 serverSorting: true
         });
-        toastr.error('Are you the 6 fingered man?');
+        //toastr.error('Are you the 6 fingered man?');
          //Target the div element by using jQuery and then call the kendoGrid() method.
+
         $("#expenseGrid").kendoGrid({
         height: "400px",
         pageable: {
@@ -205,7 +210,9 @@
           { field: "expenseDate", title: "Expense Date"},
           { field: "branchName", title: "Branch Name"},
           { field: "expenseType", title: "Expense Type"},
-          { field: "totalAmount", title: "Amount"}
+          { field: "totalAmount", title: "Amount"},
+          { field: "isApproved", title: "Status",
+          template: "# if (isApproved==true) {#<span style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approved</span>#} else {#<span style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</span>#} #"}
         ]
         });
       };

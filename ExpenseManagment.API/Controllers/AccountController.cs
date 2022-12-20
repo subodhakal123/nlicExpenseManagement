@@ -24,7 +24,7 @@ namespace ExpenseManagment.API.Controllers
             UserModel model = _as.ValidateUser(usr.UserName,usr.Password);
             if (model.UserName == null || !string.IsNullOrEmpty(model.ErrorMessage))
             {
-                model.ErrorMessage = "either username is null or some error message is encountered";
+                model.ErrorMessage = model.ErrorMessage;
             }
             else
             {

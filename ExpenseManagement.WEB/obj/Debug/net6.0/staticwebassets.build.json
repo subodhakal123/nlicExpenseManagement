@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/MX0Jmf5ZN27goLgRmPf477cz9I8d6JSh4x9JlqLL74=",
+  "Hash": "UAz3hdFILqU+Z7n6iCTXVpAKLcBkSF9ZpfOQ3VcE4cM=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -255,6 +255,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\logo_NLIC.jpg"
+    },
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\img\\logo11.jpeg",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "img/logo11.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\logo11.jpeg"
+    },
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\img\\logo12.png",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "img/logo12.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\logo12.png"
     },
     {
       "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\js\\app.js",

@@ -15,10 +15,6 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\New folder\ExpenseManagment\ExpenseManagement.WEB
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/New folder/ExpenseManagment/ExpenseManagement.WEB/Areas/Account/Views/Account/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWNjb3VudFxWaWV3c1xBY2NvdW50XEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/New folder/ExpenseManagment/ExpenseManagement.WEB/Areas/Account/Views/Account/LogIn.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWNjb3VudFxWaWV3c1xBY2NvdW50XExvZ0luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
