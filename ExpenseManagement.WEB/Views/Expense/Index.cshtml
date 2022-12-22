@@ -2,16 +2,17 @@
 
 @{
     ViewData["Title"] = "Index";
+
 }
 
-
-<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.1109/styles/kendo.default-v2.min.css"/>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>
-
-
-
 <style>
+    .k-grid-header {
+            background-color: #2a57b8;
+            color: white;
+        }
+    .k-i-filter{
+        color: white;
+    }
     .card-header{
         font-size: 22px;
         font-weight: bold;
@@ -78,20 +79,20 @@
               </ol>
             </nav>
         </div>
+
         <div class="row">
             <p>
-              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <a id="btnExpenseAdd" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Add
               </a>
-              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <button id="btnExpenseEdit" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Edit
               </button>
             </p>
             <div class="collapse" id="collapseExample">
               <div class="card text-center">
-                <div class="card-header">Expense Details</div>
+                <div class="card-header">Expense Grid</div>
                 <div class="card-body">
-                    <partial name="AddEditExpense"/>
                 </div>
               </div>
             </div>
@@ -106,50 +107,61 @@
         
     </div>
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="ItemModal" tabindex="-1" aria-labelledby="ItemModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="ItemModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
 <script>
 
-        console.log('ramesh');
-        console.log('@this.User.Identity.Name');
-        console.log('dhakal');
-
       GridImplementation();
-      //RuntimeJquery();
 
-      function RuntimeJquery(){
-          $("#btnExpenseAdd").off().on('click', function(){
+      $("#btnExpenseAdd").off().on('click', function(){
+
               loadAddEditExpense();
           });
-          $("#btnExpenseEdit").off().on('click', function(){
 
-              //fetch grid single row data
-              var grid = $("#expenseGrid").data("kendoGrid");
-              var gridItem = grid.dataItem(grid.select());
-              loadAddEditExpense(gridItem.ExpenseId);
-              
-          });
-      }
+
+        $('#btnExpenseEdit').off().on('click', function() {
+            //show loader
+            var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
+
+            if(expenseIdSelected != null){
+
+                loadAddEditExpense(expenseIdSelected);
+            }
+            else{
+                //console.log("error");
+                toastr.warning('Select a Row');
+            }
+
+
+
+            //var grd = grid.dataItem(grid.select());
+            //
+            //if (grd != null) {
+            //    console.log("hi you are in");
+            //    //loadAddEditEducation(grd.Education_Id);
+            //}
+            //else {
+            //    console.log("error");
+            //    //hide loader
+            //    //toastr.warning('Html.Raw("Select A Row")');
+            //}
+        });
+
+
+      //function RuntimeJquery(){
+      //    console.log("hello subodh");
+      //    
+      //    $("#btnExpenseEdit").off().on('click', function(){
+      //
+      //        //fetch grid single row data
+      //        var grid = $("#expenseGrid").data("kendoGrid");
+      //        var gridItem = grid.dataItem(grid.select());
+      //        loadAddEditExpense(gridItem.ExpenseId);
+      //        
+      //    });
+      //}
+
       function GridImplementation(){
 
+          console.log("grid called");
         let myDataArray = new kendo.data.DataSource({
           transport: {
                     read: {
@@ -218,20 +230,26 @@
       };
     
       function loadAddEditExpense(ExpenseId){
+
+          console.log("entered add expense");
+          console.log(ExpenseId);
+
           $.ajax({
             type: 'POST',
             url: '@Url.Content("~/Expense/AddEditExpense")',
             data: { ExpenseId: ExpenseId },
             success: function(data) {
-                $('.modal-body').empty();
-                $('#ItemModal .modal-body').html(data);
+                $('.card-body').empty();
+                $('#collapseExample .card-body').html(data);
 
                 if(ExpenseId){
-                    $("#ItemModalLabel").html("Edit Expense");
+                    $(".card-header").html("Edit Expense");
                 }
                 else{
-                    $("#ItemModalLabel").html("Report Expense");
+                    $(".card-header").html("Add Expense");
                 }
+
+                GridImplementation();
                 
             },
             error: function(res) {

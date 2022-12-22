@@ -119,6 +119,18 @@ namespace ExpenseManagment.API.Controllers
             // return File(bytes, "text/plain", Path.GetFileName(filePath));
             return true;
         }
+        [HttpGet("GetFile")]
+        public FileContentResult GetFile()
+        {
+
+            string filePath = @"D:\New folder\fileDownloadFolder\0\plan91_1657517883.xlsx";
+            byte[] fileContents = System.IO.File.ReadAllBytes(filePath);
+            string fileName = "plan91_1657517883.xlsx";
+            string contentType = "text/plain";
+
+            return File(fileContents, contentType, fileName);
+
+        }
     }   
 }       
         

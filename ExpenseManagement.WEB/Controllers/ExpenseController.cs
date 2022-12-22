@@ -12,12 +12,21 @@ namespace ExpenseManagement.Web.Controllers
             return View();
         }
 
-        public ActionResult AddEditExpense(ItemExpenseModel model)
+        public async Task<ActionResult> AddEditExpense(ItemExpenseModel model)
         {
             model.Item = new List<ItemModel>();
-            if(model.Item.Count > 0)
+            ExpenseModel expenseModel = new ExpenseModel();
+            expenseModel.ExpenseId = model.ExpenseId;
+            if(model.ExpenseId > 0)
             {
-                //do nothing
+                var client = new RestClient();
+                var request = new RestRequest();
+                request.Method = Method.Post;
+                request.Resource = "https://localhost:7250/api/Expense/GetExpenseById";
+                request.AddJsonBody(expenseModel);
+                List<ItemModel> response = await client.PostAsync<List<ItemModel>>(request);
+                model.Item = response;
+
             }
             
             return PartialView(model);

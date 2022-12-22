@@ -1,33 +1,4 @@
 ﻿@model ExpenseManagement.Model.Expense.ItemExpenseModel;
-@{
-    ViewData["Title"] = "AddEditExpense";
-}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <!--for table add/edit/delete-->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-
-    <!--kendo css-->
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.1109/styles/kendo.default-v2.min.css"/>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>
-
 
 
     <style>
@@ -117,10 +88,17 @@
         }
     </style>
 
-</head>
-<body>
+<!--for table add/edit/delete-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    
+    <!------ Include the above in your HEAD tag ---------->
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
 
-    <div class="container-fluid bg-light rounded">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -143,19 +121,49 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(Model.ExpenseId > 0)
+                    {
+                        int index = Model.Item.Count() - 1;
+                        foreach(var item in Model.Item.OrderByDescending(x => x.ItemId))
+                        {
+                            <tr>
+                                <td style="width:100%;">
+                                    <input type="text" value="@item.ItemName" class=""/>
+                                </td>
+                                <td  style="width:100%;">
+                                    <input type="text" value="@item.ExpenseType" class="expenseType"/>
+                                </td>
+                                <td style="width:100%;">
+                                    <input type="text" value="@item.ExpenseSubType" class="expenseSubType"/>
+                                </td>
+                                <td  style="width:100%;">
+                                    <input type="text" value="@item.ItemPrice" class=""/>
+                                </td>
+                                <td style="width:100%;">
+                                    <input type="text" value="@item.ItemQuantity" class=""/>
+                                </td>
+                                <td  style="width:100%;">
+                                    <input type="text" value="@item.ItemAmount" class=""/>
+                                </td>
+                                <td>
+                                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                </td>
+                            </tr>
+                            index--;
+                        }
+                    }
                 </tbody>
             </table>
-            <div class="container">
+            <div>
                 <div class="row">
-                    <div class="col-md-7">
-                    </div>
-                    <div class="col-md-2">
-                       <!-- <label asp-for="Model.Expense.TotalAmount">Total Amount: </label>-->
-                    </div>
+                    
                     <div class="col-md-2">
                         <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
                     </div>
-                </div> 
+                    <div class="col-md-10"></div><div class="col-md-10"></div>
+                </div>
                 <div class="row">
                     <!--using (Html.BeginForm("Index", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))  
                     {   
@@ -176,7 +184,7 @@
                         <input class="btn" type="submit" value="Upload" />
                     
                         <div style="margin-top:15px">
-                            <output name="result"></output>
+                            <output id="result" name="result"></output>
                         </div>
                     </form>
                 </div>
@@ -190,37 +198,46 @@
                 </div>
             </div>
         </div>
-    </div>  
 
-   <!-- <partial name="_Document"/> -->
+        @section Scripts{
 
-</body>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script>
+    <!-- <partial name="_Document"/> -->
     
-     fnAddNew();
-     fnSaveItem();
-     fnEditRow();
-     fnDeleteRow();
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-     $("#downloadButton").click(function(){
-         $.ajax({  
-                url: '/Document/DownloadFileById',  
-                type: "POST",  
-                contentType: false, // Not to set any content header  
-                processData: false, // Not to process data  
-                data: {id: 2},  
-                success: function (result) {  
-                    alert(result);  
-                },  
-                error: function (err) {  
-                    alert(err.statusText);  
-                }  
-            });  
-     });
-
-     //add a new row
-    function fnAddNew(){
+    <!--kendo css-->
+    <!--<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.1109/styles/kendo.default-v2.min.css"/>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>-->
+    <script>
+         fnWhenLoaded();
+         fnAddNew();
+         fnSaveItem();
+         fnEditRow();
+         fnDeleteRow();
+    
+         $("#downloadButton").click(function(){
+         
+             $.ajax({
+                url:"https://localhost:7250/api/Document/GetFile",
+                type: 'GET',
+                success: function(result) {
+                    console.log(result);
+                     $("#result").html(result);
+                },
+                error: function(res) {
+                },
+                failure: function(errMsg) {
+                }
+            });
+         });
+    
+         //add a new row
+        function fnAddNew(){
         // Append table with add row form on add new button click
         $(".add-new").click(function(){
             //var actions = $("table td:last-child").html();
@@ -251,66 +268,75 @@
             loadDropdown(typeId,subTypeId);
 
         });
-    };
-
-    //saveItem
-    function fnSaveItem(){
-        // Add row on add button click
-	    $(document).on("click", ".add", function(){
-	    	var empty = false;
-	    	var input = $(this).parents("tr").find('input[type="text"]');
-            input.each(function(index){
-                if(index != 5){
-                    if(!$(this).val()){
-	    			$(this).addClass("error");
-	    			empty = true;
-	    		    } else{
-                        $(this).removeClass("error");
-                    }
-                }
-	    	});
-	    	$(this).parents("tr").find(".error").first().focus();
-	    	if(!empty){
-        
-                var rowNo = $("table tbody tr:last-child").index();
-                rowNo= rowNo +1;
-                var quantity =0;
-                var price = 0;
-	    		input.each(function(index){
-                    if(index == 0 ){
-                       $(this).attr('value',$(this).val());
-                    }
-                    else if(index == 1){
-                        $(this).attr('value',$(this).val());
-                    }
-                    else if(index == 2){
-                        $(this).attr('value',$(this).val());
-                        
-                    }
-                    else if(index == 3){
-                        $(this).attr('value',$(this).val());
-                        quantity = $(this).val();
-                    }
-                    else if(index == 4){
-                        $(this).attr('value',$(this).val());
-                        price = $(this).val();
-                    }
-                    else if(index == 5){
-                        $(this).attr('value',parseFloat(quantity)*parseFloat(price));
-                    }
+        };
+    
+        function fnWhenLoaded(){
+            console.log("subodh hi");
+             var input = $(this).parents("tr").find('input[class="expenseType"]');
+             input.each(function(index){
+                 console.log(index);
                 
-	    		});	
-                
-	    		$(this).parents("tr").find(".add, .edit").toggle();
-	    		$(".add-new").removeAttr("disabled");
-	    	}		
-        
-            $("#TotalAmountId").attr('value',calculateTotal());
-        });
-    };
-
-    //editing a row
-    function fnEditRow(){
+             });
+         };
+    
+        //saveItem
+        function fnSaveItem(){
+            // Add row on add button click
+    	    $(document).on("click", ".add", function(){
+    	    	var empty = false;
+    	    	var input = $(this).parents("tr").find('input[type="text"]');
+                input.each(function(index){
+                    if(index != 5){
+                        if(!$(this).val()){
+    	    			$(this).addClass("error");
+    	    			empty = true;
+    	    		    } else{
+                            $(this).removeClass("error");
+                        }
+                    }
+    	    	});
+    	    	$(this).parents("tr").find(".error").first().focus();
+    	    	if(!empty){
+            
+                    var rowNo = $("table tbody tr:last-child").index();
+                    rowNo= rowNo +1;
+                    var quantity =0;
+                    var price = 0;
+    	    		input.each(function(index){
+                        if(index == 0 ){
+                           $(this).attr('value',$(this).val());
+                        }
+                        else if(index == 1){
+                            $(this).attr('value',$(this).val());
+                        }
+                        else if(index == 2){
+                            $(this).attr('value',$(this).val());
+                            
+                        }
+                        else if(index == 3){
+                            $(this).attr('value',$(this).val());
+                            quantity = $(this).val();
+                        }
+                        else if(index == 4){
+                            $(this).attr('value',$(this).val());
+                            price = $(this).val();
+                        }
+                        else if(index == 5){
+                            $(this).attr('value',parseFloat(quantity)*parseFloat(price));
+                        }
+                    
+    	    		});	
+                    
+    	    		$(this).parents("tr").find(".add, .edit").toggle();
+    	    		$(".add-new").removeAttr("disabled");
+    	    	}		
+            
+                $("#TotalAmountId").attr('value',calculateTotal());
+            });
+        };
+    
+        //editing a row
+        function fnEditRow(){
         //// Edit row on edit button click
 	    $(document).on("click", ".edit", function(){		
             $(this).parents("tr").find("td:not(:last-child)").each(function(index){
@@ -340,71 +366,53 @@
 	    	$(this).parents("tr").find(".add, .edit").toggle();
 	    	$(".add-new").attr("disabled", "disabled");
         });
-    }
-
-    //delete a row
-    function fnDeleteRow(){
-        // Delete row on delete button click
-	    $(document).on("click", ".delete", function(){
-            $(this).parents("tr").remove();
-	    	$(".add-new").removeAttr("disabled");
-            $("#TotalAmountId").attr('value',calculateTotal());
-        });
-    };
-
-    //add an input field
-    function fnAddElement(value,Class) {
-        var ele = "<input type='text' value='"+value+"' class='"+Class+"'/>";
-        return ele;
-    };
-
-    function calculateTotal(){
-        var count = $("table tbody tr:last-child").index();
-        count = count+1;
-        var sum = 0;
-        for(let i = 1; i<=count; i++){
-            sum = parseFloat(sum) + parseFloat($("#ItemAmountId"+i).val());
         }
+    
+        //delete a row
+        function fnDeleteRow(){
 
-        return sum;
-    };
+            // Delete row on delete button click
+	        $(document).on("click", ".delete", function(){
 
-    function loadDropdown(typeId, subTypeId){
+                    $(this).parents("tr").remove();
+	            	$(".add-new").removeAttr("disabled");
+                    $("#TotalAmountId").attr('value',calculateTotal());
 
-        $(typeId).kendoDropDownList({
-            optionLabel: "Select Item Type...",
-            height: 310,
-            footerTemplate: 'Please ensure the type selected is correct',
-            dataSource:{
-                transport: {
-                    read: {
-                        url: "https://localhost:7250/api/Common/GetDropDownList",
-                        type: "Post",
-                        contentType: "application/json",
-                        data: {mode: "ExpenseType",condition1: "",condition2: ""},
-                        dataType: 'json'
-                    },
-                    parameterMap: function (data) {
-                        var returnData = JSON.stringify(data);
-                        return returnData
-                    }
-                }
-            },
-            dataTextField: "ddlText",
-            dataValueField: "ddlVal"
-        }).data("kendoDropDownList");
+                });
+        };
+    
+        //add an input field
+        function fnAddElement(value,Class) {
+            var ele = "<input style='width: 100%;' type='text' value='"+value+"' class='"+Class+"'/>";
+            return ele;
+        };
+    
+        function calculateTotal(){
 
-        $(subTypeId).kendoDropDownList({
-                optionLabel: "Select SubType...",
+            var count = $("table tbody tr:last-child").index();
+            count = count+1;
+            var sum = 0;
+            for(let i = 1; i<=count; i++){
+                sum = parseFloat(sum) + parseFloat($("#ItemAmountId"+i).val());
+            }
+
+            return sum;
+
+        };
+    
+        function loadDropdown(typeId, subTypeId){
+    
+            $(typeId).kendoDropDownList({
+                optionLabel: "Select Item Type...",
                 height: 310,
-                footerTemplate: 'Please ensure the subtype selected is correct',
+                footerTemplate: 'Please ensure the type selected is correct',
                 dataSource:{
                     transport: {
                         read: {
                             url: "https://localhost:7250/api/Common/GetDropDownList",
                             type: "Post",
                             contentType: "application/json",
-                            data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
+                            data: {mode: "ExpenseType",condition1: "",condition2: ""},
                             dataType: 'json'
                         },
                         parameterMap: function (data) {
@@ -416,9 +424,32 @@
                 dataTextField: "ddlText",
                 dataValueField: "ddlVal"
             }).data("kendoDropDownList");
-     };
-
-    function fnGetModelList(){
+    
+            $(subTypeId).kendoDropDownList({
+                    optionLabel: "Select SubType...",
+                    height: 310,
+                    footerTemplate: 'Please ensure the subtype selected is correct',
+                    dataSource:{
+                        transport: {
+                            read: {
+                                url: "https://localhost:7250/api/Common/GetDropDownList",
+                                type: "Post",
+                                contentType: "application/json",
+                                data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
+                                dataType: 'json'
+                            },
+                            parameterMap: function (data) {
+                                var returnData = JSON.stringify(data);
+                                return returnData
+                            }
+                        }
+                    },
+                    dataTextField: "ddlText",
+                    dataValueField: "ddlVal"
+                }).data("kendoDropDownList");
+         };
+    
+        function fnGetModelList(){
         var arrList = [];
         $("table tbody tr").each(function(index){
 
@@ -435,94 +466,94 @@
             arrList.push(model);
         });
         return arrList;
-    };
-
-    function fnGetItemDetailModel(){
-        var itemDetailData = JSON.stringify({
-            expenseId : 0,
-            item: fnGetModelList()
-        });
-        return itemDetailData;
-    };
-
-    function fnModelSave(){
-
-        $.ajax({
-            url:"https://localhost:7250/api/Expense/SaveExpense",
-            type: 'POST',
-            datatype: 'json',
-            data: fnGetItemDetailModel(),
-            contentType: "application/json;charset=utf-8",
-            success: function(result) {
-            },
-            error: function(res) {
-            },
-            failure: function(errMsg) {
-            }
-
-        });
-        console.log(fnGetItemDetailModel());
-    };
-
-    function fileUpload(){
-
-     //   var myfile = document.getElementById("FileUpload_FormFile");
-     //   var formData = new FormData();
-     //
-     //  if (myfile.files.length > 0) {
-     //      for (var i = 0; i < myfile.files.length; i++) {
-     //          formData.append('file-' + i, myfile.files[i]);
-     //      }
-     //  }
-     //
-     //  console.log(myfile.files[0]);
-     //  console.log(myfile.files[1]);
-     //
-     //  $.ajax({
-     //       url: 'Url.Content("~/Document/Index")',
-     //       success: function(data) {
-     //           
-     //       },
-     //       error: function(res) {
-     //       },
-     //       failure: function(errMsg) {
-     //       }
-     //   });
-
-
-     // Checking whether FormData is available in browser  
-        if (window.FormData !== undefined) {  
-  
-            var fileUpload = $("#FileUpload_FormFile").get(0);  
-            var files = fileUpload.files;  
-              
-            // Create FormData object  
-            var fileData = new FormData();  
-  
-            // Looping over all files and add it to FormData object  
-            for (var i = 0; i < files.length; i++) {  
-                fileData.append(files[i].name, files[i]);  
-            }  
-  
-            console.log(fileData);
-            $.ajax({  
-                url: '/Document/UploadFiles',  
-                type: "POST",  
-                contentType: false, // Not to set any content header  
-                processData: false, // Not to process data  
-                data: fileData,  
-                success: function (result) {  
-                    alert(result);  
-                },  
-                error: function (err) {  
-                    alert(err.statusText);  
+        };
+    
+        function fnGetItemDetailModel(){
+            var itemDetailData = JSON.stringify({
+                expenseId : 0,
+                item: fnGetModelList()
+            });
+            return itemDetailData;
+        };
+    
+        function fnModelSave(){
+    
+            $.ajax({
+                url:"https://localhost:7250/api/Expense/SaveExpense",
+                type: 'POST',
+                datatype: 'json',
+                data: fnGetItemDetailModel(),
+                contentType: "application/json;charset=utf-8",
+                success: function(result) {
+                },
+                error: function(res) {
+                },
+                failure: function(errMsg) {
+                }
+            });
+            console.log(fnGetItemDetailModel());
+        };
+    
+        function fileUpload(){
+    
+         //   var myfile = document.getElementById("FileUpload_FormFile");
+         //   var formData = new FormData();
+         //
+         //  if (myfile.files.length > 0) {
+         //      for (var i = 0; i < myfile.files.length; i++) {
+         //          formData.append('file-' + i, myfile.files[i]);
+         //      }
+         //  }
+         //
+         //  console.log(myfile.files[0]);
+         //  console.log(myfile.files[1]);
+         //
+         //  $.ajax({
+         //       url: 'Url.Content("~/Document/Index")',
+         //       success: function(data) {
+         //           
+         //       },
+         //       error: function(res) {
+         //       },
+         //       failure: function(errMsg) {
+         //       }
+         //   });
+    
+    
+         // Checking whether FormData is available in browser  
+            if (window.FormData !== undefined) {  
+      
+                var fileUpload = $("#FileUpload_FormFile").get(0);  
+                var files = fileUpload.files;  
+                  
+                // Create FormData object  
+                var fileData = new FormData();  
+      
+                // Looping over all files and add it to FormData object  
+                for (var i = 0; i < files.length; i++) {  
+                    fileData.append(files[i].name, files[i]);  
                 }  
-            });  
-        } else {  
-            alert("FormData is not supported.");  
-        }  
+      
+                console.log(fileData);
+                $.ajax({  
+                    url: '/Document/UploadFiles',  
+                    type: "POST",  
+                    contentType: false, // Not to set any content header  
+                    processData: false, // Not to process data  
+                    data: fileData,  
+                    success: function (result) {  
+                        alert(result);  
+                    },  
+                    error: function (err) {  
+                        alert(err.statusText);  
+                    }  
+                });  
+            } else {  
+                alert("FormData is not supported.");  
+            }  
+    
+        };
+    
+    </script>
 
-    };
-
-</script>
-</html>
+    }

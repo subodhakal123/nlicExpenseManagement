@@ -126,6 +126,17 @@ namespace ExpenseManagement.Web.Controllers
                 throw;
             }
         }
+
+        public FileContentResult GetFile()
+        {
+            string filePath = "D:\\New folder\fileDownloadFolder\0\\plan91_1657517883.xlsx";
+            byte[] fileContents = System.IO.File.ReadAllBytes(filePath);
+            string fileName = "plan91_1657517883.xlsx";
+            string contentType = "text/plain";
+
+            return File(fileContents, contentType, fileName);
+
+        }
         public async Task CopyStream(Stream stream, string downloadPath)
         {
             using (var fileStream = new FileStream(downloadPath, FileMode.Create, FileAccess.Write))
