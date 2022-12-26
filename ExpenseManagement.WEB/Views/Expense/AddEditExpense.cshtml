@@ -1,6 +1,9 @@
 ﻿@model ExpenseManagement.Model.Expense.ItemExpenseModel;
 
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
     <style>
         #TotalAmountId{
             align-content: right;
@@ -88,7 +91,7 @@
         }
     </style>
 
-<!--for table add/edit/delete-->
+    <!--for table add/edit/delete-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     
     <!------ Include the above in your HEAD tag ---------->
@@ -97,8 +100,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    
 
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   
+    <div class="container-fluid m-2">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -185,6 +193,7 @@
                     
                         <div style="margin-top:15px">
                             <output id="result" name="result"></output>
+                            <div id="result2"></div>
                         </div>
                     </form>
                 </div>
@@ -198,21 +207,8 @@
                 </div>
             </div>
         </div>
-
-        @section Scripts{
-
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- <partial name="_Document"/> -->
+    </div>
     
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!--kendo css-->
-    <!--<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.1109/styles/kendo.default-v2.min.css"/>
-    
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2022.3.1109/js/kendo.all.min.js"></script>-->
     <script>
          fnWhenLoaded();
          fnAddNew();
@@ -227,7 +223,7 @@
                 type: 'GET',
                 success: function(result) {
                     console.log(result);
-                     $("#result").html(result);
+
                 },
                 error: function(res) {
                 },
@@ -264,14 +260,13 @@
             var subTypeId = '.' +$("table tbody tr").eq(index-1).find('input[type="text"]').eq(2).attr("class");
 
             //$('[data-toggle="tooltip"]').tooltip();
-
+            console.log(typeId);
             loadDropdown(typeId,subTypeId);
 
         });
         };
     
         function fnWhenLoaded(){
-            console.log("subodh hi");
              var input = $(this).parents("tr").find('input[class="expenseType"]');
              input.each(function(index){
                  console.log(index);
@@ -454,8 +449,8 @@
         $("table tbody tr").each(function(index){
 
             var model = {
+                expenseId: 0,
                 itemId: 1,
-                expenseId: 3024,
                 itemName: $("table tbody tr").eq(index).find('input[type="text"]').eq(0).val(),
                 expenseType: $("table tbody tr").eq(index).find('input[type="text"]').eq(1).val(),
                 expenseSubType: $("table tbody tr").eq(index).find('input[type="text"]').eq(2).val(),
@@ -536,7 +531,7 @@
       
                 console.log(fileData);
                 $.ajax({  
-                    url: '/Document/UploadFiles',  
+                    url: 'https://localhost:7250/api/Document/Upload',  
                     type: "POST",  
                     contentType: false, // Not to set any content header  
                     processData: false, // Not to process data  
@@ -555,5 +550,3 @@
         };
     
     </script>
-
-    }

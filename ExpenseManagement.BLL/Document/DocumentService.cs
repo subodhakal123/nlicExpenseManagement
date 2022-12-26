@@ -9,50 +9,38 @@ namespace ExpenseManagement.BLL.Document
 {
     public class DocumentService : IDocumentService
     {
-        public async Task<bool> UploadFile(IFormFile file)
+        public async Task<bool> UploadFile(List<IFormFile> files)
         {
             string path = "";
             try
             {
-                if (file.Length > 0)
+                foreach(IFormFile file in files)
                 {
-                    path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
-                    if (!Directory.Exists(path))
+                    if (file.Length > 0)
                     {
-                        Directory.CreateDirectory(path);
+                        path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
                     }
-                    using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                    else
                     {
-                        await file.CopyToAsync(fileStream);
+                        return false;
                     }
-                    return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return true;
+
             }
             catch (Exception ex)
             {
                 throw new Exception("File Copy Failed", ex);
             }
         }
-
-        //public File DownloadFile(int id)
-        //{
-            //var filePath = $"{id}.txt"; // Here, you should validate the request and the existance of the file.
-            //var filePath = "D:\New folder\fileDownloadFolder";
-            //var bytes = await File.ReadAllBytesAsync(filePath);
-            //var abc = new File(bytes,"text/plain",Path.GetFileName(filePath));
-            // return File(bytes, "text/plain", Path.GetFileName(filePath));
-
-            //FileStream fs =  File.Open(filePath,FileMode.Open, FileAccess.Write,FileShare.None);
-            //
-            //fs.Read(bytes);
-            //FileStream abc = new File.Read();
-
-
-        //    return File()
-        //}
     }
 }

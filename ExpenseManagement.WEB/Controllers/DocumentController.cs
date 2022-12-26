@@ -10,64 +10,6 @@ namespace ExpenseManagement.Web.Controllers
             return View();
         }
 
-        public async Task<ActionResult> UploadFiles(int id)
-        {
-            // Checking no of files injected in Request object
-            if (Request.Form.Files.Count > 0)
-            {
-                try
-                {
-                    //  Get all files from Request object  
-                    List<IFormFile> files = Request.Form.Files.ToList();
-
-                    long size = files.Sum(f => f.Length);
-
-                    foreach(var formfile in files)
-                    {
-                        if (formfile.Length > 0)
-                        {
-                            string name = formfile.Name;
-                            string filePath = @"D:\New folder\fileUploadFolder\" + id + @"\" + name;
-                            string directoryPath = @"D:\New folder\fileUploadFolder\" + id;
-
-                            if (!Directory.Exists(directoryPath))
-                            {
-                                try
-                                {
-                                    Directory.CreateDirectory(directoryPath);
-                                }
-                                catch (Exception ex)
-                                {
-                                    //error creating directory
-                                }
-                            }
-                            else
-                            {
-                                //no need to create directory
-                            }
-
-                            using (var stream = System.IO.File.Create(filePath))
-                            {
-                                await formfile.CopyToAsync(stream);
-                            }
-                        }
-                    }
-
-                    // Returns message that successfully uploaded  
-                    return Ok(new {count = files.Count,size});
-                    //return Json("File Uploaded Successfully!");
-                }
-                catch (Exception ex)
-                {
-                    return Json("Error occurred. Error details: " + ex.Message);
-                }
-            }
-            else
-            {
-                return Json("No files selected.");
-            }
-        }
-
         public async Task<ActionResult> DownloadFileById(int id)
         {
             try

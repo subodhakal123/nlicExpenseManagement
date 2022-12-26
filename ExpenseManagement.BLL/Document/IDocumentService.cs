@@ -9,7 +9,7 @@ namespace ExpenseManagement.BLL.Document
 {
     public interface IDocumentService
     {
-        public Task<bool> UploadFile(IFormFile file);
+        public Task<bool> UploadFile(List<IFormFile> file);
         //public File DownloadFile(int id);
     }
 }

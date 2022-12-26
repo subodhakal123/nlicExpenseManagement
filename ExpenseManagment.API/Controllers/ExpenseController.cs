@@ -24,9 +24,9 @@ namespace ExpenseManagment.API.Controllers
 		}
 
 		[HttpPost("GetExpenseById")]
-		public List<ItemModel> GetExpenseById(ExpenseModel model)
+		public List<ItemModel> GetExpenseById(int ExpenseId)
 		{
-			List<ItemModel> dm = _es.GetExpenseById(model.ExpenseId);
+			List<ItemModel> dm = _es.GetExpenseById(ExpenseId);
 			return dm;
 		}
 

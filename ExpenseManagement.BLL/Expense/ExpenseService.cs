@@ -86,7 +86,7 @@ namespace ExpenseManagement.BLL.Expense
                 Console.WriteLine(udtExpenseDetail);
                 var dp = new DynamicParameters();
                 dp.Add("@ExpenseId", model.ExpenseId);
-                dp.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail1]"));
+                dp.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail]"));
                 dp.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
                 var affectedRows = db.Query("[EXP].[usp_Expense_InsUpd]", dp, commandType: CommandType.StoredProcedure);
                 strReturnMsg = dp.Get<string>("retMsg");

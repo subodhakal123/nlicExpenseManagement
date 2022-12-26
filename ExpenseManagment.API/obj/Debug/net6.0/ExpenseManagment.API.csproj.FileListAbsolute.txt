@@ -245,6 +245,7 @@ D:\New folder\ExpenseManagment.API\ExpenseManagment.API\bin\Debug\net6.0\Expense
 D:\New folder\ExpenseManagment.API\ExpenseManagment.API\bin\Debug\net6.0\ExpenseManagement.Model.pdb
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\appsettings.Development.json
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\appsettings.json
+D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\ExpenseManagment.API.staticwebassets.runtime.json
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\ExpenseManagment.API.exe
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\ExpenseManagment.API.deps.json
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\ExpenseManagment.API.runtimeconfig.json
@@ -526,4 +527,3 @@ D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseMana
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ref\ExpenseManagment.API.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.pdb
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.genruntimeconfig.cache
-D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\ExpenseManagment.API.staticwebassets.runtime.json

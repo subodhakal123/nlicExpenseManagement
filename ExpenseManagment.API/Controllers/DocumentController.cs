@@ -1,6 +1,7 @@
 ﻿using ExpenseManagement.BLL.Document;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace ExpenseManagment.API.Controllers
 {
@@ -88,48 +89,65 @@ namespace ExpenseManagment.API.Controllers
         //
         //    return Ok(Ok(files));
         [HttpPost("Upload")]
-        public async Task<string> Upload(IFormFile file)
+        public async Task<string> Upload()
         {
             string s;
-            try
+            if (Request.Form.Files.Count > 0)
             {
-                if (await _document.UploadFile(file))
+                try
                 {
-                    s = "File Upload Successful";
+                    //  Get all files from Request object  
+                    List<IFormFile> files = Request.Form.Files.ToList();
+
+                    long size = files.Sum(f => f.Length);
+
+                    if (await _document.UploadFile(files))
+                    {
+                        s = "File Upload Successful";
+                    }
+                    else
+                    {
+                        s = "File Upload Failed";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
+                    //Log ex
                     s = "File Upload Failed";
                 }
             }
-            catch (Exception ex)
+            else
             {
-                //Log ex
                 s = "File Upload Failed";
+
             }
+            
             return s;
         }
 
-        [HttpGet("DownloadFile")]
-        public async Task<bool> DownloadFile(int id)
-        {
-            // var filePath = $"{id}.txt"; // Here, you should validate the request and the existance of the file.
-            //
-            // var bytes = await System.IO.File.ReadAllBytesAsync(filePath);
-            // return File(bytes, "text/plain", Path.GetFileName(filePath));
-            return true;
-        }
         [HttpGet("GetFile")]
-        public FileContentResult GetFile()
+        public List<FileContentResult> GetFile()
         {
-
-            string filePath = @"D:\New folder\fileDownloadFolder\0\plan91_1657517883.xlsx";
+            string filePath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
+            filePath = filePath + "/sample6.pdf";
+            string filepath2 = filePath + "/sample5.pdf";
             byte[] fileContents = System.IO.File.ReadAllBytes(filePath);
-            string fileName = "plan91_1657517883.xlsx";
-            string contentType = "text/plain";
+            byte[] fileContents2 = System.IO.File.ReadAllBytes(filePath);
+            string fileName = Path.GetFileName(filePath);
+            string fileName2 = Path.GetFileName(filePath);
+            //string contentType = "text/plain";
 
-            return File(fileContents, contentType, fileName);
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(filePath, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
 
+            List<FileContentResult> files = new List<FileContentResult>();
+            files.Add(File(fileContents, contentType, fileName));
+            files.Add(File(fileContents2, contentType, fileName2));
+
+            return files;
         }
     }   
 }       

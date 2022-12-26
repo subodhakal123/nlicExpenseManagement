@@ -82,12 +82,14 @@
 
         <div class="row">
             <p>
-              <a id="btnExpenseAdd" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <!--<a id="btnExpenseAdd" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Add
               </a>
               <button id="btnExpenseEdit" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Edit
-              </button>
+              </button>-->
+              <a class="btn btn-primary" asp-controller="Expense" asp-action="AddEditExpense">AddNow</a>
+              <a class="btn btn-primary" asp-controller="Expense" asp-action="AddEditExpense">EditNow</a>
             </p>
             <div class="collapse" id="collapseExample">
               <div class="card text-center">
@@ -126,7 +128,6 @@
                 loadAddEditExpense(expenseIdSelected);
             }
             else{
-                //console.log("error");
                 toastr.warning('Select a Row');
             }
 
@@ -160,8 +161,7 @@
       //}
 
       function GridImplementation(){
-
-          console.log("grid called");
+         
         let myDataArray = new kendo.data.DataSource({
           transport: {
                     read: {
@@ -230,9 +230,6 @@
       };
     
       function loadAddEditExpense(ExpenseId){
-
-          console.log("entered add expense");
-          console.log(ExpenseId);
 
           $.ajax({
             type: 'POST',
