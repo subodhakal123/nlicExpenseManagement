@@ -82,7 +82,21 @@ namespace ExpenseManagement.BLL.Expense
             string strReturnMsg = "";
             try
             {
-                DataTable udtExpenseDetail = ListToDataTable(model.Item);
+                List<ItemModel> item2 = new List<ItemModel>();
+                foreach(ItemModel item in model.Item)
+                {
+                    ItemModel item3= new ItemModel();
+                    item3.ItemId = item.ItemId;
+                    item3.ExpenseId = item.ExpenseId;
+                    item3.ItemName = item.ItemName;
+                    item3.ExpenseType = item.ExpenseType;
+                    item3.ExpenseSubType = item.ExpenseSubType;
+                    item3.ItemPrice = item.ItemPrice;
+                    item3.ItemQuantity = item.ItemQuantity;
+                    item3.ItemAmount = item.ItemAmount;
+                    item2.Add(item3);
+                }
+                DataTable udtExpenseDetail = ListToDataTable(item2);
                 Console.WriteLine(udtExpenseDetail);
                 var dp = new DynamicParameters();
                 dp.Add("@ExpenseId", model.ExpenseId);

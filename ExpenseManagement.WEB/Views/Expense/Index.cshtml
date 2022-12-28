@@ -89,7 +89,7 @@
                 Edit
               </button>-->
               <a class="btn btn-primary" asp-controller="Expense" asp-action="AddEditExpense">AddNow</a>
-              <a class="btn btn-primary" asp-controller="Expense" asp-action="AddEditExpense">EditNow</a>
+              <button  id="btnExpenseEdit" class="btn btn-primary">EditNow</button>
             </p>
             <div class="collapse" id="collapseExample">
               <div class="card text-center">
@@ -121,6 +121,7 @@
 
         $('#btnExpenseEdit').off().on('click', function() {
             //show loader
+            console.log("edit");
             var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
 
             if(expenseIdSelected != null){
@@ -234,25 +235,7 @@
           $.ajax({
             type: 'POST',
             url: '@Url.Content("~/Expense/AddEditExpense")',
-            data: { ExpenseId: ExpenseId },
-            success: function(data) {
-                $('.card-body').empty();
-                $('#collapseExample .card-body').html(data);
-
-                if(ExpenseId){
-                    $(".card-header").html("Edit Expense");
-                }
-                else{
-                    $(".card-header").html("Add Expense");
-                }
-
-                GridImplementation();
-                
-            },
-            error: function(res) {
-            },
-            failure: function(errMsg) {
-            }
+            data: { ExpenseId: ExpenseId }
         });
       };
     </script>

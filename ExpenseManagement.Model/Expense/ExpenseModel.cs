@@ -8,7 +8,7 @@ namespace ExpenseManagement.Model.Expense
 {
     public class ExpenseModel
     {
-        public int ExpenseId { get; set; }
+        public int? ExpenseId { get; set; }
         public DateTime? ExpenseDate { get; set; }
         public string? BranchName { get; set; }
         public string? ExpenseType { get; set; }

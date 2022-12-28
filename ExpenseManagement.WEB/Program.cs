@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+//builder.Services.AddDirectoryBrowser();
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true);
 
@@ -25,7 +27,8 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
-
+//var fileProvider = new PhysicalFileProvider("file:///C:/Users/Lenovo/Downloads") ;
+//var requestPath = "/Downloads";
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -36,6 +39,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+//app.UseDirectoryBrowser(new DirectoryBrowserOptions
+//{
+//    FileProvider = fileProvider,
+//    RequestPath = requestPath
+//});
 
 app.UseRouting();
 

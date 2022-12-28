@@ -129,23 +129,23 @@ namespace ExpenseManagment.API.Controllers
         public List<FileContentResult> GetFile()
         {
             string filePath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
-            filePath = filePath + "/sample6.pdf";
-            string filepath2 = filePath + "/sample5.pdf";
-            byte[] fileContents = System.IO.File.ReadAllBytes(filePath);
-            byte[] fileContents2 = System.IO.File.ReadAllBytes(filePath);
-            string fileName = Path.GetFileName(filePath);
-            string fileName2 = Path.GetFileName(filePath);
-            //string contentType = "text/plain";
 
+
+            string[] filePaths = Directory.GetFiles(filePath);
             var provider = new FileExtensionContentTypeProvider();
-            if (!provider.TryGetContentType(filePath, out var contentType))
-            {
-                contentType = "application/octet-stream";
-            }
-
             List<FileContentResult> files = new List<FileContentResult>();
-            files.Add(File(fileContents, contentType, fileName));
-            files.Add(File(fileContents2, contentType, fileName2));
+            foreach (string eachFilePath in filePaths)
+            {
+                byte[] fileContent = System.IO.File.ReadAllBytes(eachFilePath);
+                string fileName = Path.GetFileName(eachFilePath);
+
+                if (!provider.TryGetContentType(filePath, out var contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+
+                files.Add(File(fileContent, contentType, fileName));
+            }
 
             return files;
         }

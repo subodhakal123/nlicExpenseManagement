@@ -1,0 +1,54 @@
+.net 5 
+
+1.visual studio
+
+* Visual Studio 2019 version 16.8 or higher.
+
+2.c# 
+* C#9
+
+3. OS 
+
+System Requirement
+
+OS Requirement: Windows windows 10 and above, Linux(Fedora 33+, Ubuntu 16.04+, Centos 7+ etc), Macos 10.15+
+User Module
+add username and password and also add limits along with modules visibility 
+5 tabs
+1.Employee Detail
+2. User Assignment
+3.Role Assignment
+4. Pages Authority
+5.Approval limit
+
+employee details
+It is used to add an employee as well as edit 
+Api : SaveUser
+service : IUserService
+procedure: [USRS].[usp_User_InsUpd]
+
+User Assignment
+It is used to add an employee as well as edit 
+Api : SaveUser
+service : IUserService
+procedure: [USRS].[usp_User_InsUpd]
+
+Role Assignment
+It is used to add an employee as well as edit.
+Api : SaveUser
+service : IUserService
+procedure: [USRS].[usp_User_InsUpd]
+
+Pages Authority
+It is used to add an employee as well as edit.
+Api : SaveUser
+service : IUserService
+procedure: [USRS].[usp_User_InsUpd]
+
+Approval limit
+It is used to add an employee as well as edit. 
+Api : SaveUser
+service : IUserService
+procedure: [USRS].[usp_User_InsUpd]
+
+
