@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tNIHkeqI6nR/qmmxqhGPwqzBxNlicBp2WVQREnD3kyU=",
+  "Hash": "QopLwUcv9iR90PCBYOjcR5M12FE6PqAMzJ/E6XOkvuY=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -170,6 +170,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\download.jpg"
+    },
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\img\\fileUpload.png",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "img/fileUpload.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\fileUpload.png"
     },
     {
       "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\img\\image1.png",

@@ -1,4 +1,5 @@
 ﻿using ExpenseManagement.BLL.Document;
+using ExpenseManagement.Model.File;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
@@ -88,6 +89,7 @@ namespace ExpenseManagment.API.Controllers
         //{
         //
         //    return Ok(Ok(files));
+
         [HttpPost("Upload")]
         public async Task<string> Upload()
         {
@@ -98,17 +100,9 @@ namespace ExpenseManagment.API.Controllers
                 {
                     //  Get all files from Request object  
                     List<IFormFile> files = Request.Form.Files.ToList();
-
                     long size = files.Sum(f => f.Length);
 
-                    if (await _document.UploadFile(files))
-                    {
-                        s = "File Upload Successful";
-                    }
-                    else
-                    {
-                        s = "File Upload Failed";
-                    }
+                    s = await _document.UploadFile(files);
                 }
                 catch (Exception ex)
                 {
@@ -118,7 +112,7 @@ namespace ExpenseManagment.API.Controllers
             }
             else
             {
-                s = "File Upload Failed";
+                s = "Please Input Bills First";
 
             }
             
@@ -126,29 +120,42 @@ namespace ExpenseManagment.API.Controllers
         }
 
         [HttpGet("GetFile")]
-        public List<FileContentResult> GetFile()
+        public async Task<List<string>> GetFile(int expenseId)
         {
-            string filePath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "UploadedFiles"));
-
-
-            string[] filePaths = Directory.GetFiles(filePath);
-            var provider = new FileExtensionContentTypeProvider();
-            List<FileContentResult> files = new List<FileContentResult>();
-            foreach (string eachFilePath in filePaths)
+            List<string> filenames = new List<string>();
+            try
             {
-                byte[] fileContent = System.IO.File.ReadAllBytes(eachFilePath);
-                string fileName = Path.GetFileName(eachFilePath);
-
-                if (!provider.TryGetContentType(filePath, out var contentType))
-                {
-                    contentType = "application/octet-stream";
-                }
-
-                files.Add(File(fileContent, contentType, fileName));
+                filenames = await this._document.GetFile(expenseId);
             }
+            catch(Exception ex)
+            {
 
-            return files;
+            }
+            return filenames;
         }
+        //public List<FileContentResult> GetFile()
+        //{
+        //    string filePath = Path.GetFullPath(Path.Combine("D:\\New folder\\", "fileUploadFolder"));
+        //
+        //
+        //    string[] filePaths = Directory.GetFiles(filePath);
+        //    var provider = new FileExtensionContentTypeProvider();
+        //    List<FileContentResult> files = new List<FileContentResult>();
+        //    foreach (string eachFilePath in filePaths)
+        //    {
+        //        byte[] fileContent = System.IO.File.ReadAllBytes(eachFilePath);
+        //        string fileName = Path.GetFileName(eachFilePath);
+        //
+        //        if (!provider.TryGetContentType(filePath, out var contentType))
+        //        {
+        //            contentType = "application/octet-stream";
+        //        }
+        //
+        //        files.Add(File(fileContent, contentType, fileName));
+        //    }
+        //
+        //    return files;
+        //}
     }   
 }       
         

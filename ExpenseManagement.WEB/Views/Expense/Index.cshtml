@@ -225,11 +225,14 @@
           { field: "expenseType", title: "Expense Type"},
           { field: "totalAmount", title: "Amount"},
           { field: "isApproved", title: "Status",
-          template: "# if (isApproved==true) {#<span style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approved</span>#} else {#<span style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</span>#} #"}
+          template: "# if (isApproved==true) {#<button onclick='approveClicked()' style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approved</button>#} else {#<button style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</button>#} #"}
         ]
         });
       };
     
+      function approveClicked(){
+          console.log('finally clicked');
+      }
       function loadAddEditExpense(ExpenseId){
 
           $.ajax({

@@ -206,26 +206,25 @@ iframe {
                         <label> <b></b>Upload Receipts:<b></b></label>
                         <input type="file" name="images" value="" multiple="multiple" /> 
                     } -->
-                    <div id="previewContainer" class="row">
-
-                    </div>
-                    <form enctype="multipart/form-data" onsubmit="fileUpload(); return false;" method="post">
-                        <div width="100px" height="100px">
-                            <label for="FileUpload_FormFile" style="cursor: pointer; color: green;">
-                                Upload Bills<br/>
-                                <i class="bi bi-card-image" style="font-size: 50px"></i>
-                                <input id="FileUpload_FormFile" type="file" name="formFile" style="display:none;" multiple/>
-                            </label>
+                    <div>
+                        <div id="previewContainer" class="row">
                         </div>
                         
-                    
-                        <input class="btn-primary btn-sm" type="submit" align="right" value="Save Bills" />
-                    
-                        <div style="margin-top:15px">
-                            <div id="fileOuput" class="row">
+                        <form enctype="multipart/form-data" class="row" onsubmit="fileUpload(); return false;" method="post">
+                            <div class="col-md-10" width="100px" height="100px">
+                                <label for="FileUpload_FormFile" style="cursor: pointer; color: #0c2f69;">
+                                    Upload Bills<br/>
+                                    <i class="bi bi-card-image" style="font-size: 50px"></i>
+                                    <input id="FileUpload_FormFile" type="file" name="formFile" style="display:none;" multiple/>
+                                </label>
                             </div>
-                        </div>
-                    </form>
+                            <div class="col-md-2">
+                                <input class="btn-sm"  style="background-color: #0c2f69;color: white;" type="submit" value="Save Bills" />
+                            </div>
+                            
+                        </form>
+                    </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-1">
@@ -233,6 +232,11 @@ iframe {
                     </div>
                     <div class="col-md-1">
                         <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2">Download</button>
+                    </div>
+                </div>
+
+                <div style="margin-top:15px">
+                    <div id="fileOuput" class="row">
                     </div>
                 </div>
             </div>
@@ -291,6 +295,7 @@ iframe {
              $.ajax({
                 url:"https://localhost:7250/api/Document/GetFile",
                 type: 'GET',
+                data: { expenseId: 0},
                 success: function(result) {
                     $("#fileOuput").innerHTML= '';
 
@@ -298,7 +303,7 @@ iframe {
 
                     for(let i=0;i<result.length;i++){
                         //console.log(result[i].fileDownloadName);
-                        var fileurl = fileServerUrl + result[i].fileDownloadName;
+                        var fileurl = fileServerUrl + result[i];
                         var row2 = '<div class="iframeParent col-md-2 m-2">'
                                     + '<iframe src='+ fileurl +' scrolling="no"></iframe>'
                                     + '<button class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
@@ -566,30 +571,6 @@ iframe {
     
         function fileUpload(){
     
-         //   var myfile = document.getElementById("FileUpload_FormFile");
-         //   var formData = new FormData();
-         //
-         //  if (myfile.files.length > 0) {
-         //      for (var i = 0; i < myfile.files.length; i++) {
-         //          formData.append('file-' + i, myfile.files[i]);
-         //      }
-         //  }
-         //
-         //  console.log(myfile.files[0]);
-         //  console.log(myfile.files[1]);
-         //
-         //  $.ajax({
-         //       url: 'Url.Content("~/Document/Index")',
-         //       success: function(data) {
-         //           
-         //       },
-         //       error: function(res) {
-         //       },
-         //       failure: function(errMsg) {
-         //       }
-         //   });
-    
-    
          // Checking whether FormData is available in browser  
             if (window.FormData !== undefined) {  
       
@@ -598,10 +579,11 @@ iframe {
                   
                 // Create FormData object  
                 var fileData = new FormData();  
+                //var expenseId = $("").val();
       
                 // Looping over all files and add it to FormData object  
                 for (var i = 0; i < files.length; i++) {  
-                    fileData.append(files[i].name, files[i]);  
+                    fileData.append(0, files[i]);  
                 }  
      
                 $.ajax({  

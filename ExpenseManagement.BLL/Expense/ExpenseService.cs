@@ -82,28 +82,13 @@ namespace ExpenseManagement.BLL.Expense
             string strReturnMsg = "";
             try
             {
-                List<ItemModel> item2 = new List<ItemModel>();
-                foreach(ItemModel item in model.Item)
-                {
-                    ItemModel item3= new ItemModel();
-                    item3.ItemId = item.ItemId;
-                    item3.ExpenseId = item.ExpenseId;
-                    item3.ItemName = item.ItemName;
-                    item3.ExpenseType = item.ExpenseType;
-                    item3.ExpenseSubType = item.ExpenseSubType;
-                    item3.ItemPrice = item.ItemPrice;
-                    item3.ItemQuantity = item.ItemQuantity;
-                    item3.ItemAmount = item.ItemAmount;
-                    item2.Add(item3);
-                }
-                DataTable udtExpenseDetail = ListToDataTable(item2);
-                Console.WriteLine(udtExpenseDetail);
-                var dp = new DynamicParameters();
-                dp.Add("@ExpenseId", model.ExpenseId);
-                dp.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail]"));
-                dp.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
-                var affectedRows = db.Query("[EXP].[usp_Expense_InsUpd]", dp, commandType: CommandType.StoredProcedure);
-                strReturnMsg = dp.Get<string>("retMsg");
+                DataTable udtExpenseDetail = ListToDataTable(model.Item);
+                var parameter = new DynamicParameters();
+                parameter.Add("@ExpenseId", model.ExpenseId);
+                parameter.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail1]"));
+                parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
+                this.db.Execute("[EXP].[usp_Expense_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
+                strReturnMsg = parameter.Get<string>("retMsg");
             }
             catch (Exception ex)
             {
