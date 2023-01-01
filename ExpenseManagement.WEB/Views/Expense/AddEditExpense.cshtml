@@ -2,605 +2,486 @@
 
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-    <style>
-        #TotalAmountId{
-            align-content: right;
-        }
-        .table-wrapper {
-	    	margin: 10px auto;
-            background: #fff;
-            padding: 10px;	
-            box-shadow: 0 1px 1px rgba(0,0,0,.05);
-        }
-        .table-title {
-            padding-bottom: 10px;
-            margin: 0 0 10px;
-        }
-        .table-title h2 {
-            margin: 6px 0 0;
-            font-size: 22px;
-        }
-        .table-title .add-new {
-            float: right;
-	    	height: 30px;
-	    	font-weight: bold;
-	    	font-size: 12px;
-	    	text-shadow: none;
-	    	min-width: 100px;
-	    	border-radius: 50px;
-	    	line-height: 13px;
-        }
-	    .table-title .add-new i {
-	    	margin-right: 4px;
-	    }
-        table.table {
-            table-layout: fixed;
-        }
-        table.table tr th, table.table tr td {
-            border-color: #e9e9e9;
-        }
-        table.table th i {
-            font-size: 13px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-        table.table th:last-child {
-            width: 100px;
-        }
-        table.table td a {
-	    	cursor: pointer;
-            display: inline-block;
-            margin: 0 5px;
-	    	min-width: 24px;
-        }    
-	    table.table td a.add {
-            color: #27C46B;
-        }
-        table.table td a.edit {
-            color: #FFC107;
-        }
-        table.table td a.delete {
-            color: #E34724;
-        }
-        table.table td i {
-            font-size: 19px;
-        }
-	    table.table td a.add i {
-            font-size: 24px;
-        	margin-right: -1px;
-            position: relative;
-            top: 3px;
-        }    
-        table.table .form-control {
-            height: 32px;
-            line-height: 32px;
-            box-shadow: none;
-            border-radius: 2px;
-        }
-	    table.table .form-control.error {
-	    	border-color: #f50000;
-	    }
-	    table.table td .add {
-	    	display: none;
-	    }
-
-        thead{
-            background-color: #6b92d1;
-        }
-    </style>
-
-    <style>
-        .iframeParent {
-  width: 200px;
-  height: 200px;
-  border:solid 1px #000;
-}
-iframe {
-  width:100%;
-  height:100%;
-  border:0px;
-}
-
-.iframeParent > button {
-  opacity: 0.3;
-  position:relative;
-  float: right;
-  right:10px;
-  bottom:35px;
-  transition: 0.5s;
-  background-color: #7d2229;
-  color: white;
-  opacity: 1;
-  border:none;
-
-}
-  
-    </style>
-
-    <!--for table add/edit/delete-->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    
-    <!------ Include the above in your HEAD tag ---------->
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   
-    <div class="container-fluid m-2">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-8"></div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
-                    </div>
+       
+<div class="container-fluid m-2">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
                 </div>
             </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ItemName</th>
-                        <th>Type</th>
-                        <th>SubType</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Amount</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if(Model.ExpenseId > 0)
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ItemName</th>
+                    <th>Type</th>
+                    <th>SubType</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(Model.ExpenseId > 0)
+                {
+                    int index = Model.Item.Count() - 1;
+                    foreach(var item in Model.Item.OrderByDescending(x => x.ItemId))
                     {
-                        int index = Model.Item.Count() - 1;
-                        foreach(var item in Model.Item.OrderByDescending(x => x.ItemId))
-                        {
-                            <tr>
-                                <td style="width:100%;">
-                                    <input type="text" value="@item.ItemName" class=""/>
-                                </td>
-                                <td  style="width:100%;">
-                                    <input type="text" value="@item.ExpenseType" class="expenseType"/>
-                                </td>
-                                <td style="width:100%;">
-                                    <input type="text" value="@item.ExpenseSubType" class="expenseSubType"/>
-                                </td>
-                                <td  style="width:100%;">
-                                    <input type="text" value="@item.ItemPrice" class=""/>
-                                </td>
-                                <td style="width:100%;">
-                                    <input type="text" value="@item.ItemQuantity" class=""/>
-                                </td>
-                                <td  style="width:100%;">
-                                    <input type="text" value="@item.ItemAmount" class=""/>
-                                </td>
-                                <td>
-                                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
-                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>
-                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
-                                </td>
-                            </tr>
-                            index--;
-                        }
+                        <tr>
+                            <td>
+                                <input type="text" style="width:100%;" value="@item.ItemName" class=""/>
+                            </td>
+                            <td>
+                                <input type="text" style="width:100%;" value="@item.ExpenseType" class="expenseType"/>
+                            </td>
+                            <td>
+                                <input type="text" style="width:100%;" value="@item.ExpenseSubType" class="expenseSubType"/>
+                            </td>
+                            <td>
+                                <input type="text" style="width:100%;" value="@item.ItemPrice" class=""/>
+                            </td>
+                            <td>
+                                <input type="text" style="width:100%;" value="@item.ItemQuantity" class=""/>
+                            </td>
+                            <td>
+                                <input type="text" style="width:100%;" value="@item.ItemAmount" class=""/>
+                            </td>
+                            <td>
+                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
+                            </td>
+                        </tr>
+                        index--;
                     }
-                </tbody>
-            </table>
-            <div>
-                <div class="row">
-                    
-                    <div class="col-md-2">
-                        <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
-                    </div>
-                    <div class="col-md-10"></div><div class="col-md-10"></div>
+                }
+            </tbody>
+        </table>
+        <div>
+            <div class="row">
+                
+                <div class="col-md-2">
+                    <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
                 </div>
-                <div class="row">
-                    <!--using (Html.BeginForm("Index", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))  
-                    {   
-                        <label> <b></b>Upload Receipts:<b></b></label>
-                        <input type="file" name="images" value="" multiple="multiple" /> 
-                    } -->
-                    <div>
-                        <div id="previewContainer" class="row">
+                <div class="col-md-10"></div><div class="col-md-10"></div>
+            </div>
+            <div class="row">
+                <!--using (Html.BeginForm("Index", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))  
+                {   
+                    <label> <b></b>Upload Receipts:<b></b></label>
+                    <input type="file" name="images" value="" multiple="multiple" /> 
+                } -->
+                <div>
+                    <div id="previewContainer" class="row">
+                    </div>
+                    
+                    <form enctype="multipart/form-data" class="row" onsubmit="fileUpload(); return false;" method="post">
+                        <div class="col-md-10" width="100px" height="100px">
+                            <label for="FileUpload_FormFile" style="cursor: pointer; color: #0c2f69;">
+                                Upload Bills<br/>
+                                <i class="bi bi-card-image" style="font-size: 50px"></i>
+                                <input id="FileUpload_FormFile" type="file" name="formFile" style="display:none;" multiple/>
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="btn-sm"  style="background-color: #0c2f69;color: white;" type="submit" value="Save Bills" />
                         </div>
                         
-                        <form enctype="multipart/form-data" class="row" onsubmit="fileUpload(); return false;" method="post">
-                            <div class="col-md-10" width="100px" height="100px">
-                                <label for="FileUpload_FormFile" style="cursor: pointer; color: #0c2f69;">
-                                    Upload Bills<br/>
-                                    <i class="bi bi-card-image" style="font-size: 50px"></i>
-                                    <input id="FileUpload_FormFile" type="file" name="formFile" style="display:none;" multiple/>
-                                </label>
-                            </div>
-                            <div class="col-md-2">
-                                <input class="btn-sm"  style="background-color: #0c2f69;color: white;" type="submit" value="Save Bills" />
-                            </div>
-                            
-                        </form>
-                    </div>
-                    
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
-                    </div>
-                    <div class="col-md-1">
-                        <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2">Download</button>
-                    </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
                 </div>
-
-                <div style="margin-top:15px">
-                    <div id="fileOuput" class="row">
-                    </div>
+                <div class="col-md-1">
+                    <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2">Download</button>
                 </div>
             </div>
-        </div>  
-    </div>
+
+            <div style="margin-top:15px">
+                <div id="fileOuput" class="row">
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+
+<script>
     
-    <script>
+    fnPreviewFiles();
+    fnWhenLoaded();
+    fnAddNew();
+    fnSaveItem();
+    fnEditRow();
+    fnDeleteRow();
 
-         fnPreviewFiles();
-         fnWhenLoaded();
-         fnAddNew();
-         fnSaveItem();
-         fnEditRow();
-         fnDeleteRow();
-
-         $('.delete').click(function(){
-             console.log(this);
+    $('.delete').click(function(){
+        console.log(this);
          });
-         function fnPreviewFiles(){
+    function fnPreviewFiles(){
 
             const fileInput = document.getElementById('FileUpload_FormFile');
-            const previewContainer = document.getElementById('previewContainer');
+    const previewContainer = document.getElementById('previewContainer');
             
             fileInput.addEventListener('change', () => {
-              previewContainer.innerHTML = ''; // clear previous previews
-            
-              for (let i = 0; i < fileInput.files.length; i++) {
+        previewContainer.innerHTML = ''; // clear previous previews
+
+    for (let i = 0; i < fileInput.files.length; i++) {
                 const file = fileInput.files[i];
-                
-               // const iframe = document.createElement('iframe');
-            
-                const reader = new FileReader();
+
+    // const iframe = document.createElement('iframe');
+
+    const reader = new FileReader();
             
                 reader.onload = (event) => {
-                  //iframe.src = event.target.result;
-                  console.log(event.target.result);
-                  var row = '<div class="iframeParent col-md-2 m-2">'
-                                   + '<iframe src='+ event.target.result +' scrolling="no"></iframe>'
-                                   + '<button><i class="bi bi-trash3-fill"></i></button>'
-                               + '</div>';
-                  ////previewContainer.appendChild(iframe);
-                  //previewContainer.appendChild(row2);
-                  $("#previewContainer").append(row);
+        //iframe.src = event.target.result;
+        console.log(event.target.result);
+    var row = '<div class="iframeParent col-md-2 m-2">'
+        + '<iframe src='+ event.target.result +' scrolling="no"></iframe>'
+        + '<button><i class="bi bi-trash3-fill"></i></button>'
+        + '</div>';
+    ////previewContainer.appendChild(iframe);
+    //previewContainer.appendChild(row2);
+    $("#previewContainer").append(row);
                 };
-            
-                reader.readAsDataURL(file);
+
+    reader.readAsDataURL(file);
               }
             });
             
          };
-    
-         $("#downloadButton").click(function(){
-         
-             $.ajax({
-                url:"https://localhost:7250/api/Document/GetFile",
-                type: 'GET',
-                data: { expenseId: 0},
-                success: function(result) {
-                    $("#fileOuput").innerHTML= '';
 
-                    var fileServerUrl = "https://localhost:7250/Files/";
+    $("#downloadButton").click(function(){
 
-                    for(let i=0;i<result.length;i++){
-                        //console.log(result[i].fileDownloadName);
-                        var fileurl = fileServerUrl + result[i];
-                        var row2 = '<div class="iframeParent col-md-2 m-2">'
-                                    + '<iframe src='+ fileurl +' scrolling="no"></iframe>'
-                                    + '<button class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
-                                + '</div>';
-                        $("#fileOuput").append(row2);
-                    }
-                },
-                error: function(res) {
-                },
-                failure: function(errMsg) {
+        $.ajax({
+            url: "https://localhost:7250/api/Document/GetFile",
+            type: 'GET',
+            data: { expenseId: 0 },
+            success: function (result) {
+                $("#fileOuput").innerHTML = '';
+
+                var fileServerUrl = "https://localhost:7250/Files/";
+
+                for (let i = 0; i < result.length; i++) {
+                    //console.log(result[i].fileDownloadName);
+                    var fileurl = fileServerUrl + result[i];
+                    var row2 = '<div class="iframeParent col-md-2 m-2">'
+                        + '<iframe src=' + fileurl + ' scrolling="no"></iframe>'
+                        + '<button class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
+                        + '</div>';
+                    $("#fileOuput").append(row2);
                 }
-            });
+            },
+            error: function (res) {
+            },
+            failure: function (errMsg) {
+            }
+        });
 
          });
-    
-         //add a new row
-        function fnAddNew(){
-        // Append table with add row form on add new button click
-        $(".add-new").click(function(){
-            //var actions = $("table td:last-child").html();
-            var actions =   '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>'+
-                            '<a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>'+
-                            '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>';
-	    	$(this).attr("disabled", "disabled");
-	    	var index = $("table tbody tr:last-child").index();
-            index = index+2;
-            var row = '<tr>' +
-                '<td>' + fnAddElement("","") + '</td>' +
-                '<td>' + fnAddElement("","expenseType") + '</td>' +
-                '<td>' + fnAddElement("","expenseSubType") + '</td>' +
-                '<td>' + fnAddElement("","") + '</td>' +
-                '<td>' + fnAddElement("","") + '</td>' +
-                '<td>' + fnAddElement("","") + '</td>' +
-	    		'<td>' + actions + '</td>' +
-            '</tr>';
-            
-        	$("table").append(row);
-	    	$("table tbody tr").eq(index).find(".add, .edit").toggle();
 
-            var typeId = '.'+$("table tbody tr").eq(index-1).find('input[type="text"]').eq(1).attr("class");
-            var subTypeId = '.' +$("table tbody tr").eq(index-1).find('input[type="text"]').eq(2).attr("class");
+    //add a new row
+    function fnAddNew(){
+        // Append table with add row form on add new button click
+        $(".add-new").click(function () {
+            //var actions = $("table td:last-child").html();
+            var actions = '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>' +
+                '<a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>' +
+                '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>';
+            $(this).attr("disabled", "disabled");
+            var index = $("table tbody tr:last-child").index();
+            index = index + 2;
+            var row = '<tr>' +
+                '<td>' + fnAddElement("", "") + '</td>' +
+                '<td>' + fnAddElement("", "expenseType") + '</td>' +
+                '<td>' + fnAddElement("", "expenseSubType") + '</td>' +
+                '<td>' + fnAddElement("", "") + '</td>' +
+                '<td>' + fnAddElement("", "") + '</td>' +
+                '<td>' + fnAddElement("", "") + '</td>' +
+                '<td>' + actions + '</td>' +
+                '</tr>';
+
+            $("table").append(row);
+            $("table tbody tr").eq(index).find(".add, .edit").toggle();
+
+            var typeId = '.' + $("table tbody tr").eq(index - 1).find('input[type="text"]').eq(1).attr("class");
+            var subTypeId = '.' + $("table tbody tr").eq(index - 1).find('input[type="text"]').eq(2).attr("class");
 
             //$('[data-toggle="tooltip"]').tooltip();
-            loadDropdown(typeId,subTypeId);
+            loadDropdown(typeId, subTypeId);
 
         });
         };
-    
-        function fnWhenLoaded(){
+
+    function fnWhenLoaded(){
+            if(@Model.ExpenseId>0){
+                var index = $("table tbody tr:last-child").index();
+    for(let i=0;i<=index;i++){
+                    var typeId = '.'+$("table tbody tr").eq(i).find('input[type="text"]').eq(1).attr("class");
+    var subTypeId = '.' +$("table tbody tr").eq(i).find('input[type="text"]').eq(2).attr("class");
+    loadDropdown(typeId,subTypeId);
+                }
+
+                //loadDropdown(typeId,subTypeId);
+            }
          };
-    
-        //saveItem
-        function fnSaveItem(){
-            // Add row on add button click
-    	    $(document).on("click", ".add", function(){
-    	    	var empty = false;
-    	    	var input = $(this).parents("tr").find('input[type="text"]');
-                input.each(function(index){
-                    if(index != 5){
-                        if(!$(this).val()){
-    	    			$(this).addClass("error");
-    	    			empty = true;
-    	    		    } else{
-                            $(this).removeClass("error");
-                        }
+
+    //saveItem
+    function fnSaveItem(){
+        // Add row on add button click
+        $(document).on("click", ".add", function () {
+            var empty = false;
+            var input = $(this).parents("tr").find('input[type="text"]');
+            input.each(function (index) {
+                if (index != 5) {
+                    if (!$(this).val()) {
+                        $(this).addClass("error");
+                        empty = true;
+                    } else {
+                        $(this).removeClass("error");
                     }
-    	    	});
-    	    	$(this).parents("tr").find(".error").first().focus();
-    	    	if(!empty){
-            
-                    var rowNo = $("table tbody tr:last-child").index();
-                    rowNo= rowNo +1;
-                    var quantity =0;
-                    var price = 0;
-    	    		input.each(function(index){
-                        if(index == 0 ){
-                           $(this).attr('value',$(this).val());
-                        }
-                        else if(index == 1){
-                            $(this).attr('value',$(this).val());
-                        }
-                        else if(index == 2){
-                            $(this).attr('value',$(this).val());
-                            
-                        }
-                        else if(index == 3){
-                            $(this).attr('value',$(this).val());
-                            quantity = $(this).val();
-                        }
-                        else if(index == 4){
-                            $(this).attr('value',$(this).val());
-                            price = $(this).val();
-                        }
-                        else if(index == 5){
-                            $(this).attr('value',parseFloat(quantity)*parseFloat(price));
-                        }
-                    
-    	    		});	
-                    
-    	    		$(this).parents("tr").find(".add, .edit").toggle();
-    	    		$(".add-new").removeAttr("disabled");
-    	    	}		
-            
-                $("#TotalAmountId").attr('value',calculateTotal());
+                }
             });
+            $(this).parents("tr").find(".error").first().focus();
+            if (!empty) {
+
+                var rowNo = $("table tbody tr:last-child").index();
+                rowNo = rowNo + 1;
+                var quantity = 0;
+                var price = 0;
+                input.each(function (index) {
+                    if (index == 0) {
+                        $(this).attr('value', $(this).val());
+                    }
+                    else if (index == 1) {
+                        $(this).attr('value', $(this).val());
+                    }
+                    else if (index == 2) {
+                        $(this).attr('value', $(this).val());
+
+                    }
+                    else if (index == 3) {
+                        $(this).attr('value', $(this).val());
+                        quantity = $(this).val();
+                    }
+                    else if (index == 4) {
+                        $(this).attr('value', $(this).val());
+                        price = $(this).val();
+                    }
+                    else if (index == 5) {
+                        $(this).attr('value', parseFloat(quantity) * parseFloat(price));
+                    }
+
+                });
+
+                $(this).parents("tr").find(".add, .edit").toggle();
+                $(".add-new").removeAttr("disabled");
+            }
+
+            $("#TotalAmountId").attr('value', calculateTotal());
+        });
         };
-    
-        //editing a row
-        function fnEditRow(){
+
+    //editing a row
+    function fnEditRow(){
         //// Edit row on edit button click
-	    $(document).on("click", ".edit", function(){		
-            $(this).parents("tr").find("td:not(:last-child)").each(function(index){
+        $(document).on("click", ".edit", function () {
+            $(this).parents("tr").find("td:not(:last-child)").each(function (index) {
 
                 var currentIndex = $(this).parent("tr").index();
                 currentIndex = currentIndex + 1;
 
-                if(index == 0){
-                       $(this).children("input").attr('value',$(this).children("input").val());
+                if (index == 0) {
+                    $(this).children("input").attr('value', $(this).children("input").val());
                 }
-                else if(index = 1){
-                       $(this).children("input").attr('value',$(this).children("input").val());
+                else if (index = 1) {
+                    $(this).children("input").attr('value', $(this).children("input").val());
                 }
-                else if(index = 2){
-                       $(this).children("input").attr('value',$(this).children("input").val());
+                else if (index = 2) {
+                    $(this).children("input").attr('value', $(this).children("input").val());
                 }
-                else if(index = 3){
-                       $(this).children("input").attr('value',$(this).children("input").val());
+                else if (index = 3) {
+                    $(this).children("input").attr('value', $(this).children("input").val());
                 }
-                else if(index = 4){
-                       $(this).children("input").attr('value',$(this).children("input").val());
+                else if (index = 4) {
+                    $(this).children("input").attr('value', $(this).children("input").val());
                 }
-                else{
-                       $(this).children("input").attr('value',$(this).children("input").val());
+                else {
+                    $(this).children("input").attr('value', $(this).children("input").val());
                 }
-	    	});		
-	    	$(this).parents("tr").find(".add, .edit").toggle();
-	    	$(".add-new").attr("disabled", "disabled");
+            });
+            $(this).parents("tr").find(".add, .edit").toggle();
+            $(".add-new").attr("disabled", "disabled");
         });
         }
-    
-        //delete a row
-        function fnDeleteRow(){
 
-            // Delete row on delete button click
-	        $(document).on("click", ".delete", function(){
+    //delete a row
+    function fnDeleteRow(){
 
-                    $(this).parents("tr").remove();
-	            	$(".add-new").removeAttr("disabled");
-                    $("#TotalAmountId").attr('value',calculateTotal());
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
 
-                });
+            $(this).parents("tr").remove();
+            $(".add-new").removeAttr("disabled");
+            $("#TotalAmountId").attr('value', calculateTotal());
+
+        });
         };
-    
-        //add an input field
-        function fnAddElement(value,Class) {
-            var ele = "<input style='width: 100%;' type='text' value='"+value+"' class='"+Class+"'/>";
-            return ele;
+
+    //add an input field
+    function fnAddElement(value,Class) {
+            var ele = "<input style='width: 100%;' type='text' value='"+value+"' class='"+Class+"' />";
+    return ele;
         };
-    
-        function calculateTotal(){
+
+    function calculateTotal(){
 
             var count = $("table tbody tr:last-child").index();
-            count = count+1;
-            var sum = 0;
-            for(let i = 1; i<=count; i++){
-                sum = parseFloat(sum) + parseFloat($("#ItemAmountId"+i).val());
+    count = count+1;
+    var sum = 0;
+    for(let i = 1; i<=count; i++){
+        sum = parseFloat(sum) + parseFloat($("#ItemAmountId" + i).val());
             }
 
-            return sum;
+    return sum;
 
         };
-    
-        function loadDropdown(typeId, subTypeId){
-    
-            $(typeId).kendoDropDownList({
-                optionLabel: "Select Item Type...",
-                height: 310,
-                footerTemplate: 'Please ensure the type selected is correct',
-                dataSource:{
-                    transport: {
-                        read: {
-                            url: "https://localhost:7250/api/Common/GetDropDownList",
-                            type: "Post",
-                            contentType: "application/json",
-                            data: {mode: "ExpenseType",condition1: "",condition2: ""},
-                            dataType: 'json'
-                        },
-                        parameterMap: function (data) {
-                            var returnData = JSON.stringify(data);
-                            return returnData
-                        }
+
+    function loadDropdown(typeId, subTypeId){
+
+        $(typeId).kendoDropDownList({
+            optionLabel: "Select Item Type...",
+            height: 310,
+            footerTemplate: 'Please ensure the type selected is correct',
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "https://localhost:7250/api/Common/GetDropDownList",
+                        type: "Post",
+                        contentType: "application/json",
+                        data: { mode: "ExpenseType", condition1: "", condition2: "" },
+                        dataType: 'json'
+                    },
+                    parameterMap: function (data) {
+                        var returnData = JSON.stringify(data);
+                        return returnData
                     }
-                },
-                dataTextField: "ddlText",
-                dataValueField: "ddlVal"
-            }).data("kendoDropDownList");
-    
-            $(subTypeId).kendoDropDownList({
-                    optionLabel: "Select SubType...",
-                    height: 310,
-                    footerTemplate: 'Please ensure the subtype selected is correct',
-                    dataSource:{
-                        transport: {
-                            read: {
-                                url: "https://localhost:7250/api/Common/GetDropDownList",
-                                type: "Post",
-                                contentType: "application/json",
-                                data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
-                                dataType: 'json'
+                }
+            },
+            dataTextField: "ddlText",
+            dataValueField: "ddlVal"
+        }).data("kendoDropDownList");
+
+    $(subTypeId).kendoDropDownList({
+        optionLabel: "Select SubType...",
+    height: 310,
+    footerTemplate: 'Please ensure the subtype selected is correct',
+    dataSource:{
+        transport: {
+        read: {
+        url: "https://localhost:7250/api/Common/GetDropDownList",
+    type: "Post",
+    contentType: "application/json",
+    data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
+    dataType: 'json'
                             },
-                            parameterMap: function (data) {
+    parameterMap: function (data) {
                                 var returnData = JSON.stringify(data);
-                                return returnData
+    return returnData
                             }
                         }
                     },
-                    dataTextField: "ddlText",
-                    dataValueField: "ddlVal"
+    dataTextField: "ddlText",
+    dataValueField: "ddlVal"
                 }).data("kendoDropDownList");
          };
-    
-        function fnGetModelList(){
+
+    function fnGetModelList(){
         var arrList = [];
-        $("table tbody tr").each(function(index){
+    $("table tbody tr").each(function(index){
 
             var model = {
-                itemId: 1,
-                expenseId: 0,
-                itemName: $("table tbody tr").eq(index).find('input[type="text"]').eq(0).val(),
-                expenseType: $("table tbody tr").eq(index).find('input[type="text"]').eq(1).val(),
-                expenseSubType: $("table tbody tr").eq(index).find('input[type="text"]').eq(2).val(),
-                itemPrice: $("table tbody tr").eq(index).find('input[type="text"]').eq(4).val(),
-                itemQuantity: $("table tbody tr").eq(index).find('input[type="text"]').eq(3).val(),
-                itemAmount: $("table tbody tr").eq(index).find('input[type="text"]').eq(5).val()
+        itemId: 1,
+    expenseId: 0,
+    itemName: $("table tbody tr").eq(index).find('input[type="text"]').eq(0).val(),
+    expenseType: $("table tbody tr").eq(index).find('input[type="text"]').eq(1).val(),
+    expenseSubType: $("table tbody tr").eq(index).find('input[type="text"]').eq(2).val(),
+    itemPrice: $("table tbody tr").eq(index).find('input[type="text"]').eq(4).val(),
+    itemQuantity: $("table tbody tr").eq(index).find('input[type="text"]').eq(3).val(),
+    itemAmount: $("table tbody tr").eq(index).find('input[type="text"]').eq(5).val()
             };
-            arrList.push(model);
+    arrList.push(model);
         });
-        return arrList;
+    return arrList;
         };
-    
-        function fnGetItemDetailModel(){
+
+    function fnGetItemDetailModel(){
             var itemDetailData = JSON.stringify({
-                expenseId : 0,
-                item: fnGetModelList()
+        expenseId : 0,
+    item: fnGetModelList()
             });
-            return itemDetailData;
+    return itemDetailData;
         };
-    
-        function fnModelSave(){
-    
-            $.ajax({
-                url:"https://localhost:7250/api/Expense/SaveExpense",
-                type: 'POST',
-                datatype: 'json',
-                data: fnGetItemDetailModel(),
-                contentType: "application/json;charset=utf-8",
-                success: function(result) {
-                },
-                error: function(res) {
-                },
-                failure: function(errMsg) {
-                }
-            });
+
+    function fnModelSave(){
+
+        $.ajax({
+            url: "https://localhost:7250/api/Expense/SaveExpense",
+            type: 'POST',
+            datatype: 'json',
+            data: fnGetItemDetailModel(),
+            contentType: "application/json;charset=utf-8",
+            success: function (result) {
+            },
+            error: function (res) {
+            },
+            failure: function (errMsg) {
+            }
+        });
         };
-    
-        function fileUpload(){
+
+    function fileUpload(){
     
          // Checking whether FormData is available in browser  
             if (window.FormData !== undefined) {  
       
-                var fileUpload = $("#FileUpload_FormFile").get(0);  
-                var files = fileUpload.files;  
-                  
-                // Create FormData object  
-                var fileData = new FormData();  
-                //var expenseId = $("").val();
-      
-                // Looping over all files and add it to FormData object  
-                for (var i = 0; i < files.length; i++) {  
-                    fileData.append(0, files[i]);  
-                }  
-     
-                $.ajax({  
-                    url: 'https://localhost:7250/api/Document/Upload',  
-                    type: "POST",  
-                    contentType: false, // Not to set any content header  
-                    processData: false, // Not to process data  
-                    data: fileData,  
-                    success: function (result) {  
-                        alert(result);  
-                    },  
-                    error: function (err) {  
-                        alert(err.statusText);  
+                var fileUpload = $("#FileUpload_FormFile").get(0);
+    var files = fileUpload.files;
+
+    // Create FormData object  
+    var fileData = new FormData();
+    //var expenseId = $("").val();
+
+    // Looping over all files and add it to FormData object  
+    for (var i = 0; i < files.length; i++) {
+        fileData.append(0, files[i]);  
+                }
+
+    $.ajax({
+        url: 'https://localhost:7250/api/Document/Upload',
+    type: "POST",
+    contentType: false, // Not to set any content header
+    processData: false, // Not to process data
+    data: fileData,
+    success: function (result) {
+        alert(result);  
+                    },
+    error: function (err) {
+        alert(err.statusText);  
                     }  
                 });  
-            } else {  
-                alert("FormData is not supported.");  
+            } else {
+        alert("FormData is not supported.");  
             }  
     
         };
-    
-    </script>
+
+</script>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UOgUrBTp2HRKS6IN+chTtRu7wxjAegfrksBOKDmRxrk=",
+  "Hash": "/Ag0sAskS2wkyQHBD03mtI8w4Hvnff7taQDdHAMNxBk=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -68,6 +68,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\ExpenseManagement.Web.bundle.scp.css"
+    },
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\css\\addEditExpense.css",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "css/addEditExpense.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\addEditExpense.css"
     },
     {
       "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\css\\site.css",

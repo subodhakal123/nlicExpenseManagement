@@ -4,12 +4,11 @@
     fnAddNew();
     fnSaveItem();
     fnEditRow();
-fnDeleteRow();
-
+    fnDeleteRow();
 
     $('.delete').click(function(){
         console.log(this);
-    });
+         });
     function fnPreviewFiles(){
 
             const fileInput = document.getElementById('FileUpload_FormFile');
@@ -39,8 +38,9 @@ fnDeleteRow();
 
     reader.readAsDataURL(file);
               }
-            });   
-    };
+            });
+            
+         };
 
     $("#downloadButton").click(function(){
 
@@ -68,7 +68,8 @@ fnDeleteRow();
             failure: function (errMsg) {
             }
         });
-    });
+
+         });
 
     //add a new row
     function fnAddNew(){
@@ -101,10 +102,20 @@ fnDeleteRow();
             loadDropdown(typeId, subTypeId);
 
         });
-    };
+        };
 
     function fnWhenLoaded(){
-    };
+            if(@Model.ExpenseId>0){
+                var index = $("table tbody tr:last-child").index();
+    for(let i=0;i<=index;i++){
+                    var typeId = '.'+$("table tbody tr").eq(i).find('input[type="text"]').eq(1).attr("class");
+    var subTypeId = '.' +$("table tbody tr").eq(i).find('input[type="text"]').eq(2).attr("class");
+    loadDropdown(typeId,subTypeId);
+                }
+
+                //loadDropdown(typeId,subTypeId);
+            }
+         };
 
     //saveItem
     function fnSaveItem(){
@@ -160,7 +171,7 @@ fnDeleteRow();
 
             $("#TotalAmountId").attr('value', calculateTotal());
         });
-    };
+        };
 
     //editing a row
     function fnEditRow(){
@@ -193,7 +204,7 @@ fnDeleteRow();
             $(this).parents("tr").find(".add, .edit").toggle();
             $(".add-new").attr("disabled", "disabled");
         });
-    };
+        }
 
     //delete a row
     function fnDeleteRow(){
@@ -206,13 +217,13 @@ fnDeleteRow();
             $("#TotalAmountId").attr('value', calculateTotal());
 
         });
-    };
+        };
 
     //add an input field
     function fnAddElement(value,Class) {
             var ele = "<input style='width: 100%;' type='text' value='"+value+"' class='"+Class+"' />";
     return ele;
-    };
+        };
 
     function calculateTotal(){
 
@@ -224,7 +235,8 @@ fnDeleteRow();
             }
 
     return sum;
-    };
+
+        };
 
     function loadDropdown(typeId, subTypeId){
 
@@ -273,13 +285,13 @@ fnDeleteRow();
     dataTextField: "ddlText",
     dataValueField: "ddlVal"
                 }).data("kendoDropDownList");
-     };
+         };
 
     function fnGetModelList(){
-            var arrList = [];
+        var arrList = [];
     $("table tbody tr").each(function(index){
 
-                var model = {
+            var model = {
         itemId: 1,
     expenseId: 0,
     itemName: $("table tbody tr").eq(index).find('input[type="text"]').eq(0).val(),
@@ -288,11 +300,11 @@ fnDeleteRow();
     itemPrice: $("table tbody tr").eq(index).find('input[type="text"]').eq(4).val(),
     itemQuantity: $("table tbody tr").eq(index).find('input[type="text"]').eq(3).val(),
     itemAmount: $("table tbody tr").eq(index).find('input[type="text"]').eq(5).val()
-                };
+            };
     arrList.push(model);
-            });
+        });
     return arrList;
-    };
+        };
 
     function fnGetItemDetailModel(){
             var itemDetailData = JSON.stringify({
@@ -300,7 +312,7 @@ fnDeleteRow();
     item: fnGetModelList()
             });
     return itemDetailData;
-    };
+        };
 
     function fnModelSave(){
 
@@ -317,14 +329,14 @@ fnDeleteRow();
             failure: function (errMsg) {
             }
         });
-    };
+        };
 
     function fileUpload(){
     
-       // Checking whether FormData is available in browser  
-       if (window.FormData !== undefined) {  
-    
-           var fileUpload = $("#FileUpload_FormFile").get(0);
+         // Checking whether FormData is available in browser  
+            if (window.FormData !== undefined) {  
+      
+                var fileUpload = $("#FileUpload_FormFile").get(0);
     var files = fileUpload.files;
 
     // Create FormData object  
@@ -334,7 +346,7 @@ fnDeleteRow();
     // Looping over all files and add it to FormData object  
     for (var i = 0; i < files.length; i++) {
         fileData.append(0, files[i]);  
-           }
+                }
 
     $.ajax({
         url: 'https://localhost:7250/api/Document/Upload',
@@ -344,13 +356,13 @@ fnDeleteRow();
     data: fileData,
     success: function (result) {
         alert(result);  
-               },
+                    },
     error: function (err) {
         alert(err.statusText);  
-               }  
-           });  
-       } else {
+                    }  
+                });  
+            } else {
         alert("FormData is not supported.");  
-       }  
-};
-
+            }  
+    
+        };

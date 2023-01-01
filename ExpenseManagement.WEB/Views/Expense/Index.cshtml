@@ -45,8 +45,8 @@
             </p>
             <div class="collapse" id="collapseExample">
               <div class="card text-center">
-                <div class="card-header">Expense Grid</div>
-                <div class="card-body">
+                <div class="card-header" id="cardHeaderId">Expense Grid</div>
+                <div class="card-body" id="cardBodyId">
                 </div>
               </div>
             </div>
@@ -208,11 +208,8 @@
               url: '@Url.Content("~/Expense/AddEditExpense")',
               data: { ExpenseId: ExpenseId },
               success: function(response){
-
-                  console.log(response);
-                  $('.card-body').empty();
-                  $('.card-body').append(response);
-                  //window.open('Url.Content("~/Expense/AddEditExpense")',"_blank").document.write();
+                  $('#cardBodyId').empty();
+                  $('#cardBodyId').append(response);//window.open('Url.Content("~/Expense/AddEditExpense")',"_blank").document.write();
               }
           });
       };
