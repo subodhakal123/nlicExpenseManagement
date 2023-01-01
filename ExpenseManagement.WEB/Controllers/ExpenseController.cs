@@ -16,14 +16,16 @@ namespace ExpenseManagement.Web.Controllers
         {
             model.Item = new List<ItemModel>();
             ExpenseModel expenseModel = new ExpenseModel();
-            expenseModel.ExpenseId = model.ExpenseId;
+            
             if(model.ExpenseId > 0)
             {
+                int expId = model.ExpenseId;
                 var client = new RestClient();
                 var request = new RestRequest();
                 request.Method = Method.Post;
                 request.Resource = "https://localhost:7250/api/Expense/GetExpenseById";
-                request.AddJsonBody(expenseModel);
+                request.AddQueryParameter("ExpenseId",expId);
+                //request.AddJsonBody(expId);
                 List<ItemModel> response = await client.PostAsync<List<ItemModel>>(request);
                 model.Item = response;
 

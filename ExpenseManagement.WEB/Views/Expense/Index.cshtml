@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Index";
-
 }
 
 <style>
@@ -112,6 +111,7 @@
 <script>
 
       GridImplementation();
+      RuntimeJquery();
 
       $("#btnExpenseAdd").off().on('click', function(){
 
@@ -120,46 +120,30 @@
 
 
         $('#btnExpenseEdit').off().on('click', function() {
+
             //show loader
-            console.log("edit");
             var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
 
             if(expenseIdSelected != null){
-
                 loadAddEditExpense(expenseIdSelected);
             }
             else{
                 toastr.warning('Select a Row');
             }
-
-
-
-            //var grd = grid.dataItem(grid.select());
-            //
-            //if (grd != null) {
-            //    console.log("hi you are in");
-            //    //loadAddEditEducation(grd.Education_Id);
-            //}
-            //else {
-            //    console.log("error");
-            //    //hide loader
-            //    //toastr.warning('Html.Raw("Select A Row")');
-            //}
         });
 
 
-      //function RuntimeJquery(){
-      //    console.log("hello subodh");
-      //    
-      //    $("#btnExpenseEdit").off().on('click', function(){
-      //
-      //        //fetch grid single row data
-      //        var grid = $("#expenseGrid").data("kendoGrid");
-      //        var gridItem = grid.dataItem(grid.select());
-      //        loadAddEditExpense(gridItem.ExpenseId);
-      //        
-      //    });
-      //}
+      function RuntimeJquery(){
+          
+          $("#btnExpenseEdit").off().on('click', function(){
+      
+              //fetch grid single row data
+              var grid = $("#expenseGrid").data("kendoGrid");
+              var gridItem = grid.dataItem(grid.select());
+              loadAddEditExpense(gridItem.ExpenseId);
+              
+          });
+      }
 
       function GridImplementation(){
          
@@ -238,7 +222,14 @@
           $.ajax({
             type: 'POST',
             url: '@Url.Content("~/Expense/AddEditExpense")',
-            data: { ExpenseId: ExpenseId }
+            data: { ExpenseId: ExpenseId },
+            success: function(response){
+
+                //$('.container').append(response);
+
+                //console.log(response);
+                window.open('Url.Content("~/Expense/AddEditExpense")',"_blank").document.write();
+            }
         });
       };
     </script>

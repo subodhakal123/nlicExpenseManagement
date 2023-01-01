@@ -87,7 +87,6 @@ namespace ExpenseManagement.BLL.Document
         {
             string filePath = Path.GetFullPath(Path.Combine("D:\\New folder\\", "fileUploadFolder", expenseId+"\\"));
 
-
             string[] filePaths = Directory.GetFiles(filePath);
             List<string> filenames = new List<string>();
 
@@ -95,23 +94,6 @@ namespace ExpenseManagement.BLL.Document
             {
                 filenames.Add(Path.GetFileName(expenseId+ "\\" +eachFilePath));
             }
-
-            //var provider = new FileExtensionContentTypeProvider();
-            //List<FileContentResult> files = new List<FileContentResult>();
-            //foreach (string eachFilePath in filePaths)
-            //{
-            //    byte[] fileContent = System.IO.File.ReadAllBytes(eachFilePath);
-            //    string fileName = Path.GetFileName(eachFilePath);
-            //
-            //    if (!provider.TryGetContentType(filePath, out var contentType))
-            //    {
-            //        contentType = "application/octet-stream";
-            //    }
-            //    files.Add(File(fileContent, contentType, fileName));
-            //}
-            //
-            //return files;
-
             return filenames;
         }
 
