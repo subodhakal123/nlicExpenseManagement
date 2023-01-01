@@ -97,6 +97,25 @@ namespace ExpenseManagement.BLL.Expense
             return strReturnMsg;
         }
 
+        public string ApproveExpense(ApproveRequestModel model)
+        {
+            string strReturnMsg = "";
+            try
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@ExpenseId", model.ExpenseId);
+                parameter.Add("@Username", model.Username);
+                parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
+                this.db.Execute("[EXP].[usp_ExpenseApproval_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
+                strReturnMsg = parameter.Get<string>("retMsg");
+            }
+            catch (Exception ex)
+            {
+                strReturnMsg = "Error: " + ex.Message.ToString();
+            }
+            return strReturnMsg;
+        }
+
         public DataTable ListToDataTable<T>(List<T> items)
         {
             DataTable dataTable = new DataTable("dt");

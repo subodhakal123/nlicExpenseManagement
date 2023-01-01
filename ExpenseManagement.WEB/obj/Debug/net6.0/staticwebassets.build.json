@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "QopLwUcv9iR90PCBYOjcR5M12FE6PqAMzJ/E6XOkvuY=",
+  "Hash": "UOgUrBTp2HRKS6IN+chTtRu7wxjAegfrksBOKDmRxrk=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -306,6 +306,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\logo12.png"
+    },
+    {
+      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\js\\addEditExpense.js",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "js/addEditExpense.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\addEditExpense.js"
     },
     {
       "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\wwwroot\\js\\app.js",

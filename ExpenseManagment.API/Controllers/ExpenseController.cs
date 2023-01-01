@@ -43,5 +43,10 @@ namespace ExpenseManagment.API.Controllers
 			string msg = _es.DeleteExpense(ExpenseId);
 			return msg;
 		}
+		[HttpPost("ApproveExpense")]
+		public string ApproveExpense(ApproveRequestModel model)
+		{
+			return _es.ApproveExpense(model);
+		}
 	}
 }

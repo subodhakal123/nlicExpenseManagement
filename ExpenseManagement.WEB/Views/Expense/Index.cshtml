@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var userId = User.Identity.Name;
 }
 
 <style>
@@ -20,54 +21,6 @@
 
 <div class="container-fluid pt-4 px-4">
     <div class="col-sm-12 col-md-12 bg-light rounded p-4">
-        @*<div class="row">
-            <form asp-action="Index">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group col-md-4">
-                    <label asp-for="ExpenseId" class="control-label"></label>
-                    <input asp-for="ExpenseId" class="form-control" />
-                    <span asp-validation-for="ExpenseId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="BranchName" class="control-label"></label>
-                    <input asp-for="BranchName" class="form-control" />
-                    <span asp-validation-for="BranchName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ExpenseType" class="control-label"></label>
-                    <input asp-for="ExpenseType" class="form-control" />
-                    <span asp-validation-for="ExpenseType" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ExpenseSubType" class="control-label"></label>
-                    <input asp-for="ExpenseSubType" class="form-control" />
-                    <span asp-validation-for="ExpenseSubType" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Comment" class="control-label"></label>
-                    <input asp-for="Comment" class="form-control" />
-                    <span asp-validation-for="Comment" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsRecommended" /> @Html.DisplayNameFor(model => model.IsRecommended)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DepartmentName" class="control-label"></label>
-                    <input asp-for="DepartmentName" class="form-control" />
-                    <span asp-validation-for="DepartmentName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ExpenseAmount" class="control-label"></label>
-                    <input asp-for="ExpenseAmount" class="form-control" />
-                    <span asp-validation-for="ExpenseAmount" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>*@
         
         <div class="row">
             <nav aria-label="breadcrumb" class="d-flex flex-row-reverse">
@@ -81,14 +34,14 @@
 
         <div class="row">
             <p>
-              <!--<a id="btnExpenseAdd" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <a id="btnExpenseAdd" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Add
               </a>
               <button id="btnExpenseEdit" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Edit
-              </button>-->
-              <a class="btn btn-primary" asp-controller="Expense" asp-action="AddEditExpense">AddNow</a>
-              <button  id="btnExpenseEdit" class="btn btn-primary">EditNow</button>
+              </button>
+              <!--<a class="btn btn-primary" asp-controller="Expense" asp-action="AddEditExpense">AddNow</a>
+              <button  id="btnExpenseEdit" class="btn btn-primary">EditNow</button>-->
             </p>
             <div class="collapse" id="collapseExample">
               <div class="card text-center">
@@ -209,28 +162,59 @@
           { field: "expenseType", title: "Expense Type"},
           { field: "totalAmount", title: "Amount"},
           { field: "isApproved", title: "Status",
-          template: "# if (isApproved==true) {#<button onclick='approveClicked()' style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approved</button>#} else {#<button style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</button>#} #"}
+          template: "# if (isApproved==true) {#<button onclick='abc()' class='approveBtn btn btn-sm' style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Requested</button>#} else {#<button onclick='abc()' class='approveBtn btn btn-sm' style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</button>#} #"}
         ]
         });
       };
     
-      function approveClicked(){
-          console.log('finally clicked');
-      }
+      function abc(){
+          //show loader
+            var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
+
+            if(expenseIdSelected != null){
+                console.log(expenseIdSelected);
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://localhost:7250/api/Expense/ApproveExpense',
+                    datatype: 'json',
+                    data: JSON.stringify({ExpenseId : expenseIdSelected,Username: '@userId'}),
+                    contentType: "application/json;charset=utf-8",
+                    success: function(response){
+
+                        console.log('@userId');
+                        if(response == 1){
+                            $(".k-selected").find('td[role="gridcell"]').eq(5).find('button').eq(0).attr('style','background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);');
+                            $(".k-selected").find('td[role="gridcell"]').eq(5).find('button').eq(0).html('<button onclick=\'abc()\' class=\'approveBtn btn btn-sm\' style=\'background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);\'>Requested</button>');
+                            toastr.success(response);
+                        }
+                        else{
+                            toastr.error(response);
+                        }
+                    }
+                });
+                //$('.approveBtn').attr('style','background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);');
+            }
+            else{
+                toastr.warning('Select a Row');
+            }
+          
+      };
+
       function loadAddEditExpense(ExpenseId){
 
           $.ajax({
-            type: 'POST',
-            url: '@Url.Content("~/Expense/AddEditExpense")',
-            data: { ExpenseId: ExpenseId },
-            success: function(response){
+              type: 'POST',
+              url: '@Url.Content("~/Expense/AddEditExpense")',
+              data: { ExpenseId: ExpenseId },
+              success: function(response){
 
-                //$('.container').append(response);
-
-                //console.log(response);
-                window.open('Url.Content("~/Expense/AddEditExpense")',"_blank").document.write();
-            }
-        });
+                  console.log(response);
+                  $('.card-body').empty();
+                  $('.card-body').append(response);
+                  //window.open('Url.Content("~/Expense/AddEditExpense")',"_blank").document.write();
+              }
+          });
       };
     </script>
 
