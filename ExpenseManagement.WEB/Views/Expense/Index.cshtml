@@ -64,23 +64,23 @@
       RuntimeJquery();
 
       //hide collapsable container when clicked outside
-      $(document).on('click',function(e){
-          var container = $("#addEditContainer");
-          console.log(container);
-          // if the target of the click isn't the container nor a descendant of the container
-          if (!container.is(e.target) && container.has(e.target).length === 0) 
-          {
-              $('#collapseExample').attr('class','collapse');
-              $('#expenseGrid').show();
-          }
-      });
+      //$(document).on('click',function(e){
+      //    var container = $("#addEditContainer");
+      //    // if the target of the click isn't the container nor a descendant of the container
+      //    if (!container.is(e.target) && container.has(e.target).length === 0) 
+      //    {
+      //        console.log(e.target);
+      //       if(e.target != '<i class="material-icons"></i>'){
+      //           $('#collapseExample').attr('class','collapse');
+      //           $('#expenseGrid').show();
+      //       }
+      //    }
+      //});
 
 
       $('#collapseExample').attr('class','collapse');
 
       $("#btnExpenseAdd").off().on('click', function(){
-
-              
               var iscollapse = $('#collapseExample').attr('class');
               if(iscollapse == 'collapse')
               {
@@ -112,7 +112,6 @@
                   else{
                     toastr.warning('Select a Row');
                   }
-                  
             }
             else{
                   $('#collapseExample').addClass('collapse');
@@ -207,7 +206,6 @@
             var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
 
             if(expenseIdSelected != null){
-                console.log(expenseIdSelected);
 
                 $.ajax({
                     type: 'POST',
@@ -216,8 +214,6 @@
                     data: JSON.stringify({ExpenseId : expenseIdSelected,Username: '@userId'}),
                     contentType: "application/json;charset=utf-8",
                     success: function(response){
-
-                        console.log('@userId');
                         if(response == 1){
                             $(".k-selected").find('td[role="gridcell"]').eq(5).find('button').eq(0).attr('style','background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);');
                             $(".k-selected").find('td[role="gridcell"]').eq(5).find('button').eq(0).html('<button onclick=\'abc()\' class=\'approveBtn btn btn-sm\' style=\'background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);\'>Requested</button>');
