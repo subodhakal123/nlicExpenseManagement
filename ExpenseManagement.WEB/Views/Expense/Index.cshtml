@@ -32,7 +32,7 @@
             </nav>
         </div>
 
-        <div class="row">
+        <div class="row" id="addEditContainer">
             <div class="col-lg-12">
                 <div class="row m-2">
                     <button id="btnExpenseAdd" style="font-weight: bold;font-size: 16px;padding: 4px;text-align: center;border: none;background-color: #144a85;color: #fff;" class="col-md-1 rounded-pill"><i class="bi bi-plus-square-dotted"></i>&nbsp;Add</button>
@@ -62,6 +62,20 @@
 
       GridImplementation();
       RuntimeJquery();
+
+      //hide collapsable container when clicked outside
+      $(document).on('click',function(e){
+          var container = $("#addEditContainer");
+          console.log(container);
+          // if the target of the click isn't the container nor a descendant of the container
+          if (!container.is(e.target) && container.has(e.target).length === 0) 
+          {
+              $('#collapseExample').attr('class','collapse');
+              $('#expenseGrid').show();
+          }
+      });
+
+
       $('#collapseExample').attr('class','collapse');
 
       $("#btnExpenseAdd").off().on('click', function(){

@@ -33,7 +33,7 @@
                     int index = Model.Item.Count() - 1;
                     foreach(var item in Model.Item.OrderByDescending(x => x.ItemId))
                     {
-                        <tr>
+                        <tr class="addEditRow">
                             <td>
                                 <input type="text" style="width:100%;" value="@item.ItemName" class=""/>
                             </td>
@@ -125,7 +125,8 @@
 
     $('.delete').click(function(){
         console.log(this);
-         });
+    });
+
     function fnPreviewFiles(){
 
             const fileInput = document.getElementById('FileUpload_FormFile');
@@ -197,9 +198,9 @@
                 '<a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>' +
                 '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>';
             $(this).attr("disabled", "disabled");
-            var index = $("table tbody tr:last-child").index();
+            var index = $(".addEditRow:last-child").index();
             index = index + 2;
-            var row = '<tr>' +
+            var row = '<tr class="addEditRow">' +
                 '<td>' + fnAddElement("", "") + '</td>' +
                 '<td>' + fnAddElement("", "expenseType") + '</td>' +
                 '<td>' + fnAddElement("", "expenseSubType") + '</td>' +
@@ -211,11 +212,10 @@
 
             //$("table").append(row);
             $("#addEditTableId").append(row);
-            
-            $("table tbody tr").eq(index).find(".add, .edit").toggle();
+            $(".addEditRow").eq(index).find(".add, .edit").toggle();
 
-            var typeId = '.' + $("table tbody tr").eq(index - 1).find('input[type="text"]').eq(1).attr("class");
-            var subTypeId = '.' + $("table tbody tr").eq(index - 1).find('input[type="text"]').eq(2).attr("class");
+            var typeId = '.' + $(".addEditRow").eq(index - 1).find('input[type="text"]').eq(1).attr("class");
+            var subTypeId = '.' + $(".addEditRow").eq(index - 1).find('input[type="text"]').eq(2).attr("class");
 
             //$('[data-toggle="tooltip"]').tooltip();
             loadDropdown(typeId, subTypeId);
@@ -225,10 +225,10 @@
 
     function fnWhenLoaded(){
             if(@Model.ExpenseId>0){
-                var index = $("table tbody tr:last-child").index();
+                var index = $(".addEditRow:last-child").index();
                 for(let i=0;i<=index;i++){
-                    var typeId = '.'+$("table tbody tr").eq(i).find('input[type="text"]').eq(1).attr("class");
-                    var subTypeId = '.' +$("table tbody tr").eq(i).find('input[type="text"]').eq(2).attr("class");
+                    var typeId = '.'+$(".addEditRow").eq(i).find('input[type="text"]').eq(1).attr("class");
+                    var subTypeId = '.' +$(".addEditRow").eq(i).find('input[type="text"]').eq(2).attr("class");
                     loadDropdown(typeId,subTypeId);
                 }
             }
@@ -239,7 +239,7 @@
         // Add row on add button click
         $(document).on("click", ".add", function () {
             var empty = false;
-            var input = $(this).parents("tr").find('input[type="text"]');
+            var input = $(this).parents(".addEditRow").find('input[type="text"]');
             input.each(function (index) {
                 if (index != 5) {
                     if (!$(this).val()) {
@@ -250,10 +250,10 @@
                     }
                 }
             });
-            $(this).parents("tr").find(".error").first().focus();
+            $(this).parents(".addEditRow").find(".error").first().focus();
             if (!empty) {
 
-                var rowNo = $("table tbody tr:last-child").index();
+                var rowNo = $(".addEditRow:last-child").index();
                 rowNo = rowNo + 1;
                 var quantity = 0;
                 var price = 0;
@@ -282,7 +282,7 @@
 
                 });
 
-                $(this).parents("tr").find(".add, .edit").toggle();
+                $(this).parents(".addEditRow").find(".add, .edit").toggle();
                 $(".add-new").removeAttr("disabled");
             }
 
@@ -294,9 +294,9 @@
     function fnEditRow(){
         //// Edit row on edit button click
         $(document).on("click", ".edit", function () {
-            $(this).parents("tr").find("td:not(:last-child)").each(function (index) {
+            $(this).parents(".addEditRow").find("td:not(:last-child)").each(function (index) {
 
-                var currentIndex = $(this).parent("tr").index();
+                var currentIndex = $(this).parent(".addEditRow").index();
                 currentIndex = currentIndex + 1;
 
                 if (index == 0) {
@@ -318,7 +318,7 @@
                     $(this).children("input").attr('value', $(this).children("input").val());
                 }
             });
-            $(this).parents("tr").find(".add, .edit").toggle();
+            $(this).parents(".addEditRow").find(".add, .edit").toggle();
             $(".add-new").attr("disabled", "disabled");
         });
         }
@@ -329,7 +329,7 @@
         // Delete row on delete button click
         $(document).on("click", ".delete", function () {
 
-            $(this).parents("tr").remove();
+            $(this).parents(".addEditRow").remove();
             $(".add-new").removeAttr("disabled");
             $("#TotalAmountId").attr('value', calculateTotal());
 
@@ -344,7 +344,7 @@
 
     function calculateTotal(){
 
-            var count = $("table tbody tr:last-child").index();
+            var count = $(".addEditRow:last-child").index();
     count = count+1;
     var sum = 0;
     for(let i = 1; i<=count; i++){
@@ -406,17 +406,17 @@
 
     function fnGetModelList(){
         var arrList = [];
-    $("table tbody tr").each(function(index){
+    $(".addEditRow").each(function(index){
 
             var model = {
         itemId: 1,
     expenseId: 0,
-    itemName: $("table tbody tr").eq(index).find('input[type="text"]').eq(0).val(),
-    expenseType: $("table tbody tr").eq(index).find('input[type="text"]').eq(1).val(),
-    expenseSubType: $("table tbody tr").eq(index).find('input[type="text"]').eq(2).val(),
-    itemPrice: $("table tbody tr").eq(index).find('input[type="text"]').eq(4).val(),
-    itemQuantity: $("table tbody tr").eq(index).find('input[type="text"]').eq(3).val(),
-    itemAmount: $("table tbody tr").eq(index).find('input[type="text"]').eq(5).val()
+    itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
+    expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
+    expenseSubType: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
+    itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val(),
+    itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
+    itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(5).val()
             };
     arrList.push(model);
         });
