@@ -4,7 +4,7 @@
 @{
     Layout = null;
 }
-       
+</style>
 <div class="container-fluid m-2">
     <div class="table-wrapper">
         <div class="table-title">
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="addEditTableId">
             <thead>
                 <tr>
                     <th>ItemName</th>
@@ -209,7 +209,9 @@
                 '<td>' + actions + '</td>' +
                 '</tr>';
 
-            $("table").append(row);
+            //$("table").append(row);
+            $("#addEditTableId").append(row);
+            
             $("table tbody tr").eq(index).find(".add, .edit").toggle();
 
             var typeId = '.' + $("table tbody tr").eq(index - 1).find('input[type="text"]').eq(1).attr("class");
@@ -224,15 +226,13 @@
     function fnWhenLoaded(){
             if(@Model.ExpenseId>0){
                 var index = $("table tbody tr:last-child").index();
-    for(let i=0;i<=index;i++){
+                for(let i=0;i<=index;i++){
                     var typeId = '.'+$("table tbody tr").eq(i).find('input[type="text"]').eq(1).attr("class");
-    var subTypeId = '.' +$("table tbody tr").eq(i).find('input[type="text"]').eq(2).attr("class");
-    loadDropdown(typeId,subTypeId);
+                    var subTypeId = '.' +$("table tbody tr").eq(i).find('input[type="text"]').eq(2).attr("class");
+                    loadDropdown(typeId,subTypeId);
                 }
-
-                //loadDropdown(typeId,subTypeId);
             }
-         };
+    };
 
     //saveItem
     function fnSaveItem(){

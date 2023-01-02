@@ -336,7 +336,7 @@
          // Checking whether FormData is available in browser  
             if (window.FormData !== undefined) {  
       
-                var fileUpload = $("#FileUpload_FormFile").get(0);
+    var fileUpload = $("#FileUpload_FormFile").get(0);
     var files = fileUpload.files;
 
     // Create FormData object  

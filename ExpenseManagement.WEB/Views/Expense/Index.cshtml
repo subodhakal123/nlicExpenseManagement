@@ -33,19 +33,16 @@
         </div>
 
         <div class="row">
-            <p>
-              <a id="btnExpenseAdd" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Add
-              </a>
-              <button id="btnExpenseEdit" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Edit
-              </button>
-              <!--<a class="btn btn-primary" asp-controller="Expense" asp-action="AddEditExpense">AddNow</a>
-              <button  id="btnExpenseEdit" class="btn btn-primary">EditNow</button>-->
-            </p>
-            <div class="collapse" id="collapseExample">
+            <div class="col-lg-12">
+                <div class="row m-2">
+                    <button id="btnExpenseAdd" style="font-weight: bold;font-size: 16px;padding: 4px;text-align: center;border: none;background-color: #144a85;color: #fff;" class="col-md-1 rounded-pill"><i class="bi bi-plus-square-dotted"></i>&nbsp;Add</button>
+                    <button id="btnExpenseEdit"style="font-weight: bold;font-size: 16px;padding: 4px;text-align: center;border: none;background-color: #144a85;color: #fff;" class="col-md-1 rounded-pill"><i class="bi bi-pencil-square"></i>&nbsp;Edit</button>
+                </div>
+            </div>
+            
+            <div  id="collapseExample">
               <div class="card text-center">
-                <div class="card-header" id="cardHeaderId">Expense Grid</div>
+                <div class="card-header" id="cardHeaderId" style="background-color: #346191;color: #fff;">Expense Grid</div>
                 <div class="card-body" id="cardBodyId">
                 </div>
               </div>
@@ -65,10 +62,23 @@
 
       GridImplementation();
       RuntimeJquery();
+      $('#collapseExample').attr('class','collapse');
 
       $("#btnExpenseAdd").off().on('click', function(){
 
-              loadAddEditExpense();
+              
+              var iscollapse = $('#collapseExample').attr('class');
+              if(iscollapse == 'collapse')
+              {
+                  loadAddEditExpense();
+                  $('#collapseExample').removeClass('collapse');
+                  $('#expenseGrid').hide();
+              }
+              else{
+                  $('#collapseExample').addClass('collapse');
+                  $('#expenseGrid').show();
+              }
+              
           });
 
 
@@ -76,12 +86,23 @@
 
             //show loader
             var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
-
-            if(expenseIdSelected != null){
-                loadAddEditExpense(expenseIdSelected);
+  
+            var iscollapse = $('#collapseExample').attr('class');
+            if(iscollapse == 'collapse')
+            {
+                  if(expenseIdSelected != null){
+                    loadAddEditExpense(expenseIdSelected);
+                    $('#expenseGrid').hide();
+                    $('#collapseExample').removeClass('collapse');
+                  }
+                  else{
+                    toastr.warning('Select a Row');
+                  }
+                  
             }
             else{
-                toastr.warning('Select a Row');
+                  $('#collapseExample').addClass('collapse');
+                  $('#expenseGrid').show();
             }
         });
 
@@ -209,7 +230,9 @@
               data: { ExpenseId: ExpenseId },
               success: function(response){
                   $('#cardBodyId').empty();
-                  $('#cardBodyId').append(response);//window.open('Url.Content("~/Expense/AddEditExpense")',"_blank").document.write();
+                  $('#cardBodyId').append(response);
+
+                  
               }
           });
       };
