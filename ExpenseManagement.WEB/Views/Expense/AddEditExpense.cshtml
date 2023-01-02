@@ -34,7 +34,9 @@
                     foreach(var item in Model.Item.OrderByDescending(x => x.ItemId))
                     {
                         <tr class="addEditRow">
+                                
                             <td>
+                                <input type="number" value="@item.ItemId" class="itemClass" hidden/>
                                 <input type="text" style="width:100%;" value="@item.ItemName" class=""/>
                             </td>
                             <td>
@@ -67,20 +69,15 @@
             <div class="row">
                 
                 <div class="col-md-2">
+                    <input type="text" value="@Model.ExpenseId" id="expenseId" hidden />
                     <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
                 </div>
                 <div class="col-md-10"></div><div class="col-md-10"></div>
             </div>
             <div class="row">
-                <!--using (Html.BeginForm("Index", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))  
-                {   
-                    <label> <b></b>Upload Receipts:<b></b></label>
-                    <input type="file" name="images" value="" multiple="multiple" /> 
-                } -->
                 <div>
                     <div id="previewContainer" class="row">
                     </div>
-                    
                     <form enctype="multipart/form-data" class="row" onsubmit="fileUpload(); return false;" method="post">
                         <div class="col-md-10" width="100px" height="100px">
                             <label for="FileUpload_FormFile" style="cursor: pointer; color: #0c2f69;">
@@ -91,8 +88,7 @@
                         </div>
                         <div class="col-md-2">
                             <input class="btn-sm"  style="background-color: #0c2f69;color: white;" type="submit" value="Save Bills" />
-                        </div>
-                        
+                        </div> 
                     </form>
                 </div>
                 
@@ -154,12 +150,10 @@
                 
                 reader.readAsDataURL(file);
             }
-        });
-                
+        });     
      };
 
     $("#downloadButton").click(function(){
-
         $.ajax({
             url: "https://localhost:7250/api/Document/GetFile",
             type: 'GET',
@@ -184,8 +178,7 @@
             failure: function (errMsg) {
             }
         });
-
-         });
+    });
 
     //add a new row
     function fnAddNew(){
@@ -406,7 +399,7 @@
     $(".addEditRow").each(function(index){
 
             var model = {
-        itemId: 1,
+        itemId: $(".addEditRow").eq(index).find('input[type="number"]').eq(0).val(),
     expenseId: 0,
     itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
     expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
@@ -422,7 +415,7 @@
 
     function fnGetItemDetailModel(){
             var itemDetailData = JSON.stringify({
-        expenseId : 0,
+        expenseId : $('#expenseId').val(),
     item: fnGetModelList()
             });
     return itemDetailData;
