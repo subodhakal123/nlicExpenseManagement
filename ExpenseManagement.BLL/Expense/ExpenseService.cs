@@ -77,24 +77,27 @@ namespace ExpenseManagement.BLL.Expense
             return list;
         }
 
-        public string SaveExpense(ItemExpenseModel model)
+        public SaveExpense SaveExpense(ItemExpenseModel model)
         {
-            string strReturnMsg = "";
+            SaveExpense saveExpense = new SaveExpense();
             try
             {
                 DataTable udtExpenseDetail = ListToDataTable(model.Item);
                 var parameter = new DynamicParameters();
                 parameter.Add("@ExpenseId", model.ExpenseId);
                 parameter.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail1]"));
-                parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
-                this.db.Execute("[EXP].[usp_Expense_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
-                strReturnMsg = parameter.Get<string>("retMsg");
+                //parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
+                //this.db.Execute("[EXP].[usp_Expense_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
+                //strReturnMsg = parameter.Get<string>("retMsg");
+
+                saveExpense =  db.Query<SaveExpense>("[EXP].[usp_Expense_InsUpd]", parameter, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                //saveExpense = obj;
             }
             catch (Exception ex)
             {
-                strReturnMsg = "Error: " + ex.Message.ToString();
+                saveExpense.retMsg = "Error: " + ex.Message.ToString();
             }
-            return strReturnMsg;
+            return saveExpense;
         }
 
         public string ApproveExpense(ApproveRequestModel model)

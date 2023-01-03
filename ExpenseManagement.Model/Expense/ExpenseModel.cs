@@ -21,4 +21,9 @@ namespace ExpenseManagement.Model.Expense
         public bool? IsDeleted { get; set; }
         public bool? IsApproved { get; set; }
     }
+    public class SaveExpense
+    {
+        public int ExpenseId { get; set; }
+        public string retMsg { get; set; }
+    }
 }

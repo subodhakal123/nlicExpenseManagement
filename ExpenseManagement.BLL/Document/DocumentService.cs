@@ -73,9 +73,7 @@ namespace ExpenseManagement.BLL.Document
                 {
                     strReturnMsg = "Error: " + ex.Message.ToString();
                 }
-
                 return strReturnMsg;
-
             }
             catch (Exception ex)
             {

@@ -31,10 +31,10 @@ namespace ExpenseManagment.API.Controllers
 		}
 
 		[HttpPost("SaveExpense")]
-		public string SaveExpense(ItemExpenseModel model)
+		public SaveExpense SaveExpense(ItemExpenseModel model)
 		{
-			string msg = _es.SaveExpense(model);
-			return msg;
+			SaveExpense obj =  _es.SaveExpense(model);
+			return obj;
 		}
 
 		[HttpGet("DeleteExpense")]

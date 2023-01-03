@@ -67,38 +67,45 @@
         </table>
         <div>
             <div class="row">
-                
                 <div class="col-md-2">
                     <input type="text" value="@Model.ExpenseId" id="expenseId" hidden />
                     <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
                 </div>
-                <div class="col-md-10"></div><div class="col-md-10"></div>
+                <div class="col-md-10">
+                </div>
+            </div>
+            <div class="container row m-2">
+                <div id="previewContainer" class="row">
+                </div>
             </div>
             <div class="row">
-                <div>
-                    <div id="previewContainer" class="row">
-                    </div>
-                    <form enctype="multipart/form-data" class="row" onsubmit="fileUpload(); return false;" method="post">
-                        <div class="col-md-10" width="100px" height="100px">
+                <div class="col-md-6">
+                    <label for="comment" align-left>Comment:</label>
+                    <textarea class="form-control" rows="4" columnid="comment"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <form enctype="multipart/form-data" onsubmit="fileUpload(); return false;" method="post">
+                        <div class="col-md-6">
                             <label for="FileUpload_FormFile" style="cursor: pointer; color: #0c2f69;">
                                 Upload Bills<br/>
                                 <i class="bi bi-card-image" style="font-size: 50px"></i>
                                 <input id="FileUpload_FormFile" type="file" name="formFile" style="display:none;" multiple/>
                             </label>
                         </div>
-                        <div class="col-md-2">
-                            <input class="btn-sm"  style="background-color: #0c2f69;color: white;" type="submit" value="Save Bills" />
+                        <div class="col-md-6 row">
+                            <div class="row col-md-6 m-1"><button class="btn-sm btn-primary" type="submit">SaveB</button></div>
+                            <div class="row col-md-6 m-1"><button class="btn-sm btn-success" type="submit">Reset</button></div>
                         </div> 
                     </form>
                 </div>
-                
+
             </div>
             <div class="row">
                 <div class="col-md-1">
                     <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2">Download</button>
+                    <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2" onclick="fileDownload()">Download</button>
                 </div>
             </div>
 
@@ -118,7 +125,7 @@
     fnSaveItem();
     fnEditRow();
     fnDeleteRow();
-
+    
     //check if atleast one row exist
     if($(".addEditRow:last-child").index() <0){
         $(".add-new").click();
@@ -152,12 +159,13 @@
             }
         });     
      };
-
-    $("#downloadButton").click(function(){
-        $.ajax({
+    
+    function fileDownload(){
+        if($('#expenseId').val() !=0){
+            $.ajax({
             url: "https://localhost:7250/api/Document/GetFile",
             type: 'GET',
-            data: { expenseId: 0 },
+            data: { expenseId: $('#expenseId').val() },
             success: function (result) {
                 $("#fileOuput").innerHTML = '';
 
@@ -177,8 +185,13 @@
             },
             failure: function (errMsg) {
             }
-        });
-    });
+            });
+        }
+        else
+        {
+            toastr.error("Please Upload files first!!");
+        }
+    };
 
     //add a new row
     function fnAddNew(){
@@ -222,6 +235,7 @@
                     var subTypeId = '.' +$(".addEditRow").eq(i).find('input[type="text"]').eq(2).attr("class");
                     loadDropdown(typeId,subTypeId);
                 }
+                fileDownload();
             }
     };
 
@@ -430,7 +444,13 @@
             data: fnGetItemDetailModel(),
             contentType: "application/json;charset=utf-8",
             success: function (result) {
-                toastr.success(result);
+
+                console.log(result.expenseId);
+                console.log(result.retMsg);
+                console.log(result);
+
+                $('#expenseId').attr('value',result.expenseId);
+                toastr.success(result.retMsg);
             },
             error: function (res) {
                 toastr.error(res);
@@ -441,39 +461,45 @@
         };
 
     function fileUpload(){
-    
-         // Checking whether FormData is available in browser  
+        
+        if($('#expenseId').val() != 0){
+            // Checking whether FormData is available in browser  
             if (window.FormData !== undefined) {  
-      
+
                 var fileUpload = $("#FileUpload_FormFile").get(0);
-    var files = fileUpload.files;
+                var files = fileUpload.files;
 
-    // Create FormData object  
-    var fileData = new FormData();
-    //var expenseId = $("").val();
+                // Create FormData object  
+                var fileData = new FormData();
 
-    // Looping over all files and add it to FormData object  
-    for (var i = 0; i < files.length; i++) {
-        fileData.append(0, files[i]);  
+                // Looping over all files and add it to FormData object  
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append($('#expenseId').val(), files[i]);  
                 }
 
-    $.ajax({
-        url: 'https://localhost:7250/api/Document/Upload',
-    type: "POST",
-    contentType: false, // Not to set any content header
-    processData: false, // Not to process data
-    data: fileData,
-    success: function (result) {
-        alert(result);  
+                $.ajax({
+                    url: 'https://localhost:7250/api/Document/Upload',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        toastr.success(result);
                     },
-    error: function (err) {
-        alert(err.statusText);  
+                    error: function (err) {
+                        toastr.error(err.statusText);  
                     }  
-                });  
-            } else {
-        alert("FormData is not supported.");  
+                    });  
+            } 
+            else 
+            {
+                toastr.error("FormData is not supported.");  
             }  
-    
-        };
+        } 
+        else
+        {
+            toastr.error("Please Save Expense Item Detail First !!");
+        }
+    };
 
 </script>

@@ -13,7 +13,7 @@ namespace ExpenseManagement.BLL.Expense
     {
         ArrayList GetAllExpense(FilterSortModel model);
         List<ItemModel> GetExpenseById(int ExpenseId);
-        string SaveExpense(ItemExpenseModel model);
+        SaveExpense SaveExpense(ItemExpenseModel model);
         string DeleteExpense(int ExpenseId);
         string ApproveExpense(ApproveRequestModel model);
     }
