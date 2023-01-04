@@ -74,9 +74,10 @@
                 <div class="col-md-10">
                 </div>
             </div>
-            <div class="container row m-2">
+            <div class="container row m-2" id="fileContainerId">
                 <div id="previewContainer" class="row">
                 </div>
+                <div class="row col-md-1 m-1"><button class="btn-sm btn-success" id="resetId">Reset</button></div>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -94,7 +95,6 @@
                         </div>
                         <div class="col-md-6 row">
                             <div class="row col-md-6 m-1"><button class="btn-sm btn-primary" type="submit">SaveB</button></div>
-                            <div class="row col-md-6 m-1"><button class="btn-sm btn-success" type="submit">Reset</button></div>
                         </div> 
                     </form>
                 </div>
@@ -108,24 +108,24 @@
                     <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2" onclick="fileDownload()">Download</button>
                 </div>
             </div>
-
-            <div style="margin-top:15px">
-                <div id="fileOuput" class="row">
-                </div>
-            </div>
         </div>
     </div>  
 </div>
 
 <script>
     
-    fnPreviewFiles();
     fnWhenLoaded();
+    fnPreviewFiles();
     fnAddNew();
     fnSaveItem();
     fnEditRow();
     fnDeleteRow();
     
+    $('#resetId').on('click',function(){
+        $('#previewContainer').empty();
+        $("#fileContainerId").hide();
+    });
+
     //check if atleast one row exist
     if($(".addEditRow:last-child").index() <0){
         $(".add-new").click();
@@ -146,13 +146,16 @@
 
                 const file = fileInput.files[i];
                 const reader = new FileReader();
-                        
+                
+                console.log(event.target.result);
                 reader.onload = (event) => {
                     var row = '<div class="iframeParent col-md-2 m-2">'
                         + '<iframe src='+ event.target.result +' scrolling="no"></iframe>'
-                        + '<button><i class="bi bi-trash3-fill"></i></button>'
+                        + '<button class="uploadConfirm m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/></svg></button>'
+                        + '<button class="deleteIframe m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
                         + '</div>';
                     $("#previewContainer").append(row);
+                    $("#fileContainerId").show();
                 };
                 
                 reader.readAsDataURL(file);
@@ -167,18 +170,20 @@
             type: 'GET',
             data: { expenseId: $('#expenseId').val() },
             success: function (result) {
-                $("#fileOuput").innerHTML = '';
 
                 var fileServerUrl = "https://localhost:7250/Files/";
 
                 for (let i = 0; i < result.length; i++) {
                     //console.log(result[i].fileDownloadName);
-                    var fileurl = fileServerUrl + result[i];
+                    var fileurl = fileServerUrl + '/'+ $('#expenseId').val() +'/'+ result[i];
                     var row2 = '<div class="iframeParent col-md-2 m-2">'
                         + '<iframe src=' + fileurl + ' scrolling="no"></iframe>'
-                        + '<button class="deleteIframe"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
+                        + '<button class="uploadConfirm m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/></svg></button>'
+                        + '<a href='+ fileurl +' target="_blank"><button class="viewIframeContent m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg></button></a>'
+                        + '<button class="deleteIframe m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
                         + '</div>';
-                    $("#fileOuput").append(row2);
+                    $("#previewContainer").append(row2);
+                    $("#fileContainerId").show();
                 }
             },
             error: function (res) {
@@ -228,6 +233,8 @@
         };
 
     function fnWhenLoaded(){
+            $("#fileContainerId").hide();
+
             if(@Model.ExpenseId>0){
                 var index = $(".addEditRow:last-child").index();
                 for(let i=0;i<=index;i++){
@@ -236,6 +243,7 @@
                     loadDropdown(typeId,subTypeId);
                 }
                 fileDownload();
+                
             }
     };
 
@@ -487,7 +495,7 @@
                         toastr.success(result);
                     },
                     error: function (err) {
-                        toastr.error(err.statusText);  
+                        toastr.error(err);  
                     }  
                     });  
             } 

@@ -26,30 +26,44 @@ namespace ExpenseManagement.BLL.Document
             {
                 List<FileModel> filedata = new List<FileModel>();
                 string path = "";
+
+                string expId = ContentDispositionHeaderValue.Parse(files[0].ContentDisposition).Name.Trim('"');
+                string dirPath = Path.GetFullPath(Path.Combine("D:\\New folder\\", "fileUploadFolder", expId));
+                if (!Directory.Exists(dirPath))
+                {
+                    Directory.CreateDirectory(dirPath);
+                }
+                else
+                {
+                    DirectoryInfo di = new DirectoryInfo(dirPath);
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                }
                 foreach (IFormFile file in files)
                 {
                     FileModel fileModeldata = new FileModel();
-                    string expId = "";
                     if (file.Length > 0)
                     {
-                        expId = ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"');
-                        fileModeldata.ExpenseId = int.Parse(ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"'));
-                        fileModeldata.Uri = file.FileName;
-                        filedata.Add(fileModeldata);
-
-                        path = Path.GetFullPath(Path.Combine("D:\\New folder\\", "fileUploadFolder", expId));
-                        if (!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
+                        try { 
+                            fileModeldata.ExpenseId = int.Parse(ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"'));
+                            fileModeldata.Uri = file.FileName;
+                            filedata.Add(fileModeldata);
+                            
+                            path = Path.Combine(dirPath, file.FileName);
+                            using (var fileStream = new FileStream(path, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                            }
                         }
-                        path = Path.Combine(path, file.FileName);
-                        if (File.Exists(path))
-                        { 
-                            File.Delete(path);
-                        }
-                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        catch(Exception ex) 
                         {
-                            await file.CopyToAsync(fileStream);
+                            strReturnMsg= "Error: " + ex.Message.ToString();
                         }
                     }
                     else
@@ -59,26 +73,20 @@ namespace ExpenseManagement.BLL.Document
                 }
 
                 //save the bill metadata to the database
-                try
-                {
-                    DataTable udtBillDetail = ListToDataTable(filedata);
-                    var parameter = new DynamicParameters();
-                    parameter.Add("@ExpenseId", filedata[0].ExpenseId);
-                    parameter.Add("@udtBillDetail", udtBillDetail.AsTableValuedParameter("[dbo].[udtBillDetail]"));
-                    parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
-                    this.db.Execute("[EXP].[usp_Bills_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
-                    strReturnMsg = parameter.Get<string>("retMsg");
-                }
-                catch (Exception ex)
-                {
-                    strReturnMsg = "Error: " + ex.Message.ToString();
-                }
-                return strReturnMsg;
+                DataTable udtBillDetail = ListToDataTable(filedata);
+                var parameter = new DynamicParameters();
+                parameter.Add("@ExpenseId", filedata[0].ExpenseId);
+                parameter.Add("@udtBillDetail", udtBillDetail.AsTableValuedParameter("[dbo].[udtBillDetail]"));
+                parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
+                this.db.Execute("[EXP].[usp_Bills_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
+                strReturnMsg = parameter.Get<string>("retMsg");
+                
             }
             catch (Exception ex)
             {
                 throw new Exception("File Copy Failed", ex);
             }
+            return strReturnMsg;
         }
 
         public async Task<List<string>> GetFile(int expenseId)

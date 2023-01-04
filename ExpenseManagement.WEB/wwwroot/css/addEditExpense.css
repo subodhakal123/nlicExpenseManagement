@@ -126,3 +126,28 @@ iframe {
     opacity: 1;
     border: none;
 }
+
+.iframeParent > a > button {
+    position: relative;
+    float: right;
+    right: 10px;
+    bottom: 35px;
+    transition: 0.5s;
+    background-color: white;
+    color: blue;
+    opacity: 1;
+    border: none;
+}
+
+.iframeParent > .uploadConfirm {
+    opacity: 0.3;
+    position: relative;
+    float: right;
+    right: 10px;
+    bottom: 35px;
+    transition: 0.5s;
+    background-color: green;
+    color: white;
+    opacity: 1;
+    border: none;
+}

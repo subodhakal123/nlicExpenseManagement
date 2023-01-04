@@ -34,10 +34,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 });
 
 var app = builder.Build();
-var dirPath = "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\";
+var dirPath = "D:\\New folder\\fileUploadFolder\\";
 var dir = Environment.CurrentDirectory;
 
-var fileProvider = new PhysicalFileProvider(Path.Combine(dirPath+"UploadedFiles"));
+var fileProvider = new PhysicalFileProvider(dirPath);
 var requestPath = "/Files";
 
 // Configure the HTTP request pipeline.

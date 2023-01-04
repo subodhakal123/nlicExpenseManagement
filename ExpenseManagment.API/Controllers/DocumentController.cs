@@ -133,29 +133,6 @@ namespace ExpenseManagment.API.Controllers
             }
             return filenames;
         }
-        //public List<FileContentResult> GetFile()
-        //{
-        //    string filePath = Path.GetFullPath(Path.Combine("D:\\New folder\\", "fileUploadFolder"));
-        //
-        //
-        //    string[] filePaths = Directory.GetFiles(filePath);
-        //    var provider = new FileExtensionContentTypeProvider();
-        //    List<FileContentResult> files = new List<FileContentResult>();
-        //    foreach (string eachFilePath in filePaths)
-        //    {
-        //        byte[] fileContent = System.IO.File.ReadAllBytes(eachFilePath);
-        //        string fileName = Path.GetFileName(eachFilePath);
-        //
-        //        if (!provider.TryGetContentType(filePath, out var contentType))
-        //        {
-        //            contentType = "application/octet-stream";
-        //        }
-        //
-        //        files.Add(File(fileContent, contentType, fileName));
-        //    }
-        //
-        //    return files;
-        //}
     }   
 }       
         
