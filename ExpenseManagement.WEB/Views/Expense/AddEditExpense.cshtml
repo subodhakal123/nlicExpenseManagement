@@ -65,21 +65,38 @@
                 }
             </tbody>
         </table>
-        <div>
-            <div class="row">
-                <div class="col-md-2">
-                    <input type="text" value="@Model.ExpenseId" id="expenseId" hidden />
-                    <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
-                </div>
-                <div class="col-md-10">
+        <div class="row m-2">
+            <div class="col-md-8">
+                <div class="row m-2">
+                    <div class="form-check form-switch col-md-3">
+                      <input class="form-check-input" type="checkbox" id="IsApprovedId">
+                      <label class="form-check-label" for="IsApprovedId">IsApproved</label>
+                    </div>
+                    <div class="col-md-5" id="deptId">
+                        <div class="col-md-8">
+                            <input type="text" id="departmentId" value="" />
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="recommenderId" value="" />
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="container row m-2" id="fileContainerId">
+            <div class="col-md-1">
+                <label><b>Total:</b></label>
+            </div>
+            <div class="col-md-3">
+                <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" readonly/>
+                <input type="text" value="@Model.ExpenseId" id="expenseId" hidden />
+            </div>
+        </div>
+        <div class="container row m-2" id="fileContainerId">
                 <div id="previewContainer" class="row">
                 </div>
-                <div class="row col-md-1 m-1"><button class="btn-sm btn-success" id="resetId">Reset</button></div>
-            </div>
-            <div class="row">
+                <div class="row col-md-1 m-1"><button class="btn-sm btn-success 
+-pill" id="resetId"><i class="bi bi-arrow-clockwise"></i></button></div>
+        </div>
+        <div class="row">
                 <div class="col-md-6">
                     <label for="comment" align-left>Comment:</label>
                     <textarea class="form-control" rows="4" columnid="comment"></textarea>
@@ -94,12 +111,12 @@
                             </label>
                         </div>
                         <div class="col-md-6 row">
-                            <div class="row col-md-6 m-1"><button class="btn-sm btn-primary" type="submit">SaveB</button></div>
+                            <div class="row col-md-6 m-1"><button class="btn-sm btn-success" id="saveBill" type="submit">Bills<i class="bi bi-cloud-upload-fill"></i></button></div>
                         </div> 
                     </form>
                 </div>
 
-            </div>
+        </div>
             <div class="row">
                 <div class="col-md-1">
                     <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
@@ -215,7 +232,7 @@
                 '<td>' + fnAddElement("", "expenseSubType") + '</td>' +
                 '<td>' + fnAddElement("", "") + '</td>' +
                 '<td>' + fnAddElement("", "") + '</td>' +
-                '<td>' + fnAddElement("", "") + '</td>' +
+                '<td>' + fnAddElement("", "amountClass") + '</td>' +
                 '<td>' + actions + '</td>' +
                 '</tr>';
 
@@ -234,6 +251,19 @@
 
     function fnWhenLoaded(){
             $("#fileContainerId").hide();
+
+            //handling the departmentnames switch
+            $("#deptId").hide();
+            loadDepartmentDropdown("#departmentId");
+            $('#IsApprovedId').on('change',function(e){
+                let checkboxValue = e.target.checked;
+                if(checkboxValue == true){
+                    $('#deptId').show();
+                }
+                else{
+                    $("#deptId").hide();
+                }
+            });
 
             if(@Model.ExpenseId>0){
                 var index = $(".addEditRow:last-child").index();
@@ -361,9 +391,39 @@
         count = count+1;
         var sum = 0;
         for(let i = 1; i<=count; i++){
-            sum = parseFloat(sum) + parseFloat($("#ItemAmountId" + i).val());
+            console.log(i);
+        
+            sum = parseFloat(sum) + parseFloat($('.addEditRow').eq(i-1).find('input[type="text"]').eq(5).val());
+
+            console.log(sum);
         }
         return sum;
+
+    };
+
+    function loadDepartmentDropdown(typeId){
+         $(typeId).kendoDropDownList({
+            optionLabel: "Select Department...",
+            height: 310,
+            footerTemplate: 'Please ensure the type selected is correct',
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "https://localhost:7250/api/Common/GetDropDownList",
+                        type: "Post",
+                        contentType: "application/json",
+                        data: { mode: "Department", condition1: "", condition2: "" },
+                        dataType: 'json'
+                    },
+                    parameterMap: function (data) {
+                        var returnData = JSON.stringify(data);
+                        return returnData
+                    }
+                }
+            },
+            dataTextField: "ddlText",
+            dataValueField: "ddlVal"
+        }).data("kendoDropDownList");
 
     };
 

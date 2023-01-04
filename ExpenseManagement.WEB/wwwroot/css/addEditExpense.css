@@ -1,5 +1,12 @@
 ﻿#TotalAmountId {
-    align-content: right;
+    color: black;
+    font-size: medium;
+    font-weight: bold;
+}
+
+#saveBill{
+    font-weight: bold;
+    font-size: small;
 }
 
 .table-wrapper {
