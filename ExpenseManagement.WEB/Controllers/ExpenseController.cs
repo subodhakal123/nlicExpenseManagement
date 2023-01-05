@@ -26,8 +26,8 @@ namespace ExpenseManagement.Web.Controllers
                 request.Resource = "https://localhost:7250/api/Expense/GetExpenseById";
                 request.AddQueryParameter("ExpenseId",expId);
                 //request.AddJsonBody(expId);
-                List<ItemModel> response = await client.PostAsync<List<ItemModel>>(request);
-                model.Item = response;
+                ItemExpenseModel response = await client.PostAsync<ItemExpenseModel>(request);
+                model = response;
 
             }
             

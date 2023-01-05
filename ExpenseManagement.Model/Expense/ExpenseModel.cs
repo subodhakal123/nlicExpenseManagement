@@ -23,7 +23,7 @@ namespace ExpenseManagement.Model.Expense
     }
     public class SaveExpense
     {
-        public int ExpenseId { get; set; }
-        public string retMsg { get; set; }
+        public int? ExpenseId { get; set; }
+        public string? retMsg { get; set; }
     }
 }

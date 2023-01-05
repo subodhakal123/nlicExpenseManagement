@@ -62,19 +62,51 @@ namespace ExpenseManagement.BLL.Expense
             return al;
         }
 
-        public List<ItemModel> GetExpenseById(int ExpenseId)
+        public ItemExpenseModel GetExpenseById(int ExpenseId)
         {
-            var list = new List<ItemModel>();
+            List<ItemViewModel> list = new List<ItemViewModel>();
+            ItemExpenseModel list2 = new ItemExpenseModel();
+            list2.Item = new List<ItemModel>();
             try
             {
-                list = db.Query<ItemModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).ToList();
+                list = db.Query<ItemViewModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).ToList();
+                list2.ExpenseId = list[0].ExpenseId;
+                list2.IsRecommended = list[0].IsRecommended;
+                list2.Recommender = list[0].Recommender;
+                list2.DepartmentId = list[0].DepartmentName;
+                list2.Comment = list[0].Comment;
+                list2.TotalAmount = list[0].TotalAmount;
+
+                foreach(ItemViewModel item in list)
+                {
+                    ItemModel model1 = new ItemModel();
+                    model1.ExpenseId = item.ExpenseId;
+                    model1.ItemId = item.ItemId;
+                    model1.ItemName = item.ItemName;
+                    model1.ExpenseType = item.ExpenseType;
+                    model1.ExpenseSubType = item.ExpenseSubType;
+                    model1.ItemQuantity = item.ItemQuantity;
+                    model1.ItemAmount = item.ItemAmount;
+                    model1.ItemPrice = item.ItemPrice;
+                    list2.Item.Add(model1);
+                }
             }
             catch (Exception ex)
             {
-
-            }
             
-            return list;
+            }
+
+            //var list = new List<ItemModel>();
+            //try
+            //{
+            //    list = db.Query<ItemModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //
+            //}
+
+            return list2;
         }
 
         public SaveExpense SaveExpense(ItemExpenseModel model)
@@ -84,14 +116,17 @@ namespace ExpenseManagement.BLL.Expense
             {
                 DataTable udtExpenseDetail = ListToDataTable(model.Item);
                 var parameter = new DynamicParameters();
-                parameter.Add("@ExpenseId", model.ExpenseId);
+                parameter.Add("@ExpenseId", model.ExpenseId, direction: ParameterDirection.Output);
                 parameter.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail1]"));
-                //parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
-                //this.db.Execute("[EXP].[usp_Expense_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
-                //strReturnMsg = parameter.Get<string>("retMsg");
-
-                saveExpense =  db.Query<SaveExpense>("[EXP].[usp_Expense_InsUpd]", parameter, commandType: CommandType.StoredProcedure).FirstOrDefault();
-                //saveExpense = obj;
+                parameter.Add("@IsRecommended", model.IsRecommended);
+                parameter.Add("@Department", model.DepartmentId);
+                parameter.Add("@Recommender", model.Recommender);
+                parameter.Add("@Comment", model.Comment);
+                parameter.Add("@TotalAmount", model.TotalAmount);
+                parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
+                db.Execute("[EXP].[usp_Expense_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
+                saveExpense.retMsg = parameter.Get<string?>("retMsg");
+                saveExpense.ExpenseId = parameter.Get<int?>("ExpenseId");
             }
             catch (Exception ex)
             {
