@@ -18,7 +18,6 @@
     <Folder Include="Areas\Account\Models\" />
     <Folder Include="Areas\Settings\Data\" />
     <Folder Include="Areas\Settings\Models\" />
-    <Folder Include="Service\" />
   </ItemGroup>
 
   <ItemGroup>

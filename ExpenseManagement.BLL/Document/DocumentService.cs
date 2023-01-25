@@ -22,6 +22,8 @@ namespace ExpenseManagement.BLL.Document
         public async Task<string> UploadFile(List<IFormFile> files)
         {
             string strReturnMsg = "";
+            string[] _allowedFileTypes = { "pdf", "doc", "docx" };
+            long _maxFileSize = 2097152; // 2MB in bytes
             try
             {
                 List<FileModel> filedata = new List<FileModel>();
@@ -47,28 +49,41 @@ namespace ExpenseManagement.BLL.Document
                 }
                 foreach (IFormFile file in files)
                 {
-                    FileModel fileModeldata = new FileModel();
-                    if (file.Length > 0)
+                    var fileExtension = Path.GetExtension(file.FileName).Substring(1);
+                    if (!_allowedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase))
                     {
-                        try { 
-                            fileModeldata.ExpenseId = int.Parse(ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"'));
-                            fileModeldata.Uri = file.FileName;
-                            filedata.Add(fileModeldata);
-                            
-                            path = Path.Combine(dirPath, file.FileName);
-                            using (var fileStream = new FileStream(path, FileMode.Create))
-                            {
-                                await file.CopyToAsync(fileStream);
-                            }
-                        }
-                        catch(Exception ex) 
-                        {
-                            strReturnMsg= "Error: " + ex.Message.ToString();
-                        }
+                        return "Files only with extensions pdf, doc and docx are accepted!!";
                     }
                     else
                     {
-                        return "Please Input Bills First";
+                        FileModel fileModeldata = new FileModel();
+                        if(file.Length > _maxFileSize)
+                        {
+                            return "files above 2mb are not accepted";
+                        }
+                        else if (file.Length > 0)
+                        {
+                            try
+                            {
+                                fileModeldata.ExpenseId = int.Parse(ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"'));
+                                fileModeldata.Uri = file.FileName;
+                                filedata.Add(fileModeldata);
+
+                                path = Path.Combine(dirPath, file.FileName);
+                                using (var fileStream = new FileStream(path, FileMode.Create))
+                                {
+                                    await file.CopyToAsync(fileStream);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                strReturnMsg = "Error: " + ex.Message.ToString();
+                            }
+                        }
+                        else
+                        {
+                            return "Please Input Bills First";
+                        }
                     }
                 }
 

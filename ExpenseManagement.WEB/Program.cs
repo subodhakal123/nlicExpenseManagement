@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.FileProviders;
+using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,8 @@ builder.Services.AddRazorPages();
 //builder.Services.AddDirectoryBrowser();
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true);
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(
         CookieAuthenticationDefaults.AuthenticationScheme,
@@ -39,11 +41,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-//app.UseDirectoryBrowser(new DirectoryBrowserOptions
-//{
-//    FileProvider = fileProvider,
-//    RequestPath = requestPath
-//});
 
 app.UseRouting();
 

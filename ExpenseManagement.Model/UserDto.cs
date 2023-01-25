@@ -16,6 +16,7 @@ namespace ExpenseManagement.Model
     {
         public signIn login { get; set; }
         public UserViewModel register { get; set; }
+        public string access_token { get; set; }
     }
 
     public class UserViewModel

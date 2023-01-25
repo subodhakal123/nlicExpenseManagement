@@ -137,6 +137,30 @@
     fnSaveItem();
     fnEditRow();
     fnDeleteRow();
+
+    
+
+    function fnDisableInput(){
+        var rowCount = $('.addEditRow:last-child').index();
+        for(let i=0;i<=rowCount;i++){
+            console.log(i);
+            for(let j=0;j<=5;j++){
+                 console.log(j);
+                $('.addEditRow').eq(i).find('input[type="text"]').eq(j).attr('disabled','disabled');
+            }
+        }
+    };
+
+    function fnEnableInput(){
+        var rowCount = $('.addEditRow:last-child').index();
+        for(let i=0;i<=rowCount;i++){
+            console.log(i);
+            for(let j=0;j<=5;j++){
+                 console.log(j);
+                $('.addEditRow').eq(i).find('input[type="text"]').eq(j).removeAttr('disabled','disabled');
+            }
+        }
+    };
     
     $('#resetId').on('click',function(){
         $('#previewContainer').empty();
@@ -245,6 +269,7 @@
 
             //$('[data-toggle="tooltip"]').tooltip();
             loadDropdown(typeId, subTypeId);
+            fnDisableInput();
 
         });
         };
@@ -282,6 +307,7 @@
                     var subTypeId = '.' +$(".addEditRow").eq(i).find('input[type="text"]').eq(2).attr("class");
                     loadDropdown(typeId,subTypeId);
                 }
+                fnDisableInput();
                 fileDownload();
                 
             }
@@ -335,6 +361,7 @@
 
                 });
 
+                fnDisableInput();
                 $(this).parents(".addEditRow").find(".add, .edit").toggle();
                 $(".add-new").removeAttr("disabled");
             }
@@ -347,6 +374,9 @@
     function fnEditRow(){
         //// Edit row on edit button click
         $(document).on("click", ".edit", function () {
+
+            //enable all input
+            fnEnableInput();
             $(this).parents(".addEditRow").find("td:not(:last-child)").each(function (index) {
 
                 var currentIndex = $(this).parent(".addEditRow").index();
@@ -401,11 +431,7 @@
         count = count+1;
         var sum = 0;
         for(let i = 1; i<=count; i++){
-            console.log(i);
-        
             sum = parseFloat(sum) + parseFloat($('.addEditRow').eq(i-1).find('input[type="text"]').eq(5).val());
-
-            console.log(sum);
         }
         return sum;
 

@@ -1,15 +1,16 @@
 ﻿using ExpenseManagement.BLL.Expense;
 using ExpenseManagement.Model;
 using ExpenseManagement.Model.Expense;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 
 namespace ExpenseManagment.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
-    public class ExpenseController : ControllerBase
+	public class ExpenseController : ControllerBase
     {
 		private readonly IExpenseService _es;
 		public ExpenseController(IExpenseService userService)

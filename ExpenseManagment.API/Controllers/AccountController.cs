@@ -1,5 +1,6 @@
 ﻿using ExpenseManagement.BLL.Account;
 using ExpenseManagement.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,9 @@ namespace ExpenseManagment.API.Controllers
 
         [HttpPost]
         [Route("Token")]
+        [AllowAnonymous]
         public UserModel Token([FromBody] AppUserModel usr)
         {
-            //usr.UserName = "string";
-            //usr.Password = "password";
             UserModel model = _as.ValidateUser(usr.UserName,usr.Password);
             if (model.UserName == null || !string.IsNullOrEmpty(model.ErrorMessage))
             {

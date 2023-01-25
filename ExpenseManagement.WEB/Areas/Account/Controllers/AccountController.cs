@@ -1,4 +1,5 @@
 ﻿using ExpenseManagement.Model;
+using ExpenseManagement.Web.Service;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -11,35 +12,41 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
     [Area("Account")]
     public class AccountController : Controller
     {
+        public WebApiService ws;
+        public AccountController(){
+            ws = new WebApiService(null);
+        }
         public async Task<ActionResult> LogIn(UserDto model)
         {
             try
             {
+                model.register = new UserViewModel();
+
                 AppUserModel usr = new AppUserModel();
                 usr.UserName = model.login.Username;
                 usr.Password = model.login.Password;
                 usr.Email = model.login.Username;
 
-                model.register = new UserViewModel();
+                RestResponse userModel = ws.Authenticate(usr);
                 
-                var client = new RestClient();
-                var request = new RestRequest();
-                request.Method = Method.Post;
-                request.Resource = "https://localhost:7250/api/Account/Token";
-                request.AddJsonBody(usr);
-                UserModel response =  await client.PostAsync<UserModel>(request);
-                //IRestResponse response = client.Execute(request);
-                if(response.UserName != null){
+                UserModel response = JsonConvert.DeserializeObject<UserModel>(userModel.Content);
+                if(response.UserName != null)
+                {
                            var identity = new ClaimsIdentity(new[]
                                                 {
-                                                new Claim(ClaimTypes.Name,model.login.Username)
-                                            }, CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                                                    new Claim(ClaimTypes.Name,model.login.Username),
+                                                    new Claim("AccessToken", response.access_token)
+                                                }
+                                                , CookieAuthenticationDefaults.AuthenticationScheme
+                                                , ClaimTypes.Name
+                                                , ClaimTypes.Role);
 
-                           var principal = new ClaimsPrincipal(identity);
+                           ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                            Thread.CurrentPrincipal = principal;
+                           HttpContext.User = principal;
 
                            var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new Microsoft.AspNetCore.Authentication.AuthenticationProperties { IsPersistent = true });
-
+                    var cde = User.Claims;
                 }
                 else
                 {
@@ -50,13 +57,14 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
             }
             catch (Exception ex)
             {
-
+                return Redirect("/");
             }
             return Redirect("/Expense");
         }
 
         public ActionResult LogOut()
         {
+            var cde = User.Claims;
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("/");
         }
