@@ -136,7 +136,7 @@
         let myDataArray = new kendo.data.DataSource({
           transport: {
                     read: {
-                        url: "https://localhost:7250/api/Expense/GetAllExpense",
+                        url: WebApiUri + "/Expense/GetAllExpense",
                         data: {},
                         type: "POST",
                         datatype: 'JSON',
@@ -208,7 +208,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: 'https://localhost:7250/api/Expense/ApproveExpense',
+                    url: WebApiUri + '/Expense/ApproveExpense',
                     datatype: 'json',
                     data: JSON.stringify({ExpenseId : expenseIdSelected,Username: '@userId'}),
                     contentType: "application/json;charset=utf-8",

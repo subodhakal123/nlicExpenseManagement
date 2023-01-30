@@ -298,3 +298,4 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Antlr3.Run
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Web.Optimization.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\WebGrease.dll
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll

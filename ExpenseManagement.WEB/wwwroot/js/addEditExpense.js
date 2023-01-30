@@ -45,7 +45,8 @@
     $("#downloadButton").click(function(){
 
         $.ajax({
-            url: "https://localhost:7250/api/Document/GetFile",
+            url:
+                /Document/GetFile",
             type: 'GET',
             data: { expenseId: 0 },
             success: function (result) {
@@ -247,7 +248,7 @@
             dataSource: {
                 transport: {
                     read: {
-                        url: "https://localhost:7250/api/Common/GetDropDownList",
+                        url: WebApiUri + "/Common/GetDropDownList",
                         type: "Post",
                         contentType: "application/json",
                         data: { mode: "ExpenseType", condition1: "", condition2: "" },
@@ -270,7 +271,7 @@
     dataSource:{
         transport: {
         read: {
-        url: "https://localhost:7250/api/Common/GetDropDownList",
+    url: WebApiUri + "/Common/GetDropDownList",
     type: "Post",
     contentType: "application/json",
     data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
@@ -317,7 +318,7 @@
     function fnModelSave(){
 
         $.ajax({
-            url: "https://localhost:7250/api/Expense/SaveExpense",
+            url: WebApiUri + "/Expense/SaveExpense",
             type: 'POST',
             datatype: 'json',
             data: fnGetItemDetailModel(),

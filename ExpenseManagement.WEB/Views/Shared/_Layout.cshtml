@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inherits ExpenseManagement.Web.Helper.BaseView;
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -38,6 +40,10 @@
     <!-- toastr -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        var WebApiUri = '@this.WebApiUri';
+    </script>
+    
     @RenderSection("scripts", required: false)
 </head>
 

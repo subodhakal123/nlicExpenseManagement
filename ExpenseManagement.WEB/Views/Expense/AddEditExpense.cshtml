@@ -4,6 +4,7 @@
 @{
     Layout = null;
 }
+
 </style>
 <div class="container-fluid m-2">
     <div class="table-wrapper">
@@ -31,7 +32,7 @@
                 @if(Model.ExpenseId > 0)
                 {
                     int index = Model.Item.Count() - 1;
-                    foreach(var item in Model.Item.OrderByDescending(x => x.ItemId))
+                    foreach(var item in Model.Item)
                     {
                         <tr class="addEditRow">
                                 
@@ -93,8 +94,7 @@
         <div class="container row m-2" id="fileContainerId">
                 <div id="previewContainer" class="row">
                 </div>
-                <div class="row col-md-1 m-1"><button class="btn-sm btn-success 
--pill" id="resetId"><i class="bi bi-arrow-clockwise"></i></button></div>
+                <div class="row col-md-1 m-1"><button class="btn-sm btn-success-pill" id="resetId"><i class="bi bi-arrow-clockwise"></i></button></div>
         </div>
         <div class="row">
                 <div class="col-md-6">
@@ -137,15 +137,12 @@
     fnSaveItem();
     fnEditRow();
     fnDeleteRow();
-
     
 
     function fnDisableInput(){
         var rowCount = $('.addEditRow:last-child').index();
         for(let i=0;i<=rowCount;i++){
-            console.log(i);
             for(let j=0;j<=5;j++){
-                 console.log(j);
                 $('.addEditRow').eq(i).find('input[type="text"]').eq(j).attr('disabled','disabled');
             }
         }
@@ -207,7 +204,7 @@
     function fileDownload(){
         if($('#expenseId').val() !=0){
             $.ajax({
-            url: "https://localhost:7250/api/Document/GetFile",
+            url: WebApiUri+"/Document/GetFile",
             type: 'GET',
             data: { expenseId: $('#expenseId').val() },
             success: function (result) {
@@ -223,6 +220,7 @@
                         + '<a href='+ fileurl +' target="_blank"><button class="viewIframeContent m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg></button></a>'
                         + '<button class="deleteIframe m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
                         + '</div>';
+                    $("#previewContainer").append(row2);
                     $("#previewContainer").append(row2);
                     $("#fileContainerId").show();
                 }
@@ -445,7 +443,7 @@
             dataSource: {
                 transport: {
                     read: {
-                        url: "https://localhost:7250/api/Common/GetDropDownList",
+                        url: WebApiUri+"/Common/GetDropDownList",
                         type: "Post",
                         contentType: "application/json",
                         data: { mode: "Department", condition1: "", condition2: "" },
@@ -472,7 +470,7 @@
             dataSource: {
                 transport: {
                     read: {
-                        url: "https://localhost:7250/api/Common/GetDropDownList",
+                        url: WebApiUri + "/Common/GetDropDownList",
                         type: "Post",
                         contentType: "application/json",
                         data: { mode: "ExpenseType", condition1: "", condition2: "" },
@@ -495,7 +493,7 @@
     dataSource:{
         transport: {
         read: {
-        url: "https://localhost:7250/api/Common/GetDropDownList",
+        url: WebApiUri + "/Common/GetDropDownList",
     type: "Post",
     contentType: "application/json",
     data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
@@ -547,7 +545,7 @@
     function fnModelSave(){
 
         $.ajax({
-            url: "https://localhost:7250/api/Expense/SaveExpense",
+            url: WebApiUri + "/Expense/SaveExpense",
             type: 'POST',
             datatype: 'json',
             data: fnGetItemDetailModel(),
@@ -587,7 +585,7 @@
                 }
 
                 $.ajax({
-                    url: 'https://localhost:7250/api/Document/Upload',
+                    url: WebApiUri+"/Document/Upload",
                     type: "POST",
                     contentType: false, // Not to set any content header
                     processData: false, // Not to process data

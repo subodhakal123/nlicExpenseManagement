@@ -13,16 +13,19 @@ namespace ExpenseManagement.Web.Service
     {
         RestClient client;
         private readonly ClaimsPrincipal identity;
+        string WebApiUri;
         //private readonly IClaimsService _claimService;
         public WebApiService(IPrincipal principal)
         {
-            if(User != null)
-            {
-                var abc = User.Identity;
-            }
-            
             identity = principal as ClaimsPrincipal;
             client = new RestClient();
+
+            var builder = new ConfigurationBuilder()
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+            WebApiUri = configuration.GetValue<string>("WebApiUrl");
         }
 
         public RestResponse GetResponse(RestRequest request)
@@ -59,7 +62,7 @@ namespace ExpenseManagement.Web.Service
             {
                 var request = new RestRequest();
                 request.Method = Method.Post;
-                request.Resource = "https://localhost:7250/api/Account/Token";
+                request.Resource = WebApiUri + "/Account/Token";
                 request.AddJsonBody(usr);
                 response = client.Execute(request);
             }

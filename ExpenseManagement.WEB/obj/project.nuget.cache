@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tognySKIa5kSfm/4F6ILMaI+wdQa8llrt3p6aXmdc43A8QrmDuSaHCYUEvzjGKFA+UtlGQS5K8VJuODC9FvYEw==",
+  "dgSpecHash": "cOoQ1IRhwmRpcGAQgI8TPYn7gW0GltGGsPvbe2OmuLjIjUMk1if4im8laGPR0a/ixcMwxIvHZIqTHE68stAWTQ==",
   "success": true,
   "projectFilePath": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\ExpenseManagement.Web.csproj",
   "expectedPackageFiles": [
@@ -62,6 +62,7 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
