@@ -20,6 +20,8 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
         {
             try
             {
+                if (model.login == null) { return Redirect("/"); }
+
                 model.register = new UserViewModel();
 
                 AppUserModel usr = new AppUserModel();
@@ -32,21 +34,20 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
                 UserModel response = JsonConvert.DeserializeObject<UserModel>(userModel.Content);
                 if(response.UserName != null)
                 {
-                           var identity = new ClaimsIdentity(new[]
-                                                {
-                                                    new Claim(ClaimTypes.Name,model.login.Username),
-                                                    new Claim("AccessToken", response.access_token)
-                                                }
-                                                , CookieAuthenticationDefaults.AuthenticationScheme
-                                                , ClaimTypes.Name
-                                                , ClaimTypes.Role);
+                    var identity = new ClaimsIdentity(new[]
+                                         {
+                                             new Claim(ClaimTypes.Name,model.login.Username),
+                                             new Claim("AccessToken", response.access_token)
+                                         }
+                                         , CookieAuthenticationDefaults.AuthenticationScheme
+                                         , ClaimTypes.Name
+                                         , ClaimTypes.Role);
 
-                           ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-                           Thread.CurrentPrincipal = principal;
-                           HttpContext.User = principal;
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                    Thread.CurrentPrincipal = principal;
+                    HttpContext.User = principal;
 
-                           var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new Microsoft.AspNetCore.Authentication.AuthenticationProperties { IsPersistent = true });
-                    var cde = User.Claims;
+                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new Microsoft.AspNetCore.Authentication.AuthenticationProperties { IsPersistent = true });
                 }
                 else
                 {

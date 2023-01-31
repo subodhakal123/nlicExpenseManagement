@@ -1,6 +1,5 @@
 ﻿@model ExpenseManagement.Model.Expense.ItemExpenseModel;
 
-
 @{
     Layout = null;
 }
@@ -32,7 +31,7 @@
                 @if(Model.ExpenseId > 0)
                 {
                     int index = Model.Item.Count() - 1;
-                    foreach(var item in Model.Item)
+                    foreach(var item in Model.Item.OrderByDescending(x=>x.ItemId))
                     {
                         <tr class="addEditRow">
                                 
@@ -207,9 +206,12 @@
             url: WebApiUri+"/Document/GetFile",
             type: 'GET',
             data: { expenseId: $('#expenseId').val() },
+            beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
             success: function (result) {
 
-                var fileServerUrl = "https://localhost:7250/Files/";
+                var fileServerUrl = WebApiUri + "/Files/";
 
                 for (let i = 0; i < result.length; i++) {
                     //console.log(result[i].fileDownloadName);
@@ -447,7 +449,10 @@
                         type: "Post",
                         contentType: "application/json",
                         data: { mode: "Department", condition1: "", condition2: "" },
-                        dataType: 'json'
+                        dataType: 'json',
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        }
                     },
                     parameterMap: function (data) {
                         var returnData = JSON.stringify(data);
@@ -474,7 +479,10 @@
                         type: "Post",
                         contentType: "application/json",
                         data: { mode: "ExpenseType", condition1: "", condition2: "" },
-                        dataType: 'json'
+                        dataType: 'json',
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        }
                     },
                     parameterMap: function (data) {
                         var returnData = JSON.stringify(data);
@@ -497,7 +505,10 @@
     type: "Post",
     contentType: "application/json",
     data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
-    dataType: 'json'
+    dataType: 'json',
+    beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        }
                             },
     parameterMap: function (data) {
                                 var returnData = JSON.stringify(data);
@@ -550,6 +561,9 @@
             datatype: 'json',
             data: fnGetItemDetailModel(),
             contentType: "application/json;charset=utf-8",
+            beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
             success: function (result) {
 
                 console.log(result.expenseId);
@@ -590,6 +604,9 @@
                     contentType: false, // Not to set any content header
                     processData: false, // Not to process data
                     data: fileData,
+                    beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
                     success: function (result) {
                         toastr.success(result);
                     },

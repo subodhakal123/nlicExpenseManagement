@@ -2,12 +2,15 @@
 using ExpenseManagement.Model.Expense;
 using ExpenseManagement.Web.Helper;
 using ExpenseManagement.Web.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
+using System.Security.Claims;
 
 namespace ExpenseManagement.Web.Controllers
 {
+    [Authorize]
     public class ExpenseController : BaseController
     {
         public WebApiService _ws;
@@ -32,14 +35,12 @@ namespace ExpenseManagement.Web.Controllers
         public async Task<ActionResult> AddEditExpense(ItemExpenseModel model)
         {
             model.Item = new List<ItemModel>();
-            var cde = WebApiUri;
-
-            var abc = User.Identity.Equals("AccessToken");
-            var efg = User.Claims;
             
-            
-            if(model.ExpenseId > 0)
+            if (model.ExpenseId > 0)
             {
+                var identity = HttpContext.User as ClaimsPrincipal;
+                _ws = new WebApiService(identity);
+
                 var request = new RestRequest();
                 request.Method = Method.Post;
                 request.Resource = WebApiUri + "/Expense/GetExpenseById";

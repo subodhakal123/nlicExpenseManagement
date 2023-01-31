@@ -8,6 +8,7 @@ using System.Collections;
 
 namespace ExpenseManagment.API.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
     [ApiController]
 	public class ExpenseController : ControllerBase

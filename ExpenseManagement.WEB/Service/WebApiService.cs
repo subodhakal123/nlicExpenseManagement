@@ -30,20 +30,19 @@ namespace ExpenseManagement.Web.Service
 
         public RestResponse GetResponse(RestRequest request)
         {
-            //var claims = User.Claims;
-            //if (identity.FindFirst("AccessToken") != null)
-            //{
-            //
-            //    var AccessToken = identity.FindFirst("AccessToken").Value;
-            //    request.AddParameter("Authorization", string.Format("Bearer {0}", AccessToken), ParameterType.HttpHeader);
-                RestResponse response = new RestResponse();
-            //    if (client != null)
-            //    {
-                    response = client.Execute(request);
-            //    }
-                return response;
-            //}
-            //return null;
+            if (identity.FindFirst("AccessToken") != null)
+            {
+            
+                var AccessToken = identity.FindFirst("AccessToken").Value;
+                request.AddParameter("Authorization", string.Format("Bearer {0}", AccessToken), ParameterType.HttpHeader);
+              RestResponse response = new RestResponse();
+                if (client != null)
+                {
+                  response = client.Execute(request);
+                }
+              return response;
+            }
+            return null;
         }
         public RestResponse GetAnonymousResponse(RestRequest request)
         {

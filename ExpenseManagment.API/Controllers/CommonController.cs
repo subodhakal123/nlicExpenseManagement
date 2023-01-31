@@ -1,10 +1,12 @@
 ﻿using ExpenseManagement.BLL.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static ExpenseManagement.Model.Common.DropDownModel;
 
 namespace ExpenseManagment.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CommonController : ControllerBase

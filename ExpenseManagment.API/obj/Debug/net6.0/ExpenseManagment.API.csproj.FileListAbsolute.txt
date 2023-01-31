@@ -277,6 +277,7 @@ D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.C
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -288,6 +289,7 @@ D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.E
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
@@ -527,5 +529,3 @@ D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseMana
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ref\ExpenseManagment.API.dll
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.pdb
 D:\New folder\ExpenseManagment\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.genruntimeconfig.cache
-D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
-D:\New folder\ExpenseManagment\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll

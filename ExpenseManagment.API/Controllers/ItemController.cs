@@ -1,13 +1,15 @@
 ﻿using ExpenseManagement.Model;
 using ExpenseManagement.Model.Expense;
 using ItemManagement.BLL.Item;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 
 namespace ExpenseManagment.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Authorize]
+	[Route("api/[controller]")]
     [ApiController]
     public class ItemController : ControllerBase
     {

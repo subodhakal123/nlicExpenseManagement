@@ -11,10 +11,12 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ExpenseMan
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ExpenseManagement.Web.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ref\ExpenseManagement.Web.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\ExpenseManagement.Web.pdb
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Antlr3.Runtime.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Dapper.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Humanizer.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\MessagePack.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\MessagePack.Annotations.dll
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Web.Optimization.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -36,6 +38,7 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -43,9 +46,11 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
@@ -67,6 +72,7 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\NuGet.Common.dll
@@ -95,6 +101,7 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Run
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Security.Permissions.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\WebGrease.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -292,10 +299,3 @@ D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ExpenseMan
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ref\ExpenseManagement.Web.dll
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ExpenseManagement.Web.pdb
 D:\New folder\ExpenseManagment\ExpenseManagement.WEB\obj\Debug\net6.0\ExpenseManagement.Web.genruntimeconfig.cache
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Antlr3.Runtime.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\System.Web.Optimization.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\WebGrease.dll
-D:\New folder\ExpenseManagment\ExpenseManagement.WEB\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll

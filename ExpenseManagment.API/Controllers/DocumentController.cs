@@ -1,11 +1,13 @@
 ﻿using ExpenseManagement.BLL.Document;
 using ExpenseManagement.Model.File;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace ExpenseManagment.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DocumentController : ControllerBase
@@ -15,7 +17,6 @@ namespace ExpenseManagment.API.Controllers
         {
             this._document = _document;
         }
-
 
         //private readonly IWebHostEnvironment _environment;
         //public DocumentController(IWebHostEnvironment _environment)

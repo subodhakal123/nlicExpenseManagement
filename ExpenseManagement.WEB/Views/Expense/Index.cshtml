@@ -141,7 +141,10 @@
                         type: "POST",
                         datatype: 'JSON',
                         cache: false,
-                        contentType: "application/json"
+                        contentType: "application/json",
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        }
                     },
                     parameterMap: function(data) {
                         var returnData = JSON.stringify(data);
@@ -212,6 +215,9 @@
                     datatype: 'json',
                     data: JSON.stringify({ExpenseId : expenseIdSelected,Username: '@userId'}),
                     contentType: "application/json;charset=utf-8",
+                    beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
                     success: function(response){
                         if(response == 1){
                             $(".k-selected").find('td[role="gridcell"]').eq(5).find('button').eq(0).attr('style','background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);');

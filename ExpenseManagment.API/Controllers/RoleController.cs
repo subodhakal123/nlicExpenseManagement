@@ -1,5 +1,6 @@
 ﻿using ExpenseManagement.BLL.Account;
 using ExpenseManagement.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 
@@ -7,7 +8,8 @@ using System.Collections;
 
 namespace ExpenseManagment.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Authorize]
+	[Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase
 	{

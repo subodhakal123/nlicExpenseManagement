@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.Razor;
+﻿using ExpenseManagement.Model;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Security.Claims;
 
 namespace ExpenseManagement.Web.Helper
 {
     public abstract class BaseView<TModel> : RazorPage<TModel>
     {
+        protected AppUser CurrentUser
+        {
+            get
+            {
+                return new AppUser(this.User as ClaimsPrincipal);
+            }
+        }
         public string WebApiUri
         {
             get
