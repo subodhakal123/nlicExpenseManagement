@@ -12,6 +12,8 @@ namespace ExpenseManagement.Model
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string RoleId { get; set; }
+        public string BrName { get; set; }
         public string ErrorMessage { get; set; }
         public string access_token { get; set; }
         public string CultureCD { get; set; }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3SJoVp2FqaEZ7PBSbemIIXuxryuHRlKJr9dr+byadGk=",
+  "Hash": "2lWmqISBLZKiuZVI3LRI3v4Ni7fGUJ21StsXe7g6o+g=",
   "Source": "ExpenseManagment.API",
   "BasePath": "_content/ExpenseManagment.API",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "ExpenseManagment.API\\wwwroot",
       "Source": "ExpenseManagment.API",
-      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\",
+      "ContentRoot": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagment.API\\wwwroot\\",
       "BasePath": "_content/ExpenseManagment.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\uploads\\common\\noimage.png",
+      "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagment.API\\wwwroot\\uploads\\common\\noimage.png",
       "SourceId": "ExpenseManagment.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\wwwroot\\",
+      "ContentRoot": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagment.API\\wwwroot\\",
       "BasePath": "_content/ExpenseManagment.API",
       "RelativePath": "uploads/common/noimage.png",
       "AssetKind": "All",

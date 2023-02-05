@@ -15,7 +15,8 @@ var builder2 = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
 IConfigurationRoot configuration = builder2.Build();
-// Add services to the container.
+
+// Add services to the container.ApplicationServiceExtensions
 
 builder.Services.AddControllers();
 builder.Services.AddDirectoryBrowser();

@@ -11015,11 +11015,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\ExpenseManagement.Web.csproj",
+      "projectUniqueName": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\ExpenseManagement.Web.csproj",
       "projectName": "ExpenseManagement.Web",
-      "projectPath": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\ExpenseManagement.Web.csproj",
+      "projectPath": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\ExpenseManagement.Web.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.WEB\\obj\\",
+      "outputPath": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11036,8 +11036,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\ExpenseManagment.API.csproj": {
-              "projectPath": "D:\\New folder\\ExpenseManagment\\ExpenseManagment.API\\ExpenseManagment.API.csproj"
+            "D:\\New folder\\nlicExpenseManagement\\ExpenseManagment.API\\ExpenseManagment.API.csproj": {
+              "projectPath": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagment.API\\ExpenseManagment.API.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\New folder\\ExpenseManagment\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj": {}
+    "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj": {}
   },
   "projects": {
-    "D:\\New folder\\ExpenseManagment\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj": {
+    "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj",
+        "projectUniqueName": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj",
         "projectName": "ExpenseManagement.Model",
-        "projectPath": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj",
+        "projectPath": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.Model\\obj\\",
+        "outputPath": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",

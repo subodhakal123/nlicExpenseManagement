@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "U4uhOEmzH0ou2XdmsZjQylvFQ4vclRLulB88KsHiW930Q98aVy5egD2jEblOqTWMPWpWoKchMnCtfQJ3OF8L8g==",
+  "dgSpecHash": "vQtGCBJttnVqaLf+ODmf//zzvTt9sA6BCPhlmOGMXPSUd8glfezfgashYzk82IGcOc0VnDNrrn6raiACNuyQ1Q==",
   "success": true,
-  "projectFilePath": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.BLL\\ExpenseManagement.BLL.csproj",
+  "projectFilePath": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.BLL\\ExpenseManagement.BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

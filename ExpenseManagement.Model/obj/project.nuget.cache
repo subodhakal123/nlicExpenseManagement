@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Rmu5IePubiNe87PT3OvqetSxiqXfdto4yU9JAnCxlW6vkZJ3rAAZmm+SA9iUw4Zk3Er5kBcKMt98beZB+8MI0Q==",
+  "dgSpecHash": "UWYMNnMTjQidb2SVHbDw6TT95NCe2gzm/KFu145n4/RDOiRQpYiHMyqmy2oUTzGg3Gwi9v2hjXgKaku78ltYcA==",
   "success": true,
-  "projectFilePath": "D:\\New folder\\ExpenseManagment\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj",
+  "projectFilePath": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.Model\\ExpenseManagement.Model.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

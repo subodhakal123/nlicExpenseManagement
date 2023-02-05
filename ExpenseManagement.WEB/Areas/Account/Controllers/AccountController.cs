@@ -37,6 +37,8 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
                     var identity = new ClaimsIdentity(new[]
                                          {
                                              new Claim(ClaimTypes.Name,model.login.Username),
+                                             new Claim("RoleId",response.RoleId),
+                                             new Claim("BrName",response.BrName),
                                              new Claim("AccessToken", response.access_token)
                                          }
                                          , CookieAuthenticationDefaults.AuthenticationScheme
