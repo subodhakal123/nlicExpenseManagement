@@ -2,6 +2,8 @@
 
 @{
     Layout = null;
+    var Branch = User.Claims.FirstOrDefault(c => c.Type == "BrName")?.Value;
+    var Username = User.Identity.Name;
 }
 
 </style>
@@ -9,7 +11,14 @@
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
-                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <label for="branch">Branch :</label>
+                    <input type="text" id="branch" value="@Branch" readonly/>
+                </div>
+                <div class="col-sm-4">
+                    <label for="AppliedBy">AppliedBy :</label>
+                    <input type="text" id="AppliedBy" value = "@Username" readonly />
+                </div>
                 <div class="col-sm-4">
                     <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
                 </div>
@@ -120,9 +129,9 @@
                 <div class="col-md-1">
                     <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
                 </div>
-                <div class="col-md-1">
+                <!--<div class="col-md-1">
                     <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2" onclick="fileDownload()">Download</button>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>  

@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Index";
-    var userId = User.Identity.Name;
+    var userId = User.Claims.FirstOrDefault(c=>c.Type == "UserId")?.Value;
+    var cde = userId;
 }
 
 <style>
@@ -137,7 +138,7 @@
           transport: {
                     read: {
                         url: WebApiUri + "/Expense/GetAllExpense",
-                        data: {},
+                        data: { UserId: '@userId'},
                         type: "POST",
                         datatype: 'JSON',
                         cache: false,
