@@ -9,6 +9,11 @@ namespace ExpenseManagement.Model.Expense
     public class ItemExpenseModel
     {
         public int ExpenseId { get; set; }
+        public string ExpenseTitle { get; set; }
+        public string ExpenseBy { get; set; }
+        public string BranchName { get; set; }
+        public string AppliedBy { get; set; }
+        public string Status { get; set; }
         public List<ItemModel> Item { get; set; }
         public bool IsRecommended { get; set; }
         public int DepartmentId { get; set; }

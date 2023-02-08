@@ -2,8 +2,11 @@
 
 @{
     Layout = null;
+    var userId = User.Claims.FirstOrDefault(c=>c.Type == "UserId")?.Value;
     var Branch = User.Claims.FirstOrDefault(c => c.Type == "BrName")?.Value;
     var Username = User.Identity.Name;
+    if (Model.BranchName == null) Model.BranchName = Branch;
+    if (Model.AppliedBy == null) Model.AppliedBy = Username;
 }
 
 </style>
@@ -12,13 +15,26 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="branch">Branch :</label>
-                    <input type="text" id="branch" value="@Branch" readonly/>
+                    <label asp-for="ExpenseBy">ExpenseBy :</label>
+                    <input asp-for="ExpenseBy" type="text"  value = "@Model.ExpenseBy" />
                 </div>
                 <div class="col-sm-4">
-                    <label for="AppliedBy">AppliedBy :</label>
-                    <input type="text" id="AppliedBy" value = "@Username" readonly />
+                    <label asp-for="BranchName">Branch :</label>
+                    <input asp-for="BranchName" type="text" value="@Model.BranchName" readonly/>
                 </div>
+                <div class="col-sm-4">
+                    <label asp-for="AppliedBy">AppliedBy :</label>
+                    <input asp-for="AppliedBy" type="text"  value = "@Model.AppliedBy" readonly />
+                </div>
+            </div>
+        </div>
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label asp-for="ExpenseTitle">ExpenseTitle :</label>
+                    <input asp-for="ExpenseTitle" type="text" value = "@Model.ExpenseTitle" />
+                </div>
+                <div class="col-sm-4"></div>
                 <div class="col-sm-4">
                     <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
                 </div>
@@ -129,6 +145,15 @@
                 <div class="col-md-1">
                     <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
                 </div>
+                @if(Model.ExpenseId > 0){
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
+                    </div>
+                    <div class="col-md-3">
+                        <input asp-for="Status" type="text" value="@Model.Status" />
+                    </div>
+                }
+                
                 <!--<div class="col-md-1">
                     <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2" onclick="fileDownload()">Download</button>
                 </div>-->
@@ -318,6 +343,7 @@
                 }
                 fnDisableInput();
                 fileDownload();
+                fnForwardList();
                 
             }
     };
@@ -552,6 +578,11 @@
     function fnGetItemDetailModel(){
         var itemDetailData = JSON.stringify({
             expenseId : $('#expenseId').val(),
+            expenseTitle: $('#ExpenseTitle').val(),
+            expenseBy: $('#ExpenseBy').val(),
+            branchName: $('#BranchName').val(),
+            appliedBy: $('#AppliedBy').val(),
+            status: $('#Status').val(),
             item: fnGetModelList(),
             isRecommended: isRecommended,
             departmentId: $('#departmentId').val(),
@@ -635,4 +666,53 @@
         }
     };
 
+    function fnModelApprove(){
+
+            var expenseIdSelected = $('#expenseId').val();
+
+            if(expenseIdSelected > 0){
+
+                $.ajax({
+                    type: 'POST',
+                    url: WebApiUri + '/Expense/ApproveExpense',
+                    datatype: 'json',
+                    data: JSON.stringify({ExpenseId : expenseIdSelected,Username: '@userId'}),
+                    contentType: "application/json;charset=utf-8",
+                    beforeSend: function(xhr){expenseIdSelected
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
+                    success: function(response){
+                        toastr.success(response);
+                    }
+                });
+            }
+          
+      };
+
+    function fnForwardList(){
+        $("#Status").kendoDropDownList({
+        optionLabel: "Select where to forward",
+    height: 310,
+    dataSource:{
+        transport: {
+        read: {
+        url: WebApiUri + "/Common/GetDropDownList",
+    type: "Post",
+    contentType: "application/json",
+    data: {mode: "ForwardList",condition1: "",condition2: ""},
+    dataType: 'json',
+    beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        }
+                            },
+    parameterMap: function (data) {
+                                var returnData = JSON.stringify(data);
+    return returnData;
+                            }
+                        }
+                    },
+    dataTextField: "ddlText",
+    dataValueField: "ddlVal"
+                }).data("kendoDropDownList");
+    };
 </script>

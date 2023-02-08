@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Index";
     var userId = User.Claims.FirstOrDefault(c=>c.Type == "UserId")?.Value;
-    var cde = userId;
 }
 
 <style>
@@ -196,9 +195,9 @@
           { field: "expenseId", title: "Expense Id"},
           { field: "expenseDate", title: "Expense Date"},
           { field: "branchName", title: "Branch Name"},
-          { field: "expenseType", title: "Expense Type"},
+          { field: "expenseStatus", title: "Status"},
           { field: "totalAmount", title: "Amount"},
-          { field: "isApproved", title: "Status",
+          { field: "isApproved", title: "Action",
           template: "# if (isApproved==true) {#<button onclick='abc()' class='approveBtn btn btn-sm' style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Requested</button>#} else {#<button onclick='abc()' class='approveBtn btn btn-sm' style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</button>#} #"}
         ]
         });
@@ -247,8 +246,6 @@
               success: function(response){
                   $('#cardBodyId').empty();
                   $('#cardBodyId').append(response);
-
-                  
               }
           });
       };

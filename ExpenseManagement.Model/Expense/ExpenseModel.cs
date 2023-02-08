@@ -14,6 +14,7 @@ namespace ExpenseManagement.Model.Expense
         public string? ExpenseType { get; set; }
         public string? ExpenseSubType { get; set; }
         public float? Amount { get; set; }
+        public string? ExpenseStatus { get; set; }
         public float? TotalAmount { get; set; }
         public bool? IsRecommended { get; set; }
         public string? DepartmentName { get; set; }

@@ -46,19 +46,26 @@ namespace ExpenseManagement.BLL.Expense
             var sortCondition = FilterSortHelper.OrderField(sort.Field);
 
             var list = new List<ExpenseModel>();
-            var dp = new DynamicParameters();
-            dp.Add("@TotalRecordCount", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            dp.Add("@UserId", model.UserId);
-            dp.Add("@OffsetRows", model.skip);
-            dp.Add("@FetchRows", model.take);
-            dp.Add("@WhereClause", whereCondition);
-            dp.Add("@SortOrder", sort.Dir);
-            dp.Add("@SortField", sortCondition);
-            dp.Add("@CultureCd", model.CultureCode);
-            list = db.Query<ExpenseModel>("[EXP].[usp_Expense_AllGet]", dp, commandType: CommandType.StoredProcedure).ToList();
             ArrayList al = new ArrayList();
-            al.Add(list);
-            al.Add(dp.Get<int>("TotalRecordCount"));
+            try { 
+                var dp = new DynamicParameters();
+                dp.Add("@TotalRecordCount", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                dp.Add("@UserId", model.UserId);
+                dp.Add("@OffsetRows", model.skip);
+                dp.Add("@FetchRows", model.take);
+                dp.Add("@WhereClause", whereCondition);
+                dp.Add("@SortOrder", sort.Dir);
+                dp.Add("@SortField", sortCondition);
+                dp.Add("@CultureCd", model.CultureCode);
+                list = db.Query<ExpenseModel>("[EXP].[usp_Expense_AllGet]", dp, commandType: CommandType.StoredProcedure).ToList();
+                
+                al.Add(list);
+                al.Add(dp.Get<int>("TotalRecordCount"));
+            }
+            catch(Exception ex)
+            {
+
+            }
             return al;
         }
 
@@ -71,6 +78,11 @@ namespace ExpenseManagement.BLL.Expense
             {
                 list = db.Query<ItemViewModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).ToList();
                 list2.ExpenseId = list[0].ExpenseId;
+                list2.ExpenseTitle = list[0].ExpenseTitle;
+                list2.ExpenseBy = list[0].ExpenseBy;
+                list2.BranchName = list[0].BranchName;
+                list2.AppliedBy = list[0].AppliedBy;
+                list2.Status = list[0].Status;
                 list2.IsRecommended = list[0].IsRecommended;
                 list2.Recommender = list[0].Recommender;
                 list2.DepartmentId = list[0].DepartmentName;
@@ -117,6 +129,11 @@ namespace ExpenseManagement.BLL.Expense
                 DataTable udtExpenseDetail = ListToDataTable(model.Item);
                 var parameter = new DynamicParameters();
                 parameter.Add("@ExpenseId", model.ExpenseId, direction: ParameterDirection.Output);
+                parameter.Add("@ExpenseTitle", model.ExpenseTitle);
+                parameter.Add("@ExpenseBy", model.ExpenseBy);
+                parameter.Add("@AppliedBy", model.AppliedBy);
+                parameter.Add("@BranchName", model.BranchName);
+                parameter.Add("@Status", model.Status);
                 parameter.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail1]"));
                 parameter.Add("@IsRecommended", model.IsRecommended);
                 parameter.Add("@Department", model.DepartmentId);

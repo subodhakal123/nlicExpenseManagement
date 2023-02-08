@@ -20,6 +20,11 @@ namespace ExpenseManagement.Model.Expense
 
     public class ItemViewModel
     {
+        public string ExpenseTitle { get; set; }
+        public string ExpenseBy { get; set; }
+        public string BranchName { get; set; }
+        public string AppliedBy { get; set; }
+        public string Status { get; set; }
         public bool IsRecommended {get; set;}
         public int DepartmentName { get; set;}
         public string Recommender { get; set;}
