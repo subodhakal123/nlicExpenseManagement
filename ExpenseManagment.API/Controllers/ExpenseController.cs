@@ -50,5 +50,11 @@ namespace ExpenseManagment.API.Controllers
 		{
 			return _es.ApproveExpense(model);
 		}
+
+		[HttpPost("RequestApproval")]
+		public string RequestApproval(RequestApproval model)
+		{
+			return _es.ApprovalRequest(model);
+		}
 	}
 }

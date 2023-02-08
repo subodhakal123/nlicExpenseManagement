@@ -83,11 +83,15 @@ namespace ExpenseManagement.BLL.Expense
                 list2.BranchName = list[0].BranchName;
                 list2.AppliedBy = list[0].AppliedBy;
                 list2.Status = list[0].Status;
+                list2.ExpenseDate = list[0].ExpenseDate;
                 list2.IsRecommended = list[0].IsRecommended;
                 list2.Recommender = list[0].Recommender;
                 list2.DepartmentId = list[0].DepartmentName;
                 list2.Comment = list[0].Comment;
-                list2.TotalAmount = list[0].TotalAmount;
+                list2.IsApproved = list[0].IsApproved;
+                list2.ApprovedBy = list[0].ApprovedBy;
+                list2.ApprovedDate = list[0].ApprovedDate;
+                list2.ApproverName = list[0].ApproverName;
 
                 foreach(ItemViewModel item in list)
                 {
@@ -162,6 +166,25 @@ namespace ExpenseManagement.BLL.Expense
                 parameter.Add("@Username", model.Username);
                 parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
                 this.db.Execute("[EXP].[usp_ExpenseApproval_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
+                strReturnMsg = parameter.Get<string>("retMsg");
+            }
+            catch (Exception ex)
+            {
+                strReturnMsg = "Error: " + ex.Message.ToString();
+            }
+            return strReturnMsg;
+        }
+
+        public string ApprovalRequest(RequestApproval model)
+        {
+            string strReturnMsg = "";
+            try
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@ExpenseId", model.ExpenseId);
+                parameter.Add("@ForwardTo", model.ForwardTo);
+                parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
+                this.db.Execute("[EXP].[usp_RequestExpenseApproval]", parameter, commandType: CommandType.StoredProcedure);
                 strReturnMsg = parameter.Get<string>("retMsg");
             }
             catch (Exception ex)

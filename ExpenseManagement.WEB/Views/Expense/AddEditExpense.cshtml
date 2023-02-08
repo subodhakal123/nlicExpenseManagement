@@ -146,12 +146,21 @@
                     <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
                 </div>
                 @if(Model.ExpenseId > 0){
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
-                    </div>
-                    <div class="col-md-3">
-                        <input asp-for="Status" type="text" value="@Model.Status" />
-                    </div>
+                    @if(Model.Status == 8){
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
+                        </div>
+                        <div class="col-md-3">
+                            <input asp-for="Status" type="text" value="@Model.Status" />
+                        </div>
+                    }
+                    @if((Model.Status == 2) || (Model.Status == 6))
+                    {
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelApprove()">Cancel Approval Request</button>
+                        </div>
+                    }
+                    
                 }
                 
                 <!--<div class="col-md-1">
@@ -674,9 +683,9 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: WebApiUri + '/Expense/ApproveExpense',
+                    url: WebApiUri + '/Expense/RequestApproval',
                     datatype: 'json',
-                    data: JSON.stringify({ExpenseId : expenseIdSelected,Username: '@userId'}),
+                    data: JSON.stringify({ExpenseId : expenseIdSelected,ForwardTo: $('#Status').val()}),
                     contentType: "application/json;charset=utf-8",
                     beforeSend: function(xhr){expenseIdSelected
                             xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);

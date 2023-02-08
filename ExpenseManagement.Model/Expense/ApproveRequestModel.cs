@@ -11,4 +11,10 @@ namespace ExpenseManagement.Model.Expense
         public int ExpenseId { get; set; }
         public string Username { get; set; }
     }
+
+    public class RequestApproval
+    {
+        public int ExpenseId { get; set; }
+        public int ForwardTo { get; set; }
+    }
 }
