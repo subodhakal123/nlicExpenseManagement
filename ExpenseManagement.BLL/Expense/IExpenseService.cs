@@ -16,6 +16,7 @@ namespace ExpenseManagement.BLL.Expense
         SaveExpense SaveExpense(ItemExpenseModel model);
         string DeleteExpense(int ExpenseId);
         string ApproveExpense(ApproveRequestModel model);
+        public string CancelExpenseApproval(ApproveRequestModel model);
         string ApprovalRequest(RequestApproval model);
     }
 }

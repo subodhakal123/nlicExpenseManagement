@@ -177,6 +177,25 @@ namespace ExpenseManagement.BLL.Expense
             return strReturnMsg;
         }
 
+        public string CancelExpenseApproval(ApproveRequestModel model)
+        {
+            string strReturnMsg = "";
+            try
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@ExpenseId", model.ExpenseId);
+                parameter.Add("@UserId", model.UserId);
+                parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
+                this.db.Execute("[EXP].[usp_Cancel_ExpenseApproval]", parameter, commandType: CommandType.StoredProcedure);
+                strReturnMsg = parameter.Get<string>("retMsg");
+            }
+            catch (Exception ex)
+            {
+                strReturnMsg = "Error: " + ex.Message.ToString();
+            }
+            return strReturnMsg;
+        }
+
         public string ApprovalRequest(RequestApproval model)
         {
             string strReturnMsg = "";

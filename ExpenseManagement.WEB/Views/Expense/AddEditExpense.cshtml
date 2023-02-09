@@ -150,46 +150,58 @@
                 </div>
                 
                 @if(Model.ExpenseId > 0){
-                    @if(Model.IsApproved == 0){
-                    @if(Model.IsAuthorisedToApprove == 1)
+                    @if(Model.IsApproved == 0)
+                    {
+                        @if(Model.IsAuthorisedToApprove == 1)
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-success rounded-pill m-2" onclick="fnApproveExpense()">Approve</button>
+                            </div>
+                        }
+                        else if(@BrCode != 100)
+                        {
+                                @if((@BrCode >=700) & (@BrCode <= 900)){
+                                    @if(Model.Status == 2){
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-success rounded-pill m-2"  onclick="fnModelApprove()">Send For Approval</button>
+                                        </div>
+                                    }
+                                    @if(Model.Status == 6 & (BrCode == Model.BrCode))
+                                    {
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-danger rounded-pill m-2" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    @if(Model.Status == 9){
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
+                                    </div>
+                                    }
+                                    else if(Model.Status == 2 || Model.Status == 6)
+                                    {
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
+                                        </div>
+                                        
+                                    }
+                                }
+                    }
+                }
+                else
+                {
+                    @if(Model.ApprovedBy == @userId)
                     {
                         <div class="col-md-3">
-                            <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Approve</button>
+                            <button type="button" class="btn btn-danger rounded-pill m-2"  onclick="fnCancelExpenseApproval()">Cancel Approval</button>
                         </div>
                     }
-                    else if(@BrCode != 100){
-                            @if((@BrCode >=700) & (@BrCode <= 900)){
-                                @if(Model.Status == 2){
-                                    <div class="col-md-3">
-                                        <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
-                                    </div>
-                                }
-                                @if(Model.Status == 6 & (BrCode == Model.BrCode))
-                                {
-                                    <div class="col-md-3">
-                                        <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                @if(Model.Status == 9){
-                                    <div class="col-md-3">
-                                        <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
-                                </div>
-                                }
-                                else if(Model.Status == 2 || Model.Status == 6)
-                                {
-                                    <div class="col-md-3">
-                                        <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
-                                    </div>
-                                    
-                                }
-                            }
-                        }
-                    }
-                    
                 }
+
+
+            }
                 
                 <!--<div class="col-md-1">
                     <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2" onclick="fileDownload()">Download</button>
@@ -784,4 +796,60 @@
     dataValueField: "ddlVal"
                 }).data("kendoDropDownList");
     };
+
+    function fnApproveExpense(){
+          //show loader
+            var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
+
+            if(expenseIdSelected != null){
+
+                $.ajax({
+                    type: 'POST',
+                    url: WebApiUri + '/Expense/ApproveExpense',
+                    datatype: 'json',
+                    data: JSON.stringify({ExpenseId : expenseIdSelected,UserId: '@userId'}),
+                    contentType: "application/json;charset=utf-8",
+                    beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
+                    success: function(response){
+                            toastr.success(response);
+                            GridImplementation();
+                    }
+                });
+                //$('.approveBtn').attr('style','background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);');
+            }
+            else{
+                toastr.warning('Select a Row');
+            }
+          
+      };
+
+      function fnCancelExpenseApproval(){
+          //show loader
+            var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
+
+            if(expenseIdSelected != null){
+
+                $.ajax({
+                    type: 'POST',
+                    url: WebApiUri + '/Expense/CancelExpenseApproval',
+                    datatype: 'json',
+                    data: JSON.stringify({ExpenseId : expenseIdSelected,UserId: '@userId'}),
+                    contentType: "application/json;charset=utf-8",
+                    beforeSend: function(xhr){
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
+                    success: function(response){
+                            toastr.success(response);
+                            GridImplementation();
+                    }
+                });
+                //$('.approveBtn').attr('style','background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);');
+            }
+            else{
+                toastr.warning('Select a Row');
+            }
+          
+      };
 </script>
