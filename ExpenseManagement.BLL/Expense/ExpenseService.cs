@@ -69,14 +69,14 @@ namespace ExpenseManagement.BLL.Expense
             return al;
         }
 
-        public ItemExpenseModel GetExpenseById(int ExpenseId)
+        public ItemExpenseViewModel GetExpenseById(GetExpenseById model)
         {
             List<ItemViewModel> list = new List<ItemViewModel>();
-            ItemExpenseModel list2 = new ItemExpenseModel();
+            ItemExpenseViewModel list2 = new ItemExpenseViewModel();
             list2.Item = new List<ItemModel>();
             try
             {
-                list = db.Query<ItemViewModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).ToList();
+                list = db.Query<ItemViewModel>("[EXP].[usp_Expense_Get]", new { expenseId = model.ExpenseId,userId = model.UserId }, commandType: CommandType.StoredProcedure).ToList();
                 list2.ExpenseId = list[0].ExpenseId;
                 list2.ExpenseTitle = list[0].ExpenseTitle;
                 list2.ExpenseBy = list[0].ExpenseBy;
@@ -93,6 +93,7 @@ namespace ExpenseManagement.BLL.Expense
                 list2.ApprovedBy = list[0].ApprovedBy;
                 list2.ApprovedDate = list[0].ApprovedDate;
                 list2.ApproverName = list[0].ApproverName;
+                list2.IsAuthorisedToApprove = list[0].IsAuthorisedToApprove;
 
                 foreach(ItemViewModel item in list)
                 {
@@ -164,7 +165,7 @@ namespace ExpenseManagement.BLL.Expense
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("@ExpenseId", model.ExpenseId);
-                parameter.Add("@Username", model.Username);
+                parameter.Add("@UserId", model.UserId);
                 parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
                 this.db.Execute("[EXP].[usp_ExpenseApproval_InsUpd]", parameter, commandType: CommandType.StoredProcedure);
                 strReturnMsg = parameter.Get<string>("retMsg");
@@ -183,6 +184,7 @@ namespace ExpenseManagement.BLL.Expense
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("@ExpenseId", model.ExpenseId);
+                parameter.Add("@UserId", model.userId);
                 parameter.Add("@ForwardTo", model.ForwardTo);
                 parameter.Add("@retMsg", dbType: DbType.String, size: 500, direction: ParameterDirection.Output);
                 this.db.Execute("[EXP].[usp_RequestExpenseApproval]", parameter, commandType: CommandType.StoredProcedure);

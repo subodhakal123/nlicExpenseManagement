@@ -16,6 +16,7 @@ namespace ExpenseManagement.Web.Controllers
         public WebApiService _ws;
         RestClient client;
         string WebApiUri;
+        int userId;
         public ExpenseController()
         {
             client = new RestClient();
@@ -35,6 +36,10 @@ namespace ExpenseManagement.Web.Controllers
         public async Task<ActionResult> AddEditExpense(ItemExpenseModel model)
         {
             model.Item = new List<ItemModel>();
+            var model2 = new ItemExpenseViewModel();
+            var model3 = new GetExpenseById();
+            model3.ExpenseId = model.ExpenseId;
+            model3.UserId = 985;
             
             if (model.ExpenseId > 0)
             {
@@ -44,13 +49,13 @@ namespace ExpenseManagement.Web.Controllers
                 var request = new RestRequest();
                 request.Method = Method.Post;
                 request.Resource = WebApiUri + "/Expense/GetExpenseById";
-                request.AddQueryParameter("ExpenseId", model.ExpenseId);
+                request.AddJsonBody(model3);
                 RestResponse response = _ws.GetResponse(request);
-                model = JsonConvert.DeserializeObject< ItemExpenseModel>( response.Content);
+                model2 = JsonConvert.DeserializeObject<ItemExpenseViewModel>( response.Content);
 
             }
             
-            return PartialView(model);
+            return PartialView(model2);
 
         }
     }

@@ -27,4 +27,10 @@ namespace ExpenseManagement.Model.Expense
         public int? ExpenseId { get; set; }
         public string? retMsg { get; set; }
     }
+
+    public class GetExpenseById
+    {
+        public int? ExpenseId { get; set; }
+        public int? UserId { get; set; }
+    }
 }

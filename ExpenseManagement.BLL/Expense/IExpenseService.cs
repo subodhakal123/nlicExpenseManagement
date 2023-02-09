@@ -12,7 +12,7 @@ namespace ExpenseManagement.BLL.Expense
     public interface IExpenseService
     {
         ArrayList GetAllExpense(FilterSortModel model);
-        ItemExpenseModel GetExpenseById(int ExpenseId);
+        ItemExpenseViewModel GetExpenseById(GetExpenseById model);
         SaveExpense SaveExpense(ItemExpenseModel model);
         string DeleteExpense(int ExpenseId);
         string ApproveExpense(ApproveRequestModel model);

@@ -1,4 +1,4 @@
-﻿@model ExpenseManagement.Model.Expense.ItemExpenseModel;
+﻿@model ExpenseManagement.Model.Expense.ItemExpenseViewModel;
 
 @{
     Layout = null;
@@ -8,6 +8,7 @@
     var Username = User.Identity.Name;
     if (Model.BranchName == null) Model.BranchName = Branch;
     if (Model.AppliedBy == null) Model.AppliedBy = Username;
+    if (Model.Status == 0) Model.Status = 9;
 }
 
 <div class="container-fluid m-2">
@@ -150,7 +151,13 @@
                 
                 @if(Model.ExpenseId > 0){
                     @if(Model.IsApproved == 0){
-                        @if(@BrCode != 100){
+                    @if(Model.IsAuthorisedToApprove == 1)
+                    {
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Approve</button>
+                        </div>
+                    }
+                    else if(@BrCode != 100){
                             @if((@BrCode >=700) & (@BrCode <= 900)){
                                 @if(Model.Status == 2){
                                     <div class="col-md-3">
@@ -179,7 +186,7 @@
                                     
                                 }
                             }
-                    }
+                        }
                     }
                     
                 }
@@ -738,7 +745,7 @@
                     type: 'POST',
                     url: WebApiUri + '/Expense/RequestApproval',
                     datatype: 'json',
-                    data: JSON.stringify({ExpenseId : expenseIdSelected,ForwardTo: '10'}),
+                    data: JSON.stringify({ExpenseId : expenseIdSelected,UserId: @userId,ForwardTo: '10'}),
                     contentType: "application/json;charset=utf-8",
                     beforeSend: function(xhr){expenseIdSelected
                             xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);

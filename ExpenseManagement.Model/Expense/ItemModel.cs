@@ -36,6 +36,7 @@ namespace ExpenseManagement.Model.Expense
         public string ApprovedBy { get; set;}
         public string ApprovedDate { get; set;}
         public string ApproverName { get; set;}
+        public int IsAuthorisedToApprove { get; set;}
         public int ItemId { get; set; }
         public int ExpenseId { get; set; }
         public string ItemName { get; set; }
