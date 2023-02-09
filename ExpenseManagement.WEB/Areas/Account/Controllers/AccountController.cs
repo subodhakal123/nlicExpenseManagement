@@ -40,6 +40,7 @@ namespace ExpenseManagement.Web.Areas.Account.Controllers
                                              new Claim("UserId",response.UserId),
                                              new Claim("RoleId",response.RoleId),
                                              new Claim("BrName",response.BrName),
+                                             new Claim("BrCode",response.BrCode),
                                              new Claim("AccessToken", response.access_token)
                                          }
                                          , CookieAuthenticationDefaults.AuthenticationScheme

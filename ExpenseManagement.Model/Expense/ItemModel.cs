@@ -22,6 +22,7 @@ namespace ExpenseManagement.Model.Expense
     {
         public string ExpenseTitle { get; set; }
         public string ExpenseBy { get; set; }
+        public int BrCode { get; set; }
         public string BranchName { get; set; }
         public string AppliedBy { get; set; }
         public int Status { get; set; }

@@ -80,6 +80,7 @@ namespace ExpenseManagement.BLL.Expense
                 list2.ExpenseId = list[0].ExpenseId;
                 list2.ExpenseTitle = list[0].ExpenseTitle;
                 list2.ExpenseBy = list[0].ExpenseBy;
+                list2.BrCode = list[0].BrCode;
                 list2.BranchName = list[0].BranchName;
                 list2.AppliedBy = list[0].AppliedBy;
                 list2.Status = list[0].Status;

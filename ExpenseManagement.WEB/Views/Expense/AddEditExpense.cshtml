@@ -4,12 +4,12 @@
     Layout = null;
     var userId = User.Claims.FirstOrDefault(c=>c.Type == "UserId")?.Value;
     var Branch = User.Claims.FirstOrDefault(c => c.Type == "BrName")?.Value;
+    var BrCode = Int16.Parse(User.Claims.FirstOrDefault(c => c.Type == "BrCode")?.Value);
     var Username = User.Identity.Name;
     if (Model.BranchName == null) Model.BranchName = Branch;
     if (Model.AppliedBy == null) Model.AppliedBy = Username;
 }
 
-</style>
 <div class="container-fluid m-2">
     <div class="table-wrapper">
         <div class="table-title">
@@ -34,7 +34,9 @@
                     <label asp-for="ExpenseTitle">ExpenseTitle :</label>
                     <input asp-for="ExpenseTitle" type="text" value = "@Model.ExpenseTitle" />
                 </div>
-                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <input asp-for="Status" type="text" value="@Model.Status" />
+                </div>
                 <div class="col-sm-4">
                     <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
                 </div>
@@ -145,20 +147,39 @@
                 <div class="col-md-1">
                     <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
                 </div>
+                
                 @if(Model.ExpenseId > 0){
-                    @if(Model.Status == 8){
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
-                        </div>
-                        <div class="col-md-3">
-                            <input asp-for="Status" type="text" value="@Model.Status" />
-                        </div>
+                    @if(Model.IsApproved == 0){
+                        @if(@BrCode != 100){
+                            @if((@BrCode >=700) & (@BrCode <= 900)){
+                                @if(Model.Status == 2){
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
+                                    </div>
+                                }
+                                @if(Model.Status == 6 & (BrCode == Model.BrCode))
+                                {
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                @if(Model.Status == 9){
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
+                                </div>
+                                }
+                                else if(Model.Status == 2 || Model.Status == 6)
+                                {
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
+                                    </div>
+                                    
+                                }
+                            }
                     }
-                    @if((Model.Status == 2) || (Model.Status == 6))
-                    {
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelApprove()">Cancel Approval Request</button>
-                        </div>
                     }
                     
                 }
@@ -318,6 +339,10 @@
         };
 
     function fnWhenLoaded(){
+
+        
+            fnForwardList();
+
             $("#fileContainerId").hide();
             $("#deptId").hide();
             if('@Model.Comment' !=''){
@@ -352,7 +377,6 @@
                 }
                 fnDisableInput();
                 fileDownload();
-                fnForwardList();
                 
             }
     };
@@ -589,15 +613,21 @@
             expenseId : $('#expenseId').val(),
             expenseTitle: $('#ExpenseTitle').val(),
             expenseBy: $('#ExpenseBy').val(),
+            brCode: 0,
             branchName: $('#BranchName').val(),
             appliedBy: $('#AppliedBy').val(),
             status: $('#Status').val(),
+            expenseDate: '',
             item: fnGetModelList(),
             isRecommended: isRecommended,
             departmentId: $('#departmentId').val(),
             recommender: $('#recommenderId').val(),
             totalAmount: $('#TotalAmountId').val(),
-            comment: $('#commentId').val()
+            comment: $('#commentId').val(),
+            isApproved: 0,
+            approvedBy: "",
+            approvedDate: "",
+            approverName: ""
         });
         return itemDetailData;
     };
@@ -686,6 +716,29 @@
                     url: WebApiUri + '/Expense/RequestApproval',
                     datatype: 'json',
                     data: JSON.stringify({ExpenseId : expenseIdSelected,ForwardTo: $('#Status').val()}),
+                    contentType: "application/json;charset=utf-8",
+                    beforeSend: function(xhr){expenseIdSelected
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                        },
+                    success: function(response){
+                        toastr.success(response);
+                    }
+                });
+            }
+          
+      };
+
+      function fnModelCancelApprove(){
+
+            var expenseIdSelected = $('#expenseId').val();
+
+            if(expenseIdSelected > 0){
+
+                $.ajax({
+                    type: 'POST',
+                    url: WebApiUri + '/Expense/RequestApproval',
+                    datatype: 'json',
+                    data: JSON.stringify({ExpenseId : expenseIdSelected,ForwardTo: '10'}),
                     contentType: "application/json;charset=utf-8",
                     beforeSend: function(xhr){expenseIdSelected
                             xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
