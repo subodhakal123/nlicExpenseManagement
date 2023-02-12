@@ -815,3 +815,8 @@ D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\Expens
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\ref\ExpenseManagment.API.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.pdb
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.genruntimeconfig.cache
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Cors.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Http.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Http.Cors.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

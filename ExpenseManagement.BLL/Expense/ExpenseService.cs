@@ -94,6 +94,7 @@ namespace ExpenseManagement.BLL.Expense
                 list2.ApprovedDate = list[0].ApprovedDate;
                 list2.ApproverName = list[0].ApproverName;
                 list2.IsAuthorisedToApprove = list[0].IsAuthorisedToApprove;
+                list2.TotalAmount = list[0].TotalAmount;
 
                 foreach(ItemViewModel item in list)
                 {

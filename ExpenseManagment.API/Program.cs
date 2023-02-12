@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +54,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 builder.Services.AddCors();
-
 builder.Services.AddDbContext<ApplicationDbContext>(options=> options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));

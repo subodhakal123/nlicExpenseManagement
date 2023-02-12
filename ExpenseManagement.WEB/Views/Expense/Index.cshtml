@@ -35,8 +35,8 @@
         <div class="row" id="addEditContainer">
             <div class="col-lg-12">
                 <div class="row m-2">
-                    <button id="btnExpenseAdd" style="font-weight: bold;font-size: 16px;padding: 4px;text-align: center;border: none;background-color: #144a85;color: #fff;" class="col-md-1 rounded-pill"><i class="bi bi-plus-square-dotted"></i>&nbsp;Add</button>
-                    <button id="btnExpenseEdit"style="font-weight: bold;font-size: 16px;padding: 4px;text-align: center;border: none;background-color: #144a85;color: #fff;" class="col-md-1 rounded-pill"><i class="bi bi-pencil-square"></i>&nbsp;Edit</button>
+                    <button id="btnExpenseAdd"  onclick="fnAddExpense()" style="font-weight: bold;font-size: 16px;padding: 4px;text-align: center;border: none;background-color: #144a85;color: #fff;" class="col-md-1 rounded-pill"><i class="bi bi-plus-square-dotted"></i>&nbsp;Add</button>
+                    <button id="btnExpenseEdit" onclick = "fnEditExpense()" style="font-weight: bold;font-size: 16px;padding: 4px;text-align: center;border: none;background-color: #144a85;color: #fff;" class="col-md-1 rounded-pill"><i class="bi bi-pencil-square"></i>&nbsp;Edit</button>
                 </div>
             </div>
             
@@ -79,7 +79,7 @@
 
       $('#collapseExample').attr('class','collapse');
 
-      $("#btnExpenseAdd").off().on('click', function(){
+      function fnAddExpense(){
               var iscollapse = $('#collapseExample').attr('class');
               if(iscollapse == 'collapse')
               {
@@ -92,10 +92,10 @@
                   $('#expenseGrid').show();
               }
               
-          });
+          };
 
 
-        $('#btnExpenseEdit').off().on('click', function() {
+        function fnEditExpense(){
 
             //show loader
             var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
@@ -116,7 +116,7 @@
                   $('#collapseExample').addClass('collapse');
                   $('#expenseGrid').show();
             }
-        });
+        };
 
 
       function RuntimeJquery(){
@@ -198,37 +198,9 @@
           { field: "expenseStatus", title: "Status"},
           { field: "totalAmount", title: "Amount"},
           { field: "isApproved", title: "Action",
-          template: "# if (isApproved==true) {#<button onclick='abc()' class='approveBtn btn btn-sm' style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approved</button>#} else {#<button onclick='abc()' class='approveBtn btn btn-sm' style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</button>#} #"}
+          template: "# if (isApproved==true) { if(approvedBy == @userId){#<button onclick='fnEditExpense()' class='approveBtn btn btn-sm' style='background-color: red; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Cancel Approval</button>#} else {#<button class='approveBtn btn btn-sm' style='background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approved</button>#}} else { if(isAuthorisedToApprove == 1) {#<button onclick='fnEditExpense()' class='approveBtn btn btn-sm' style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Approve Now</button># } else { #<button onclick='fnEditExpense()' class='approveBtn btn btn-sm' style='background-color: orange; color:white; padding: 4px; border-radius: calc(.5rem - 1px);'>Send To Approve</button># }} #"}
         ]
         });
-      };
-    
-      function abc(){
-          //show loader
-            var expenseIdSelected = $(".k-selected").find('td[role="gridcell"]').eq(0).html();
-
-            if(expenseIdSelected != null){
-
-                $.ajax({
-                    type: 'POST',
-                    url: WebApiUri + '/Expense/ApproveExpense',
-                    datatype: 'json',
-                    data: JSON.stringify({ExpenseId : expenseIdSelected,UserId: '@userId'}),
-                    contentType: "application/json;charset=utf-8",
-                    beforeSend: function(xhr){
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
-                        },
-                    success: function(response){
-                            toastr.success(response);
-                            GridImplementation();
-                    }
-                });
-                //$('.approveBtn').attr('style','background-color: green; color:white; padding: 4px; border-radius: calc(.5rem - 1px);');
-            }
-            else{
-                toastr.warning('Select a Row');
-            }
-          
       };
 
       function loadAddEditExpense(ExpenseId){

@@ -21,6 +21,8 @@ namespace ExpenseManagement.Model.Expense
         public string? Comment { get; set; }
         public bool? IsDeleted { get; set; }
         public bool? IsApproved { get; set; }
+        public int? ApprovedBy { get; set; }
+        public int? IsAuthorisedToApprove { get; set; }
     }
     public class SaveExpense
     {
