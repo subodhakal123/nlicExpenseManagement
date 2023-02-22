@@ -271,13 +271,14 @@
                     var extension = file.name.split(".");
                     extension = extension[1];
                     if(extension == "docx" || extension == "doc" ){
-                       var fileImageUrl = "https://localhost:7084/img/docx.png";
+                       var fileImageUrl = '@Url.Content("~/img/docx.png")';
                     }
-                    else if(extension == "xls" || extension == "xlsx"){
-                       var fileImageUrl = "https://localhost:7084/img/excel.png";
+                    else if(extension == "xls" || extension == "xlsx")
+                    {
+                       var fileImageUrl = '@Url.Content("~/img/excel.png")';
                     }
                     else if(extension == "pptx"){
-                       var fileImageUrl = "https://localhost:7084/img/ppt.png";
+                       var fileImageUrl = '@Url.Content("~/img/ppt.png")';
                     }
                     else
                     {
@@ -316,13 +317,13 @@
                     var extension = filename.split(".");
                     extension = extension[1];
                     if(extension == "docx" || extension == "doc" ){
-                       var fileImageUrl = "https://localhost:7084/img/docx.png";
+                       var fileImageUrl = '@Url.Content("~/img/docx.png")';
                     }
                     else if(extension == "xls" || extension == "xlsx"){
-                       var fileImageUrl = "https://localhost:7084/img/excel.png";
+                       var fileImageUrl = '@Url.Content("~/img/excel.png")';
                     }
                     else if(extension == "pptx"){
-                       var fileImageUrl = "https://localhost:7084/img/ppt.png";
+                       var fileImageUrl = '@Url.Content("~/img/ppt.png")';
                     }
                     else
                     {
