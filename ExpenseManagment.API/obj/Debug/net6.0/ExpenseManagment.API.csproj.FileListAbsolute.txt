@@ -542,6 +542,10 @@ D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Dapper
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Humanizer.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\MessagePack.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\MessagePack.Annotations.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Cors.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Http.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Http.Cors.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -599,6 +603,7 @@ D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Micros
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\NuGet.Common.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\NuGet.Configuration.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
@@ -815,8 +820,3 @@ D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\Expens
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\ref\ExpenseManagment.API.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.pdb
 D:\New folder\nlicExpenseManagement\ExpenseManagment.API\obj\Debug\net6.0\ExpenseManagment.API.genruntimeconfig.cache
-D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Cors.dll
-D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Net.Http.Formatting.dll
-D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Http.dll
-D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\System.Web.Http.Cors.dll
-D:\New folder\nlicExpenseManagement\ExpenseManagment.API\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

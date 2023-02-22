@@ -1,0 +1,12 @@
+﻿.clsRedTxt {
+    color: red !important;
+    background-color: white !important;
+}
+
+.clsRedBox {
+    border-color: red !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-radius: .25rem !important;
+    /*border: none !important;*/
+}

@@ -114,7 +114,7 @@
                 <label><b>Total:</b></label>
             </div>
             <div class="col-md-3">
-                <input type="number" class="btn-info rounded-pill m-2"  id="TotalAmountId" asp-for= "@Model.TotalAmount" readonly/>
+                <input type="text" class="btn-info rounded-pill m-2"  id="TotalAmountId" asp-for= "@Model.TotalAmount" readonly/>
                 <input type="text" value="@Model.ExpenseId" id="expenseId" hidden />
             </div>
         </div>
@@ -233,9 +233,7 @@
     function fnEnableInput(){
         var rowCount = $('.addEditRow:last-child').index();
         for(let i=0;i<=rowCount;i++){
-            console.log(i);
             for(let j=0;j<=5;j++){
-                 console.log(j);
                 $('.addEditRow').eq(i).find('input[type="text"]').eq(j).removeAttr('disabled','disabled');
             }
         }
@@ -258,19 +256,36 @@
             
         fileInput.addEventListener('change', () => 
         {
-
             previewContainer.innerHTML = ''; // clear previous previews
 
             for (let i = 0; i < fileInput.files.length; i++) 
             {
 
                 const file = fileInput.files[i];
+             
+
                 const reader = new FileReader();
                 
-                console.log(event.target.result);
                 reader.onload = (event) => {
+
+                    var extension = file.name.split(".");
+                    extension = extension[1];
+                    if(extension == "docx" || extension == "doc" ){
+                       var fileImageUrl = "https://localhost:7084/img/docx.png";
+                    }
+                    else if(extension == "xls" || extension == "xlsx"){
+                       var fileImageUrl = "https://localhost:7084/img/excel.png";
+                    }
+                    else if(extension == "pptx"){
+                       var fileImageUrl = "https://localhost:7084/img/ppt.png";
+                    }
+                    else
+                    {
+                        var fileImageUrl = event.target.result;
+                    }
+
                     var row = '<div class="iframeParent col-md-2 m-2">'
-                        + '<iframe src='+ event.target.result +' scrolling="no"></iframe>'
+                        + '<iframe src='+ fileImageUrl +' scrolling="no"></iframe>'
                         + '<button class="uploadConfirm m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/></svg></button>'
                         + '<button class="deleteIframe m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
                         + '</div>';
@@ -297,10 +312,26 @@
                 var fileServerUrl = WebApiUri + "/Files/";
 
                 for (let i = 0; i < result.length; i++) {
-                    //console.log(result[i].fileDownloadName);
-                    var fileurl = fileServerUrl + '/'+ $('#expenseId').val() +'/'+ result[i];
+                    var filename = result[i];
+                    var extension = filename.split(".");
+                    extension = extension[1];
+                    if(extension == "docx" || extension == "doc" ){
+                       var fileImageUrl = "https://localhost:7084/img/docx.png";
+                    }
+                    else if(extension == "xls" || extension == "xlsx"){
+                       var fileImageUrl = "https://localhost:7084/img/excel.png";
+                    }
+                    else if(extension == "pptx"){
+                       var fileImageUrl = "https://localhost:7084/img/ppt.png";
+                    }
+                    else
+                    {
+                        var fileImageUrl = fileServerUrl + '/'+ $('#expenseId').val() +'/'+ filename;
+                    }
+                    
+                    var fileurl = fileServerUrl + '/'+ $('#expenseId').val() +'/'+ filename;
                     var row2 = '<div class="iframeParent col-md-2 m-2">'
-                        + '<iframe src=' + fileurl + ' scrolling="no"></iframe>'
+                        + '<iframe src=' + fileImageUrl + ' scrolling="no"></iframe>'
                         + '<button class="uploadConfirm m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/></svg></button>'
                         + '<a href='+ fileurl +' target="_blank"><button class="viewIframeContent m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg></button></a>'
                         + '<button class="deleteIframe m-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></button>'
@@ -370,6 +401,10 @@
             if('@Model.IsRecommended' == 'True'){
                 $('#IsRecommendedId').prop('checked',true);
                 $('#deptId').show();
+            }
+            if(@Model.TotalAmount > 0){
+                console.log(@Model.TotalAmount);
+                $('#TotalAmountId').val(fnSeparator(@Model.TotalAmount));
             }
             
             //handling the departmentnames switch
@@ -453,7 +488,7 @@
                 $(".add-new").removeAttr("disabled");
             }
 
-            $("#TotalAmountId").attr('value', calculateTotal());
+            $("#TotalAmountId").attr('value', fnSeparator(calculateTotal()));
         });
         };
 
@@ -521,7 +556,6 @@
             sum = parseFloat(sum) + parseFloat($('.addEditRow').eq(i-1).find('input[type="text"]').eq(5).val());
         }
         return sum;
-
     };
 
     function loadDepartmentDropdown(typeId){
@@ -652,7 +686,8 @@
     };
 
     function fnModelSave(){
-
+        console.log("save");
+        validateTextBoxesCM('ExpenseBy', false);
         $.ajax({
             url: WebApiUri + "/Expense/SaveExpense",
             type: 'POST',
@@ -663,10 +698,6 @@
                             xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
                         },
             success: function (result) {
-
-                console.log(result.expenseId);
-                console.log(result.retMsg);
-                console.log(result);
 
                 $('#expenseId').attr('value',result.expenseId);
                 toastr.success(result.retMsg);

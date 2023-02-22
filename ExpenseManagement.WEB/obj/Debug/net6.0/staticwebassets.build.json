@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bOd6FVhTxI8wIUAYHgMdTHPvUjvsphXCUBr4PCGZtCc=",
+  "Hash": "8Pp1A8NV/OrV0W12hzdYvsGYLYUJtjnf1JCJP4A6kys=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -85,6 +85,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\addEditExpense.css"
+    },
+    {
+      "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\css\\custom.css",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "css/custom.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\custom.css"
     },
     {
       "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\css\\site.css",

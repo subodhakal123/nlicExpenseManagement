@@ -7,7 +7,6 @@
     fnDeleteRow();
 
     $('.delete').click(function(){
-        console.log(this);
          });
     function fnPreviewFiles(){
 
@@ -26,7 +25,6 @@
             
                 reader.onload = (event) => {
         //iframe.src = event.target.result;
-        console.log(event.target.result);
     var row = '<div class="iframeParent col-md-2 m-2">'
         + '<iframe src='+ event.target.result +' scrolling="no"></iframe>'
         + '<button><i class="bi bi-trash3-fill"></i></button>'
