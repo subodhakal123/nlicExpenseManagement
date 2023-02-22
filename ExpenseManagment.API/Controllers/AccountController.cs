@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManagment.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
