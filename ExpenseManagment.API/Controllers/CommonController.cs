@@ -1,4 +1,5 @@
 ﻿using ExpenseManagement.BLL.Common;
+using ExpenseManagement.Model.Expense;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,14 @@ namespace ExpenseManagment.API.Controllers
         {
             List<DropDown> dropDownsList = new List<DropDown>();
             dropDownsList = _dd.GetDropDowns(callParameter);
+            return dropDownsList;
+        }
+
+        [HttpPost("GetForwardListDropDowns")]
+        public List<DropDown> GetForwardListDropDowns(GetExpenseById callParameter)
+        {
+            List<DropDown> dropDownsList = new List<DropDown>();
+            dropDownsList = _dd.GetForwardListDropDowns(callParameter);
             return dropDownsList;
         }
     }

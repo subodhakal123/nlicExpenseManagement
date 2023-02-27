@@ -39,11 +39,11 @@ namespace ExpenseManagement.Web.Controllers
             var model2 = new ItemExpenseViewModel();
             var model3 = new GetExpenseById();
             model3.ExpenseId = model.ExpenseId;
-            model3.UserId = 985;
-            
+
             if (model.ExpenseId > 0)
             {
                 var identity = HttpContext.User as ClaimsPrincipal;
+                model3.UserId = Int16.Parse(identity.Claims.First(c => c.Type == "UserId").Value);
                 _ws = new WebApiService(identity);
 
                 var request = new RestRequest();

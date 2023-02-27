@@ -8,7 +8,21 @@
     var Username = User.Identity.Name;
     if (Model.BranchName == null) Model.BranchName = Branch;
     if (Model.AppliedBy == null) Model.AppliedBy = Username;
-    if (Model.Status == 0) Model.Status = 9;
+    if (Model.Status == 0)
+    {
+        if(BrCode == 100)
+        {
+            Model.Status = 6;
+        }
+        else if(BrCode >=700 && BrCode <= 900)
+        {
+            Model.Status = 2;
+        }
+        else
+        {
+            Model.Status = 9;
+        }
+    }
 }
 
 <div class="container-fluid m-2">
@@ -35,8 +49,9 @@
                     <label asp-for="ExpenseTitle">ExpenseTitle :</label>
                     <input asp-for="ExpenseTitle" type="text" value = "@Model.ExpenseTitle" />
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Status" type="text" value="@Model.Status" />
+                <div class="col-sm-3">
+                    <label for="statusId">Status :</label>
+                    <input type="text" id="statusId" value="@Model.Status" />
                 </div>
                 <div class="col-sm-4">
                     <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
@@ -102,9 +117,11 @@
                     </div>
                     <div class="col-md-5" id="deptId">
                         <div class="col-md-8">
+                            <label class="form-check-label" for="DepartmentId">Department:</label>
                             <input type="text" id="departmentId" value="@Model.DepartmentId" />
                         </div>
                         <div class="col-md-4">
+                            <label class="form-check-label" for="Recommender">By:</label>
                             <input type="text" id="recommenderId" value="@Model.Recommender" />
                         </div>
                     </div>
@@ -125,8 +142,8 @@
         </div>
         <div class="row">
                 <div class="col-md-6">
-                    <label for="commentId" align-left>Comment:</label>
-                    <textarea class="form-control" rows="4" id="commentId" value="@Model.Comment"></textarea>
+                    <label for="descId" align-left>Description:</label>
+                    <textarea class="form-control" rows="4" id="descId" value="@Model.Comment"></textarea>
                 </div>
                 <div class="col-md-6">
                     <form enctype="multipart/form-data" onsubmit="fileUpload(); return false;" method="post">
@@ -137,71 +154,81 @@
                                 <input id="FileUpload_FormFile" type="file" name="formFile" style="display:none;" multiple/>
                             </label>
                         </div>
-                        <div class="col-md-6 row">
+                        <!--div class="col-md-6 row">
                             <div class="row col-md-6 m-1"><button class="btn-sm btn-success" id="saveBill" type="submit">Bills<i class="bi bi-cloud-upload-fill"></i></button></div>
-                        </div> 
+                        </div> -->
                     </form>
                 </div>
 
         </div>
             <div class="row">
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()">Save</button>
+                <div class="col-md-1 ">
+                    <button type="button" class="btn btn-success rounded-pill m-2" id="saveExpense" onclick="fnModelSave()"><i class="bi bi-upload"></i> &nbsp;Save</button>
                 </div>
                 
-                @if(Model.ExpenseId > 0){
-                    @if(Model.IsApproved == 0)
+            @if (Model.ExpenseId > 0)
+            {
+                @if (Model.IsApproved == 0)
+                {
+                    @if (Model.IsAuthorisedToApprove == 1)
                     {
-                        @if(Model.IsAuthorisedToApprove == 1)
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-success rounded-pill m-2" onclick="fnApproveExpense()">Approve</button>
+                        </div>
+                    }
+                    else if (@BrCode != 100)
+                    {
+                        @if ((@BrCode >= 700) & (@BrCode <= 900))
                         {
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-success rounded-pill m-2" onclick="fnApproveExpense()">Approve</button>
-                            </div>
+                            @if ((Model.Status == 2) )
+                            {
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-success rounded-pill m-2"  onclick="fnModelApprove()">Send For Approval</button>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input asp-for="Status" type="text" value="@Model.Status" />
+                                </div>
+                            }
+                            @if ((Model.Status == 6))
+                            {
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-danger rounded-pill m-2" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
+                                </div>
+                            }
                         }
-                        else if(@BrCode != 100)
+                        else
                         {
-                                @if((@BrCode >=700) & (@BrCode <= 900)){
-                                    @if(Model.Status == 2){
-                                        <div class="col-md-3">
-                                            <button type="button" class="btn btn-success rounded-pill m-2"  onclick="fnModelApprove()">Send For Approval</button>
-                                        </div>
-                                    }
-                                    @if(Model.Status == 6 & (BrCode == Model.BrCode))
-                                    {
-                                        <div class="col-md-3">
-                                            <button type="button" class="btn btn-danger rounded-pill m-2" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    @if(Model.Status == 9){
-                                        <div class="col-md-3">
-                                            <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
-                                    </div>
-                                    }
-                                    else if(Model.Status == 2 || Model.Status == 6)
-                                    {
-                                        <div class="col-md-3">
-                                            <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
-                                        </div>
-                                        
-                                    }
-                                }
+                            @if (Model.Status == 9)
+                            {
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
+                                </div>
+                            }
+                            else if (Model.Status == 2 || Model.Status == 6)
+                            {
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-danger rounded-pill m-2" id="RemoveApproveExpense" onclick="fnModelCancelApprove()">Cancel Approval Request</button>
+                                </div>
+
+                            }
+                        }
                     }
                 }
                 else
                 {
-                    @if(Model.ApprovedBy == @userId)
+                    @if (Model.ApprovedBy == @userId)
                     {
                         <div class="col-md-3">
                             <button type="button" class="btn btn-danger rounded-pill m-2"  onclick="fnCancelExpenseApproval()">Cancel Approval</button>
                         </div>
                     }
                 }
-
-
             }
+            <div class="col-md-1 ml-4">
+                <a asp-controller="Expense" asp-action="index" type="button" class="btn btn-primary rounded-pill m-2" ><i class="bi bi-skip-backward-circle"></i> &nbsp;Back </a>
+            </div>
+
+            
                 
                 <!--<div class="col-md-1">
                     <button type="button" id="downloadButton" class="btn btn-danger rounded-pill m-2" onclick="fileDownload()">Download</button>
@@ -391,20 +418,42 @@
 
     function fnWhenLoaded(){
 
-        
+            $("#statusId").kendoDropDownList({
+            optionLabel: "Expense Status",
+            height: 310,
+            dataSource:{
+                transport: {
+                read: {
+                url: WebApiUri + "/Common/GetDropDownList",
+            type: "Post",
+            contentType: "application/json",
+            data: {mode: "ForwardList",condition1: "",condition2: ""},
+            dataType: 'json',
+            beforeSend: function(xhr){
+                                    xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                                }
+                                    },
+            parameterMap: function (data) {
+                                        var returnData = JSON.stringify(data);
+            return returnData;
+                                    }
+                                }
+                            },
+            dataTextField: "ddlText",
+            dataValueField: "ddlVal"}).data("kendoDropDownList").enable(false);
+
             fnForwardList();
 
             $("#fileContainerId").hide();
             $("#deptId").hide();
             if('@Model.Comment' !=''){
-                $('#commentId').val('@Model.Comment');
+                $('#descId').val('@Model.Comment');
             }
             if('@Model.IsRecommended' == 'True'){
                 $('#IsRecommendedId').prop('checked',true);
                 $('#deptId').show();
             }
             if(@Model.TotalAmount > 0){
-                console.log(@Model.TotalAmount);
                 $('#TotalAmountId').val(fnSeparator(@Model.TotalAmount));
             }
             
@@ -444,14 +493,22 @@
             var input = $(this).parents(".addEditRow").find('input[type="text"]');
             input.each(function (index) {
                 if (index != 5) {
-                    if (!$(this).val()) {
-                        $(this).addClass("error");
-                        empty = true;
-                    } else {
-                        $(this).removeClass("error");
-                    }
+
+                   if ($(this).val().length != 0) {
+                       //$(this).addClass("error");
+                   
+                        $(this).removeClass("clsRedBox");
+                   
+                       empty = true;
+                   
+                   } else {
+                       //$(this).removeClass("error");
+                   
+                       $(this).addClass("clsRedBox");
+                   }
                 }
             });
+
             $(this).parents(".addEditRow").find(".error").first().focus();
             if (!empty) {
 
@@ -478,10 +535,10 @@
                         $(this).attr('value', $(this).val());
                         price = $(this).val();
                     }
-                    else if (index == 5) {
+                    else if (index == 5) 
+                    {
                         $(this).attr('value', parseFloat(quantity) * parseFloat(price));
                     }
-
                 });
 
                 fnDisableInput();
@@ -670,14 +727,14 @@
             brCode: 0,
             branchName: $('#BranchName').val(),
             appliedBy: $('#AppliedBy').val(),
-            status: $('#Status').val(),
-            expenseDate: '',
+            status: $('#statusId').val(),
+            expenseDate: "",
             item: fnGetModelList(),
             isRecommended: isRecommended,
             departmentId: $('#departmentId').val(),
             recommender: $('#recommenderId').val(),
-            totalAmount: $('#TotalAmountId').val(),
-            comment: $('#commentId').val(),
+            totalAmount: calculateTotal(),
+            comment: $('#descId').val(),
             isApproved: 0,
             approvedBy: "",
             approvedDate: "",
@@ -687,8 +744,7 @@
     };
 
     function fnModelSave(){
-        console.log("save");
-        validateTextBoxesCM('ExpenseBy', false);
+        validateTextBoxesCM('ExpenseBy,ExpenseTitle,descId', false);
         $.ajax({
             url: WebApiUri + "/Expense/SaveExpense",
             type: 'POST',
@@ -701,6 +757,7 @@
             success: function (result) {
 
                 $('#expenseId').attr('value',result.expenseId);
+                fileUpload();
                 toastr.success(result.retMsg);
             },
             error: function (res) {
@@ -803,16 +860,17 @@
       };
 
     function fnForwardList(){
+
         $("#Status").kendoDropDownList({
         optionLabel: "Select where to forward",
     height: 310,
     dataSource:{
         transport: {
         read: {
-        url: WebApiUri + "/Common/GetDropDownList",
+        url: WebApiUri + "/Common/GetForwardListDropDowns",
     type: "Post",
     contentType: "application/json",
-    data: {mode: "ForwardList",condition1: "",condition2: ""},
+    data: {expenseId: $('#expenseId').val() ,userId: "@userId"},
     dataType: 'json',
     beforeSend: function(xhr){
                             xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
@@ -825,8 +883,7 @@
                         }
                     },
     dataTextField: "ddlText",
-    dataValueField: "ddlVal"
-                }).data("kendoDropDownList");
+    dataValueField: "ddlVal"}).data("kendoDropDownList");
     };
 
     function fnApproveExpense(){

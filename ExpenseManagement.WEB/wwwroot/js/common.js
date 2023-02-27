@@ -14,7 +14,7 @@ function validateTextBoxesCM(txtNames, needDiv) {
         //if (Name.slice(0, 3) == "div") {
         //    Name = txtName.slice(3);
         //}
-        //var txtLen = $("#" + Name).val().length;
+        var txtLen = $("#" + Name).val().length;
         //if (needDiv) {
         //    txtName = "div" + Name;
         //}

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8Pp1A8NV/OrV0W12hzdYvsGYLYUJtjnf1JCJP4A6kys=",
+  "Hash": "7OQSl2QkAttPwVwHrhTnUgmRlehLyuWbPbvm02aZ1Xs=",
   "Source": "ExpenseManagement.Web",
   "BasePath": "_content/ExpenseManagement.Web",
   "Mode": "Default",
@@ -155,6 +155,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\img\\docx.png",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "img/docx.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\docx.png"
+    },
+    {
       "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\img\\download (1).jpg",
       "SourceId": "ExpenseManagement.Web",
       "SourceType": "Discovered",
@@ -204,6 +221,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\download.jpg"
+    },
+    {
+      "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\img\\excel.png",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "img/excel.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\excel.png"
     },
     {
       "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\img\\fileUpload.png",
@@ -340,6 +374,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\logo12.png"
+    },
+    {
+      "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\img\\ppt.png",
+      "SourceId": "ExpenseManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\",
+      "BasePath": "_content/ExpenseManagement.Web",
+      "RelativePath": "img/ppt.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\ppt.png"
     },
     {
       "Identity": "D:\\New folder\\nlicExpenseManagement\\ExpenseManagement.WEB\\wwwroot\\js\\addEditExpense.js",

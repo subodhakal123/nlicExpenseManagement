@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpenseManagement.Model.Expense;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace ExpenseManagement.BLL.Common
     public interface IDropDownService
     {
         public List<DropDown> GetDropDowns(DropDownCallParameter callParameter);
+        public List<DropDown> GetForwardListDropDowns(GetExpenseById callParameter);
     }
 }

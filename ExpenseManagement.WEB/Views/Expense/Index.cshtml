@@ -42,7 +42,7 @@
             
             <div  id="collapseExample">
               <div class="card text-center">
-                <div class="card-header" id="cardHeaderId" style="background-color: #346191;color: #fff;">Expense Grid</div>
+                <div class="card-header" id="cardHeaderId" style="background-color: #346191;color: #fff;">Report Expense</div>
                 <div class="card-body" id="cardBodyId">
                 </div>
               </div>
@@ -55,7 +55,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 
 <script>
@@ -79,7 +78,7 @@
 
       $('#collapseExample').attr('class','collapse');
 
-      function fnAddExpense(){
+        function fnAddExpense(){
               var iscollapse = $('#collapseExample').attr('class');
               if(iscollapse == 'collapse')
               {
@@ -92,7 +91,7 @@
                   $('#expenseGrid').show();
               }
               
-          };
+        };
 
 
         function fnEditExpense(){
