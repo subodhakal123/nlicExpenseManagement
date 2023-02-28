@@ -28,3 +28,4 @@ function validateTextBoxesCM(txtNames, needDiv) {
     });
     return retVal;
 }
+

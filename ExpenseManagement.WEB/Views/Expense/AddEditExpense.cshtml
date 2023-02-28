@@ -25,6 +25,7 @@
     }
 }
 
+
 <div class="container-fluid m-2">
     <div class="table-wrapper">
         <div class="table-title">
@@ -175,6 +176,9 @@
                         <div class="col-md-3">
                             <button type="button" class="btn btn-success rounded-pill m-2" onclick="fnApproveExpense()">Approve</button>
                         </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-danger rounded-pill m-2" onclick="fnRejectExpense()">Reject</button>
+                        </div>
                     }
                     else if (@BrCode != 100)
                     {
@@ -202,6 +206,9 @@
                             {
                                 <div class="col-md-3">
                                     <button type="button" class="btn btn-success rounded-pill m-2" id="approveExpense" onclick="fnModelApprove()">Send For Approval</button>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input asp-for="Status" type="text" value="@Model.Status" />
                                 </div>
                             }
                             else if (Model.Status == 2 || Model.Status == 6)
@@ -418,6 +425,9 @@
 
     function fnWhenLoaded(){
 
+            //if need to be disabled
+            fnDisableifApproved();
+
             $("#statusId").kendoDropDownList({
             optionLabel: "Expense Status",
             height: 310,
@@ -496,10 +506,15 @@
 
                    if ($(this).val().length != 0) {
                        //$(this).addClass("error");
-                   
-                        $(this).removeClass("clsRedBox");
-                   
-                       empty = true;
+
+                       if(index == 3 || index ==4){
+                           //console.log($(this).id);s
+                           //checkIfValidNumber($(this).id);
+                       }
+                       else{
+                           $(this).removeClass("clsRedBox");
+                           empty = true;
+                       }
                    
                    } else {
                        //$(this).removeClass("error");
@@ -819,19 +834,28 @@
 
             if(expenseIdSelected > 0){
 
-                $.ajax({
-                    type: 'POST',
-                    url: WebApiUri + '/Expense/RequestApproval',
-                    datatype: 'json',
-                    data: JSON.stringify({ExpenseId : expenseIdSelected,ForwardTo: $('#Status').val()}),
-                    contentType: "application/json;charset=utf-8",
-                    beforeSend: function(xhr){expenseIdSelected
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
-                        },
-                    success: function(response){
-                        toastr.success(response);
-                    }
-                });
+                if($('#Status').val() != ''){
+
+                    $.ajax({
+                        type: 'POST',
+                        url: WebApiUri + '/Expense/RequestApproval',
+                        datatype: 'json',
+                        data: JSON.stringify({ExpenseId : expenseIdSelected,ForwardTo: $('#Status').val()}),
+                        contentType: "application/json;charset=utf-8",
+                        beforeSend: function(xhr){expenseIdSelected
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                            },
+                        success: function(response){
+                            toastr.success(response);
+                        }
+                    });
+                }
+                else
+                {
+
+                    toastr.error('Please select where to forward first..!!!');
+                }
+                
             }
           
       };
@@ -939,6 +963,38 @@
             else{
                 toastr.warning('Select a Row');
             }
-          
-      };
+        };
+
+
+    function fnDisableifApproved() {
+    
+        
+        if(@Model.Status == 2){
+
+            $(".table-wrapper input,.table-wrapper textarea").each(function () {
+                
+                    $(this).attr("disabled",true);
+                    $(this).addClass("disabledforApproved");
+
+            });
+
+            $("#Status").attr("disabled",false);
+            $("#saveExpense").attr("disabled",true);
+            $(".add-new").hide();
+            $("a.add").hide();
+            $("a.edit").hide();
+            $("a.delete").hide();
+        }
+        else
+        {
+            $(".table-wrapper input,.table-wrapper textarea,.table-wrapper button").each(function () {
+                
+                    $(this).attr("disabled",false);
+                    $(this).removeClass("disabledforApproved");
+            });
+
+        }
+        
+    
+    };
 </script>
