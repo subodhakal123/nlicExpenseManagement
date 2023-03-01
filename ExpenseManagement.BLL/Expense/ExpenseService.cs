@@ -103,7 +103,6 @@ namespace ExpenseManagement.BLL.Expense
                     model1.ItemId = item.ItemId;
                     model1.ItemName = item.ItemName;
                     model1.ExpenseType = item.ExpenseType;
-                    model1.ExpenseSubType = item.ExpenseSubType;
                     model1.ItemQuantity = item.ItemQuantity;
                     model1.ItemAmount = item.ItemAmount;
                     model1.ItemPrice = item.ItemPrice;
@@ -141,7 +140,7 @@ namespace ExpenseManagement.BLL.Expense
                 parameter.Add("@AppliedBy", model.AppliedBy);
                 parameter.Add("@BranchName", model.BranchName);
                 parameter.Add("@Status", model.Status);
-                parameter.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail1]"));
+                parameter.Add("@udtExpenseDetail", udtExpenseDetail.AsTableValuedParameter("[dbo].[udtExpenseDetail]"));
                 parameter.Add("@IsRecommended", model.IsRecommended);
                 parameter.Add("@Department", model.DepartmentId);
                 parameter.Add("@Recommender", model.Recommender);

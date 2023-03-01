@@ -12,7 +12,6 @@ namespace ExpenseManagement.Model.Expense
         public DateTime? ExpenseDate { get; set; }
         public string? BranchName { get; set; }
         public string? ExpenseType { get; set; }
-        public string? ExpenseSubType { get; set; }
         public float? Amount { get; set; }
         public string? ExpenseStatus { get; set; }
         public float? TotalAmount { get; set; }

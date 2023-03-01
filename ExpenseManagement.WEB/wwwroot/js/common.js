@@ -29,3 +29,10 @@ function validateTextBoxesCM(txtNames, needDiv) {
     return retVal;
 }
 
+function checkIfValidNumber(arg) {
+    if (arg === undefined || arg === null || isNaN(arg)) {
+        return false;
+    }
+    return true;
+}
+

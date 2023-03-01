@@ -33,3 +33,4 @@ D:\New folder\nlicExpenseManagement\ExpenseManagement.Model\obj\Debug\net6.0\Exp
 D:\New folder\nlicExpenseManagement\ExpenseManagement.Model\obj\Debug\net6.0\ExpenseManagement.Model.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagement.Model\obj\Debug\net6.0\ref\ExpenseManagement.Model.dll
 D:\New folder\nlicExpenseManagement\ExpenseManagement.Model\obj\Debug\net6.0\ExpenseManagement.Model.pdb
+D:\New folder\nlicExpenseManagement\ExpenseManagement.Model\obj\Debug\net6.0\ExpenseManagement.Model.csproj.AssemblyReference.cache

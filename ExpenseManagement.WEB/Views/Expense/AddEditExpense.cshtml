@@ -64,7 +64,6 @@
                 <tr>
                     <th>ItemName</th>
                     <th>Type</th>
-                    <th>SubType</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Amount</th>
@@ -85,9 +84,6 @@
                             </td>
                             <td>
                                 <input type="text" style="width:100%;" value="@item.ExpenseType" class="expenseType"/>
-                            </td>
-                            <td>
-                                <input type="text" style="width:100%;" value="@item.ExpenseSubType" class="expenseSubType"/>
                             </td>
                             <td>
                                 <input type="text" style="width:100%;" value="@item.ItemPrice" class=""/>
@@ -258,7 +254,7 @@
     function fnDisableInput(){
         var rowCount = $('.addEditRow:last-child').index();
         for(let i=0;i<=rowCount;i++){
-            for(let j=0;j<=5;j++){
+            for(let j=0;j<=4;j++){
                 $('.addEditRow').eq(i).find('input[type="text"]').eq(j).attr('disabled','disabled');
             }
         }
@@ -267,7 +263,7 @@
     function fnEnableInput(){
         var rowCount = $('.addEditRow:last-child').index();
         for(let i=0;i<=rowCount;i++){
-            for(let j=0;j<=5;j++){
+            for(let j=0;j<=4;j++){
                 $('.addEditRow').eq(i).find('input[type="text"]').eq(j).removeAttr('disabled','disabled');
             }
         }
@@ -402,7 +398,6 @@
             var row = '<tr class="addEditRow">' +
                 '<td>' + fnAddElement("", "") + '</td>' +
                 '<td>' + fnAddElement("", "expenseType") + '</td>' +
-                '<td>' + fnAddElement("", "expenseSubType") + '</td>' +
                 '<td>' + fnAddElement("", "") + '</td>' +
                 '<td>' + fnAddElement("", "") + '</td>' +
                 '<td>' + fnAddElement("", "amountClass") + '</td>' +
@@ -414,10 +409,9 @@
             $(".addEditRow").eq(index).find(".add, .edit").toggle();
 
             var typeId = '.' + $(".addEditRow").eq(index - 1).find('input[type="text"]').eq(1).attr("class");
-            var subTypeId = '.' + $(".addEditRow").eq(index - 1).find('input[type="text"]').eq(2).attr("class");
 
             //$('[data-toggle="tooltip"]').tooltip();
-            loadDropdown(typeId, subTypeId);
+            loadDropdown(typeId);
             fnDisableInput();
 
         });
@@ -486,8 +480,7 @@
                 var index = $(".addEditRow:last-child").index();
                 for(let i=0;i<=index;i++){
                     var typeId = '.'+$(".addEditRow").eq(i).find('input[type="text"]').eq(1).attr("class");
-                    var subTypeId = '.' +$(".addEditRow").eq(i).find('input[type="text"]').eq(2).attr("class");
-                    loadDropdown(typeId,subTypeId);
+                    loadDropdown(typeId);
                 }
                 fnDisableInput();
                 fileDownload();
@@ -499,33 +492,71 @@
     function fnSaveItem(){
         // Add row on add button click
         $(document).on("click", ".add", function () {
-            var empty = false;
+            var empty = true;
+            var emptyQuantity = true;
+            var emptyPrice = true;
             var input = $(this).parents(".addEditRow").find('input[type="text"]');
             input.each(function (index) {
-                if (index != 5) {
+                if (index != 0 || index != 4) {
 
                    if ($(this).val().length != 0) {
-                       //$(this).addClass("error");
 
-                       if(index == 3 || index ==4){
-                           //console.log($(this).id);s
-                           //checkIfValidNumber($(this).id);
+                       if(index == 1){
+                           //if($(this).val() == ){
+                           //    if(input.eq(0).val().length != 0){
+                           //        input.eq(0).addClass("clsRedBox");
+                           //        empty= true;
+                           //    }
+                           //    else
+                           //    {
+                           //        input.eq(0).removeClass("clsRedBox");
+                           //    }
+                           //}
+                       }
+                       else if(index == 2){
+                           var quantity = $(this).val();
+                           var ifnumber = checkIfValidNumber(quantity.toString());
+                           if(ifnumber == true){
+                               $(this).removeClass("clsRedBox");
+                               emptyQuantity = false;
+                           }
+                           else
+                           {
+                               $(this).addClass("clsRedBox");
+                               emptyQuantity = true;
+                           }
+                       }
+                       else if(index == 3){
+
+                           var price = $(this).val();
+                           var ifnumber = checkIfValidNumber(price.toString());
+                           if(ifnumber == true){
+                               $(this).removeClass("clsRedBox");
+                               emptyPrice = false;
+                           }
+                           else
+                           {
+                               $(this).addClass("clsRedBox");
+                               emptyPrice = true;
+                           }
                        }
                        else{
+
                            $(this).removeClass("clsRedBox");
-                           empty = true;
+                           empty = false;
+
                        }
                    
                    } else {
-                       //$(this).removeClass("error");
                    
                        $(this).addClass("clsRedBox");
+                       empty = true;
                    }
                 }
             });
 
             $(this).parents(".addEditRow").find(".error").first().focus();
-            if (!empty) {
+            if (!empty & !emptyQuantity & !emptyPrice) {
 
                 var rowNo = $(".addEditRow:last-child").index();
                 rowNo = rowNo + 1;
@@ -540,17 +571,13 @@
                     }
                     else if (index == 2) {
                         $(this).attr('value', $(this).val());
-
+                        quantity = $(this).val();
                     }
                     else if (index == 3) {
                         $(this).attr('value', $(this).val());
-                        quantity = $(this).val();
-                    }
-                    else if (index == 4) {
-                        $(this).attr('value', $(this).val());
                         price = $(this).val();
                     }
-                    else if (index == 5) 
+                    else if (index == 4) 
                     {
                         $(this).attr('value', parseFloat(quantity) * parseFloat(price));
                     }
@@ -559,9 +586,11 @@
                 fnDisableInput();
                 $(this).parents(".addEditRow").find(".add, .edit").toggle();
                 $(".add-new").removeAttr("disabled");
+
+                $("#TotalAmountId").attr('value', fnSeparator(calculateTotal()));
             }
 
-            $("#TotalAmountId").attr('value', fnSeparator(calculateTotal()));
+            
         });
         };
 
@@ -587,9 +616,6 @@
                     $(this).children("input").attr('value', $(this).children("input").val());
                 }
                 else if (index = 3) {
-                    $(this).children("input").attr('value', $(this).children("input").val());
-                }
-                else if (index = 4) {
                     $(this).children("input").attr('value', $(this).children("input").val());
                 }
                 else {
@@ -626,7 +652,7 @@
         count = count+1;
         var sum = 0;
         for(let i = 1; i<=count; i++){
-            sum = parseFloat(sum) + parseFloat($('.addEditRow').eq(i-1).find('input[type="text"]').eq(5).val());
+            sum = parseFloat(sum) + parseFloat($('.addEditRow').eq(i-1).find('input[type="text"]').eq(4).val());
         }
         return sum;
     };
@@ -660,7 +686,7 @@
 
     };
 
-    function loadDropdown(typeId, subTypeId){
+    function loadDropdown(typeId){
 
         $(typeId).kendoDropDownList({
             optionLabel: "Select Item Type...",
@@ -688,32 +714,7 @@
             dataValueField: "ddlVal"
         }).data("kendoDropDownList");
 
-    $(subTypeId).kendoDropDownList({
-        optionLabel: "Select SubType...",
-    height: 310,
-    footerTemplate: 'Please ensure the subtype selected is correct',
-    dataSource:{
-        transport: {
-        read: {
-        url: WebApiUri + "/Common/GetDropDownList",
-    type: "Post",
-    contentType: "application/json",
-    data: {mode: "ExpenseSubType",condition1: "",condition2: ""},
-    dataType: 'json',
-    beforeSend: function(xhr){
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
-                        }
-                            },
-    parameterMap: function (data) {
-                                var returnData = JSON.stringify(data);
-    return returnData
-                            }
-                        }
-                    },
-    dataTextField: "ddlText",
-    dataValueField: "ddlVal"
-                }).data("kendoDropDownList");
-         };
+    };
 
     function fnGetModelList(){
         var arrList = [];
@@ -724,10 +725,9 @@
     expenseId: 0,
     itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
     expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
-    expenseSubType: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
-    itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val(),
-    itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
-    itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(5).val()
+    itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
+    itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
+    itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val()
             };
     arrList.push(model);
         });
