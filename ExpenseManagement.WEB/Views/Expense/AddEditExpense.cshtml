@@ -6,23 +6,22 @@
     var Branch = User.Claims.FirstOrDefault(c => c.Type == "BrName")?.Value;
     var BrCode = Int16.Parse(User.Claims.FirstOrDefault(c => c.Type == "BrCode")?.Value);
     var Username = User.Identity.Name;
+    var userbranchstatus = 0;
     if (Model.BranchName == null) Model.BranchName = Branch;
     if (Model.AppliedBy == null) Model.AppliedBy = Username;
-    if (Model.Status == 0)
+    if(BrCode == 100)
     {
-        if(BrCode == 100)
-        {
-            Model.Status = 6;
-        }
-        else if(BrCode >=700 && BrCode <= 900)
-        {
-            Model.Status = 2;
-        }
-        else
-        {
-            Model.Status = 9;
-        }
+        userbranchstatus = 6;
     }
+    else if(BrCode >=700 && BrCode <= 900)
+    {
+        userbranchstatus = 2;
+    }
+    else
+    {
+        userbranchstatus = 9;
+    }
+    if (Model.Status == 0) Model.Status = userbranchstatus;
 }
 
 
@@ -62,8 +61,8 @@
         <table class="table table-bordered" id="addEditTableId">
             <thead>
                 <tr>
-                    <th>ItemName</th>
                     <th>Type</th>
+                    <th>ItemName</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Amount</th>
@@ -77,13 +76,12 @@
                     foreach(var item in Model.Item.OrderByDescending(x=>x.ItemId))
                     {
                         <tr class="addEditRow">
-                                
+                            <td>
+                                <input type="text" style="width:100%;" value="@item.ExpenseType" class="expenseType"/>
+                            </td>
                             <td>
                                 <input type="number" value="@item.ItemId" class="itemClass" hidden/>
                                 <input type="text" style="width:100%;" value="@item.ItemName" class=""/>
-                            </td>
-                            <td>
-                                <input type="text" style="width:100%;" value="@item.ExpenseType" class="expenseType"/>
                             </td>
                             <td>
                                 <input type="text" style="width:100%;" value="@item.ItemPrice" class=""/>
@@ -378,10 +376,6 @@
             }
             });
         }
-        else
-        {
-            toastr.error("Please Upload files first!!");
-        }
     };
 
     //add a new row
@@ -497,21 +491,35 @@
             var emptyPrice = true;
             var input = $(this).parents(".addEditRow").find('input[type="text"]');
             input.each(function (index) {
-                if (index != 0 || index != 4) {
+                if (index != 0 && index != 4) {
 
                    if ($(this).val().length != 0) {
 
                        if(index == 1){
-                           //if($(this).val() == ){
-                           //    if(input.eq(0).val().length != 0){
-                           //        input.eq(0).addClass("clsRedBox");
-                           //        empty= true;
-                           //    }
-                           //    else
-                           //    {
-                           //        input.eq(0).removeClass("clsRedBox");
-                           //    }
-                           //}
+                           console.log("1");
+                           console.log($(this).val());
+                           if($(this).val() == 1009){
+
+                               console.log("2");
+                               console.log($(this).parent().children("input:first").val());
+
+                               if($(this).parent().children("input:first").val() != 0){
+
+                                   $(this).parent().children("input:first").addClass("clsRedBox");
+                                   empty= true;
+
+                               }
+                               else
+                               {
+                                   $(this).parent().children("input:first").removeClass("clsRedBox");
+                                   empty= false;
+                               }
+                           }
+                           else
+                           {
+                               $(this).parent().children("input:first").removeClass("clsRedBox");
+                               empty= false;
+                           }
                        }
                        else if(index == 2){
                            var quantity = $(this).val();
@@ -556,6 +564,7 @@
             });
 
             $(this).parents(".addEditRow").find(".error").first().focus();
+
             if (!empty & !emptyQuantity & !emptyPrice) {
 
                 var rowNo = $(".addEditRow:last-child").index();
@@ -590,7 +599,6 @@
                 $("#TotalAmountId").attr('value', fnSeparator(calculateTotal()));
             }
 
-            
         });
         };
 
@@ -969,7 +977,7 @@
     function fnDisableifApproved() {
     
         
-        if(@Model.Status == 2){
+        if(@Model.Status != @userbranchstatus){
 
             $(".table-wrapper input,.table-wrapper textarea").each(function () {
                 

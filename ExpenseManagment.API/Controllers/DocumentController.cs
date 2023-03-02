@@ -94,7 +94,7 @@ namespace ExpenseManagment.API.Controllers
         [HttpPost("Upload")]
         public async Task<string> Upload()
         {
-            string s;
+            string s = "";
             if (Request.Form.Files.Count > 0)
             {
                 try
@@ -110,11 +110,6 @@ namespace ExpenseManagment.API.Controllers
                     //Log ex
                     s = "File Upload Failed";
                 }
-            }
-            else
-            {
-                s = "Please Input Bills First";
-
             }
             
             return s;
