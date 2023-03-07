@@ -494,27 +494,30 @@
             var emptyPrice = true;
             var input = $(this).parents(".addEditRow").find('input[type="text"]');
             input.each(function (index) {
-                if (index != 0 && index != 4) {
-
+                if (index != 1 && index != 4) {
                    if ($(this).val().length != 0) {
-
+                       
+                        console.log($(this).val());
                        if(index == 0){
                            if($(this).val() == 1009){
-
-                               if($(this).parent().children("input:nth-child(2)").val() != 0){
-
-                                   $(this).parent().children("input:nth-child(2)").addClass("clsRedBox");
+                               console.log("abc");
+                               console.log($(this).parents().find('.addEditRow input[type="text"]').eq(1).val());
+                               if($(this).parents().find('.addEditRow input[type="text"]').eq(1).val().length == 0){
+                                   console.log("2");
+                                   $(this).parents().find('.addEditRow input[type="text"]').eq(1).addClass("clsRedBox");
                                    empty= true;
                                }
                                else
                                {
-                                   $(this).parent().children("input:nth-child(2)").removeClass("clsRedBox");
+                                   console.log("3");
+                                   $(this).parents().find('.addEditRow input[type="text"]').eq(1).removeClass("clsRedBox");
                                    empty= false;
                                }
                            }
                            else
                            {
-                               $(this).parent().children("input:nth-child(2)").removeClass("clsRedBox");
+                               console.log("4");
+                               $(this).parents().find('.addEditRow input[type="text"]').eq(1).removeClass("clsRedBox");
                                empty= false;
                            }
                        }
@@ -552,15 +555,24 @@
 
                        }
                    
-                   } else {
-                   
-                       $(this).addClass("clsRedBox");
+                   } 
+                   else {
+                       
+                       if(index == 0){
+                           var id = '#'+$(this).attr('id');
+
+                           console.log(id);
+                       }
+                       else{
+                           $(this).addClass("clsRedBox");
+                       }
+                       
                        empty = true;
                    }
                 }
             });
 
-            $(this).parents(".addEditRow").find(".error").first().focus();
+            //$(this).parents(".addEditRow").find(".error").first().focus();
 
             if (!empty & !emptyQuantity & !emptyPrice) {
 
