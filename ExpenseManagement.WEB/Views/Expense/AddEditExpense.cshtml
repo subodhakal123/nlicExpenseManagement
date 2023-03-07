@@ -72,33 +72,38 @@
             <tbody>
                 @if(Model.ExpenseId > 0)
                 {
-                    int index = Model.Item.Count() - 1;
+                    int index = 0;
                     foreach(var item in Model.Item.OrderByDescending(x=>x.ItemId))
                     {
-                        <tr class="addEditRow">
-                            <td>
-                                <input type="text" style="width:100%;" value="@item.ExpenseType" class="expenseType"/>
-                            </td>
-                            <td>
-                                <input type="number" value="@item.ItemId" class="itemClass" hidden/>
-                                <input type="text" style="width:100%;" value="@item.ItemName" class=""/>
-                            </td>
-                            <td>
-                                <input type="text" style="width:100%;" value="@item.ItemPrice" class=""/>
-                            </td>
-                            <td>
-                                <input type="text" style="width:100%;" value="@item.ItemQuantity" class=""/>
-                            </td>
-                            <td>
-                                <input type="text" style="width:100%;" value="@item.ItemAmount" class=""/>
-                            </td>
-                            <td>
-                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
-                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>
-                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
-                            </td>
-                        </tr>
-                        index--;
+                        if(@index < Model.Item.Count())
+                        {
+                            <tr class="addEditRow">
+                                <td>
+                                    <input type="text" id ="firstItemName@(index)" style="width:100%;" value="@item.ExpenseType" class="expenseType"/>
+                                </td>
+                                <td>
+                                    <input type="number" value="@item.ItemId" class="itemClass" hidden/>
+                                    <input type="text" id ="secondItemName@(index)" style="width:100%;" value="@item.ItemName" class=""/>
+                                </td>
+                                <td>
+                                    <input type="text" id ="thirdItemName(@index)" style="width:100%;" value="@item.ItemPrice" class=""/>
+                                </td>
+                                <td>
+                                    <input type="text" id ="fourthItemName@(index)" style="width:100%;" value="@item.ItemQuantity" class=""/>
+                                </td>
+                                <td>
+                                    <input type="text" id ="fifthItemName@(index)" style="width:100%;" value="@item.ItemAmount" class="amountClass" readonly/>
+                                </td>
+                                <td>
+                                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                        
+                        
                     }
                 }
             </tbody>
@@ -240,7 +245,9 @@
 </div>
 
 <script>
+
     var isRecommended = false;
+
     fnWhenLoaded();
     fnPreviewFiles();
     fnAddNew();
@@ -248,8 +255,7 @@
     fnEditRow();
     fnDeleteRow();
     
-
-    function fnDisableInput(){
+    function fnDisableAddEditRow(){
         var rowCount = $('.addEditRow:last-child').index();
         for(let i=0;i<=rowCount;i++){
             for(let j=0;j<=4;j++){
@@ -258,7 +264,7 @@
         }
     };
 
-    function fnEnableInput(){
+    function fnEnableAddEditRow(){
         var rowCount = $('.addEditRow:last-child').index();
         for(let i=0;i<=rowCount;i++){
             for(let j=0;j<=4;j++){
@@ -388,25 +394,22 @@
                 '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>';
             $(this).attr("disabled", "disabled");
             var index = $(".addEditRow:last-child").index();
-            index = index + 2;
+            index = index + 1;
             var row = '<tr class="addEditRow">' +
-                '<td>' + fnAddElement("", "") + '</td>' +
-                '<td>' + fnAddElement("", "expenseType") + '</td>' +
-                '<td>' + fnAddElement("", "") + '</td>' +
-                '<td>' + fnAddElement("", "") + '</td>' +
-                '<td>' + fnAddElement("", "amountClass") + '</td>' +
-                '<td>' + actions + '</td>' +
-                '</tr>';
+                      '<td>' + fnAddElement("", "firstItemName"+index , "expenseType") + '</td>' +
+                      '<td>' + fnAddElement("", "secondItemName"+index , "") + '</td>' +
+                      '<td>' + fnAddElement("", "thirdItemName"+index , "") + '</td>' +
+                      '<td>' + fnAddElement("", "fourthItemName"+index , "") + '</td>' +
+                      '<td>' + fnAddElement("", "fifthItemName"+index , "amountClass") + '</td>' +
+                      '<td>' + actions + '</td>' +
+                      '</tr>';
 
-            //$("table").append(row);
             $("#addEditTableId").append(row);
-            $(".addEditRow").eq(index).find(".add, .edit").toggle();
+            
+            var typeId = '#' + $(".addEditRow").eq(index).find('input[type="text"]').eq(0).attr("id");
 
-            var typeId = '.' + $(".addEditRow").eq(index - 1).find('input[type="text"]').eq(1).attr("class");
-
-            //$('[data-toggle="tooltip"]').tooltip();
-            loadDropdown(typeId);
-            fnDisableInput();
+            loadDropdown(typeId,false);
+            fnDisableAddEditRow();
 
         });
         };
@@ -473,12 +476,12 @@
             if(@Model.ExpenseId>0){
                 var index = $(".addEditRow:last-child").index();
                 for(let i=0;i<=index;i++){
-                    var typeId = '.'+$(".addEditRow").eq(i).find('input[type="text"]').eq(1).attr("class");
-                    loadDropdown(typeId);
+                    var typeId = '#'+$(".addEditRow").eq(i).find('input[type="text"]').eq(0).attr("id");
+                    loadDropdown(typeId,false);
                 }
-                fnDisableInput();
+
+                fnDisableAddEditRow();
                 fileDownload();
-                
             }
     };
 
@@ -495,29 +498,23 @@
 
                    if ($(this).val().length != 0) {
 
-                       if(index == 1){
-                           console.log("1");
-                           console.log($(this).val());
+                       if(index == 0){
                            if($(this).val() == 1009){
 
-                               console.log("2");
-                               console.log($(this).parent().children("input:first").val());
+                               if($(this).parent().children("input:nth-child(2)").val() != 0){
 
-                               if($(this).parent().children("input:first").val() != 0){
-
-                                   $(this).parent().children("input:first").addClass("clsRedBox");
+                                   $(this).parent().children("input:nth-child(2)").addClass("clsRedBox");
                                    empty= true;
-
                                }
                                else
                                {
-                                   $(this).parent().children("input:first").removeClass("clsRedBox");
+                                   $(this).parent().children("input:nth-child(2)").removeClass("clsRedBox");
                                    empty= false;
                                }
                            }
                            else
                            {
-                               $(this).parent().children("input:first").removeClass("clsRedBox");
+                               $(this).parent().children("input:nth-child(2)").removeClass("clsRedBox");
                                empty= false;
                            }
                        }
@@ -573,6 +570,8 @@
                 var price = 0;
                 input.each(function (index) {
                     if (index == 0) {
+                        var typeId = '#' + $(this).attr("id");
+                        loadDropdown(typeId,false);
                         $(this).attr('value', $(this).val());
                     }
                     else if (index == 1) {
@@ -592,7 +591,7 @@
                     }
                 });
 
-                fnDisableInput();
+                fnDisableAddEditRow();
                 $(this).parents(".addEditRow").find(".add, .edit").toggle();
                 $(".add-new").removeAttr("disabled");
 
@@ -604,17 +603,18 @@
 
     //editing a row
     function fnEditRow(){
-        //// Edit row on edit button click
+
+        // Edit row on edit button click
         $(document).on("click", ".edit", function () {
 
             //enable all input
-            fnEnableInput();
+            fnEnableAddEditRow();
             $(this).parents(".addEditRow").find("td:not(:last-child)").each(function (index) {
 
-                var currentIndex = $(this).parent(".addEditRow").index();
-                currentIndex = currentIndex + 1;
-
+                
                 if (index == 0) {
+                    var typeId = '#' + $(this).children().children("input").attr("id");
+                    loadDropdown(typeId,true);
                     $(this).children("input").attr('value', $(this).children("input").val());
                 }
                 else if (index = 1) {
@@ -627,6 +627,7 @@
                     $(this).children("input").attr('value', $(this).children("input").val());
                 }
                 else {
+                    $(this).children("input").attr('value', $(this).children("input").val());
                     $(this).children("input").attr('value', $(this).children("input").val());
                 }
             });
@@ -642,15 +643,49 @@
         $(document).on("click", ".delete", function () {
 
             $(this).parents(".addEditRow").remove();
-            $(".add-new").removeAttr("disabled");
-            //$("#TotalAmountId").attr('value', calculateTotal());
 
+
+            $(this).parents(".addEditRow").find("td:not(:last-child)").each(function (index) {
+                
+                if (index == 0) {
+                    $(this).children().children("input").attr("id",firstItemName+index);
+                }
+                else if (index = 1) {
+                    $(this).children("input").attr("id", secondItemName+index);
+                }                                           
+                else if (index = 2) {                       
+                    $(this).children("input").attr("id", thirdItemName+index);
+                }                                           
+                else if (index = 3) {                       
+                    $(this).children("input").attr("id", fourthItemName+index);
+                }                                           
+                else {                                      
+                    $(this).children("input").attr("id", fifthItemName+index);
+                }
+            });
+
+
+            $(this).parents(".addEditRow").find(".add, .edit").toggle();
+            //$(".add-new").attr("disabled", "disabled");
+            $(".add-new").removeAttr("disabled");
         });
-        };
+
+
+            //$(".add-new").removeAttr("disabled");
+            //$("#TotalAmountId").attr('value', calculateTotal());
+    };
 
     //add an input field
-    function fnAddElement(value,Class) {
-        var ele = "<input style='width: 100%;' type='text' value='"+value+"' class='"+Class+"' />";
+    function fnAddElement(value,idNo,Class) {
+
+        if(Class == 'amountClass')
+        {
+            var ele = "<input style='width: 100%;' id='"+ idNo +"' type='text' value='"+value+"' class='"+Class+"' readonly/>";
+        }
+        else{
+            var ele = "<input style='width: 100%;' id='"+ idNo +"' type='text' value='"+value+"' class='"+Class+"' />";
+        }
+        
         return ele;
     };
 
@@ -694,33 +729,38 @@
 
     };
 
-    function loadDropdown(typeId){
-
-        $(typeId).kendoDropDownList({
-            optionLabel: "Select Item Type...",
-            height: 310,
-            footerTemplate: 'Please ensure the type selected is correct',
-            dataSource: {
-                transport: {
-                    read: {
-                        url: WebApiUri + "/Common/GetDropDownList",
-                        type: "Post",
-                        contentType: "application/json",
-                        data: { mode: "ExpenseType", condition1: "", condition2: "" },
-                        dataType: 'json',
-                        beforeSend: function(xhr){
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+    function loadDropdown(typeId,isEnabled){
+        
+        var enabledDropdown =    $(typeId).kendoDropDownList({
+                optionLabel: "Select Item Type...",
+                height: 310,
+                footerTemplate: 'Please ensure the type selected is correct',
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: WebApiUri + "/Common/GetDropDownList",
+                            type: "Post",
+                            contentType: "application/json",
+                            data: { mode: "ExpenseType", condition1: "", condition2: "" },
+                            dataType: 'json',
+                            beforeSend: function(xhr){
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                            }
+                        },
+                        parameterMap: function (data) {
+                            var returnData = JSON.stringify(data);
+                            return returnData
                         }
-                    },
-                    parameterMap: function (data) {
-                        var returnData = JSON.stringify(data);
-                        return returnData
                     }
-                }
-            },
-            dataTextField: "ddlText",
-            dataValueField: "ddlVal"
-        }).data("kendoDropDownList");
+                },
+                dataTextField: "ddlText",
+                dataValueField: "ddlVal"
+            }).data("kendoDropDownList");
+
+        if(isEnabled == false)
+        {
+            enabledDropdown.enable(false);
+        }
 
     };
 
@@ -731,8 +771,8 @@
             var model = {
         itemId: $(".addEditRow").eq(index).find('input[type="number"]').eq(0).val(),
     expenseId: 0,
-    itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
-    expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
+    itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
+    expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
     itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
     itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
     itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val()
@@ -747,7 +787,7 @@
             expenseId : $('#expenseId').val(),
             expenseTitle: $('#ExpenseTitle').val(),
             expenseBy: $('#ExpenseBy').val(),
-            brCode: 0,
+            brCode: @BrCode,
             branchName: $('#BranchName').val(),
             appliedBy: $('#AppliedBy').val(),
             status: $('#statusId').val(),
@@ -767,28 +807,37 @@
     };
 
     function fnModelSave(){
-        validateTextBoxesCM('ExpenseBy,ExpenseTitle,descId', false);
-        $.ajax({
-            url: WebApiUri + "/Expense/SaveExpense",
-            type: 'POST',
-            datatype: 'json',
-            data: fnGetItemDetailModel(),
-            contentType: "application/json;charset=utf-8",
-            beforeSend: function(xhr){
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
-                        },
-            success: function (result) {
+        var validationStatus = validateTextBoxesCM('ExpenseBy,ExpenseTitle,descId');
 
-                $('#expenseId').attr('value',result.expenseId);
-                fileUpload();
-                toastr.success(result.retMsg);
-            },
-            error: function (res) {
-                toastr.error(res);
-            },
-            failure: function (errMsg) {
-            }
-        });
+        if(validationStatus == true){
+            $.ajax({
+                url: WebApiUri + "/Expense/SaveExpense",
+                type: 'POST',
+                datatype: 'json',
+                data: fnGetItemDetailModel(),
+                contentType: "application/json;charset=utf-8",
+                beforeSend: function(xhr){
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
+                },
+                success: function (result) {
+
+                    $('#expenseId').attr('value',result.expenseId);
+                    fileUpload();
+                    toastr.success(result.retMsg);
+
+                },
+                error: function (res) {
+                    toastr.error(res);
+                },
+                failure: function (errMsg) {
+                }
+            });
+        }
+        else
+        {
+            toastr.error("Validation failed");
+        }
+        
         };
 
     function fileUpload(){

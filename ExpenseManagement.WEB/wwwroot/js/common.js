@@ -5,7 +5,7 @@
 }
 
 //validate textbox
-function validateTextBoxesCM(txtNames, needDiv) {
+function validateTextBoxesCM(txtNames) {
     var retVal = true;
     var substr = txtNames.split(",");
     substr.forEach(function (item) {

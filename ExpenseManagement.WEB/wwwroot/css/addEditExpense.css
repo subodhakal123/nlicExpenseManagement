@@ -4,7 +4,11 @@
     font-weight: bold;
 }
 
-#saveBill{
+.amountClass {
+    background: #acd1f2;
+}
+
+#saveBill {
     font-weight: bold;
     font-size: small;
 }
