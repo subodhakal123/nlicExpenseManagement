@@ -132,9 +132,10 @@ namespace ExpenseManagement.BLL.Expense
             SaveExpense saveExpense = new SaveExpense();
             try
             {
+
                 DataTable udtExpenseDetail = ListToDataTable(model.Item);
                 var parameter = new DynamicParameters();
-                parameter.Add("@ExpenseId", model.ExpenseId, direction: ParameterDirection.Output);
+                parameter.Add("@ExpenseId",model.ExpenseId,direction: ParameterDirection.InputOutput);
                 parameter.Add("@ExpenseTitle", model.ExpenseTitle);
                 parameter.Add("@ExpenseBy", model.ExpenseBy);
                 parameter.Add("@AppliedBy", model.AppliedBy);

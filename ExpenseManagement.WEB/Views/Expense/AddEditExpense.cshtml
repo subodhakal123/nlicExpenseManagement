@@ -780,19 +780,19 @@
         var arrList = [];
     $(".addEditRow").each(function(index){
 
-            var model = {
-        itemId: $(".addEditRow").eq(index).find('input[type="number"]').eq(0).val(),
-    expenseId: 0,
-    itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
-    expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
-    itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
-    itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
-    itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val()
-            };
-    arrList.push(model);
-        });
-    return arrList;
-        };
+                 var model = {
+                    itemId: $(".addEditRow").eq(index).find('input[type="number"]').eq(0).val(),
+                    expenseId:  $('#expenseId').val(),
+                    itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
+                    expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
+                    itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
+                    itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
+                    itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val()
+                            };
+                    arrList.push(model);
+                });
+            return arrList;
+    };
 
     function fnGetItemDetailModel(){
         var itemDetailData = JSON.stringify({
@@ -835,6 +835,8 @@
 
                     $('#expenseId').attr('value',result.expenseId);
                     fileUpload();
+
+                    window.location.replace("/Expense");
                     toastr.success(result.retMsg);
 
                 },
