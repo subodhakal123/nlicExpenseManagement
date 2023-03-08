@@ -283,6 +283,7 @@
         $(".add-new").click();
     };
 
+
     function fnPreviewFiles(){
 
         const fileInput = document.getElementById('FileUpload_FormFile');
@@ -496,26 +497,20 @@
                 if (index != 1 && index != 4) {
                    if ($(this).val().length != 0) {
                        
-                        console.log($(this).val());
                        if(index == 0){
                            if($(this).val() == 1009){
-                               console.log("abc");
-                               console.log($(this).parents().find('.addEditRow input[type="text"]').eq(1).val());
                                if($(this).parents().find('.addEditRow input[type="text"]').eq(1).val().length == 0){
-                                   console.log("2");
                                    $(this).parents().find('.addEditRow input[type="text"]').eq(1).addClass("clsRedBox");
                                    empty= true;
                                }
                                else
                                {
-                                   console.log("3");
                                    $(this).parents().find('.addEditRow input[type="text"]').eq(1).removeClass("clsRedBox");
                                    empty= false;
                                }
                            }
                            else
                            {
-                               console.log("4");
                                $(this).parents().find('.addEditRow input[type="text"]').eq(1).removeClass("clsRedBox");
                                empty= false;
                            }
@@ -655,29 +650,29 @@
 
             $(this).parents(".addEditRow").remove();
 
-
-            $(this).parents(".addEditRow").find("td:not(:last-child)").each(function (index) {
+            //if atleast one row exist, change the id's of the rows
+            if($(".addEditRow:last-child").index() >= 0){
+                $(this).parents(".addEditRow").find("td:not(:last-child)").each(function (index) {
                 
-                if (index == 0) {
-                    $(this).children().children("input").attr("id",firstItemName+index);
-                }
-                else if (index = 1) {
-                    $(this).children("input").attr("id", secondItemName+index);
-                }                                           
-                else if (index = 2) {                       
-                    $(this).children("input").attr("id", thirdItemName+index);
-                }                                           
-                else if (index = 3) {                       
-                    $(this).children("input").attr("id", fourthItemName+index);
-                }                                           
-                else {                                      
-                    $(this).children("input").attr("id", fifthItemName+index);
-                }
-            });
+                    if (index == 0) {
+                        $(this).children().children("input").attr("id",firstItemName+index);
+                    }
+                    else if (index = 1) {
+                        $(this).children("input").attr("id", secondItemName+index);
+                    }                                           
+                    else if (index = 2) {                       
+                        $(this).children("input").attr("id", thirdItemName+index);
+                    }                                           
+                    else if (index = 3) {                       
+                        $(this).children("input").attr("id", fourthItemName+index);
+                    }                                           
+                    else {                                      
+                        $(this).children("input").attr("id", fifthItemName+index);
+                    }
+                });
+                //$(this).parents(".addEditRow").find(".add, .edit").toggle();
+            }
 
-
-            $(this).parents(".addEditRow").find(".add, .edit").toggle();
-            //$(".add-new").attr("disabled", "disabled");
             $(".add-new").removeAttr("disabled");
         });
 
@@ -818,9 +813,16 @@
     };
 
     function fnModelSave(){
+        fnValidateAddEditRow();
+        var isZeroNoOfItems = false;
+        if($(".addEditRow:last-child").index() <0)
+        {
+            isZeroNoOfItems = true;
+        }
+
         var validationStatus = validateTextBoxesCM('ExpenseBy,ExpenseTitle,descId');
 
-        if(validationStatus == true){
+        if(validationStatus == true & isZeroNoOfItems == false){
             $.ajax({
                 url: WebApiUri + "/Expense/SaveExpense",
                 type: 'POST',
@@ -848,7 +850,7 @@
         }
         else
         {
-            toastr.error("Validation failed");
+            toastr.error("Required field or alteast one item is mandatory..!!!");
         }
         
         };
@@ -917,6 +919,8 @@
                                 xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
                             },
                         success: function(response){
+
+                            window.location.replace("/Expense");
                             toastr.success(response);
                         }
                     });
@@ -947,6 +951,7 @@
                             xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
                         },
                     success: function(response){
+                        window.location.replace("/Expense");
                         toastr.success(response);
                     }
                 });
@@ -958,27 +963,27 @@
 
         $("#Status").kendoDropDownList({
         optionLabel: "Select where to forward",
-    height: 310,
-    dataSource:{
-        transport: {
-        read: {
-        url: WebApiUri + "/Common/GetForwardListDropDowns",
-    type: "Post",
-    contentType: "application/json",
-    data: {expenseId: $('#expenseId').val() ,userId: "@userId"},
-    dataType: 'json',
-    beforeSend: function(xhr){
-                            xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
-                        }
-                            },
-    parameterMap: function (data) {
-                                var returnData = JSON.stringify(data);
-    return returnData;
+        height: 310,
+        dataSource:{
+            transport: {
+            read: {
+            url: WebApiUri + "/Common/GetForwardListDropDowns",
+        type: "Post",
+        contentType: "application/json",
+        data: {expenseId: $('#expenseId').val() ,userId: "@userId"},
+        dataType: 'json',
+        beforeSend: function(xhr){
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + AccessToken);
                             }
-                        }
-                    },
-    dataTextField: "ddlText",
-    dataValueField: "ddlVal"}).data("kendoDropDownList");
+                                },
+        parameterMap: function (data) {
+                                    var returnData = JSON.stringify(data);
+        return returnData;
+                                }
+                            }
+                        },
+        dataTextField: "ddlText",
+        dataValueField: "ddlVal"}).data("kendoDropDownList");
     };
 
     function fnApproveExpense(){
@@ -1006,8 +1011,7 @@
             else{
                 toastr.warning('Select a Row');
             }
-          
-      };
+    };
 
       function fnCancelExpenseApproval(){
           //show loader
@@ -1065,7 +1069,24 @@
             });
 
         }
-        
-    
+    };
+
+    function fnValidateAddEditRow(){
+        console.log("subodh");
+        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(0).val().length == 0)
+        {
+            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(0).addClass("clsRedBox");
+        }
+        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(1).val().length == 0)
+        {
+            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(1).addClass("clsRedBox");
+        }
+        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(2).val().length == 0)
+        {
+            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(2).addClass("clsRedBox");
+        }
+        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(3).val().length == 0){
+            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(3).addClass("clsRedBox");
+        }
     };
 </script>
