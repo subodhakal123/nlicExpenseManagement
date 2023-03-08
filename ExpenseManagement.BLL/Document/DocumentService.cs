@@ -107,14 +107,16 @@ namespace ExpenseManagement.BLL.Document
         public async Task<List<string>> GetFile(int expenseId)
         {
             string filePath = Path.GetFullPath(Path.Combine("D:\\New folder\\", "fileUploadFolder", expenseId+"\\"));
-
-            string[] filePaths = Directory.GetFiles(filePath);
             List<string> filenames = new List<string>();
-
-            foreach(string eachFilePath in filePaths)
+            if (Directory.Exists(filePath))
             {
-                filenames.Add(Path.GetFileName(expenseId+ "\\" +eachFilePath));
+                string[] filePaths = Directory.GetFiles(filePath);
+                foreach (string eachFilePath in filePaths)
+                {
+                    filenames.Add(Path.GetFileName(expenseId + "\\" + eachFilePath));
+                }
             }
+            
             return filenames;
         }
 
