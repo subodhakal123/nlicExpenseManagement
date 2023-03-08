@@ -813,7 +813,8 @@
     };
 
     function fnModelSave(){
-        fnValidateAddEditRow();
+        var isFirstRowInValid = fnValidateAddEditRow();
+        console.log(isFirstRowInValid);
         var isZeroNoOfItems = false;
         if($(".addEditRow:last-child").index() <0)
         {
@@ -822,7 +823,7 @@
 
         var validationStatus = validateTextBoxesCM('ExpenseBy,ExpenseTitle,descId');
 
-        if(validationStatus == true & isZeroNoOfItems == false){
+        if(validationStatus == true & isZeroNoOfItems == false & isFirstRowInValid== false){
             $.ajax({
                 url: WebApiUri + "/Expense/SaveExpense",
                 type: 'POST',
@@ -1072,21 +1073,28 @@
     };
 
     function fnValidateAddEditRow(){
-        console.log("subodh");
+
+        var returnValue = false;
         if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(0).val().length == 0)
         {
             $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(0).addClass("clsRedBox");
+            returnValue = true;
         }
         if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(1).val().length == 0)
         {
             $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(1).addClass("clsRedBox");
+            returnValue = true;
         }
         if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(2).val().length == 0)
         {
             $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(2).addClass("clsRedBox");
+            returnValue = true;
         }
         if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(3).val().length == 0){
             $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(3).addClass("clsRedBox");
+            returnValue = true;
         }
+
+        return returnValue ;
     };
 </script>
