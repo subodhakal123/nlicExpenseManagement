@@ -398,8 +398,8 @@
             var row = '<tr class="addEditRow">' +
                       '<td>' + fnAddElement("", "firstItemName"+index , "expenseType") + '</td>' +
                       '<td>' + fnAddElement("", "secondItemName"+index , "") + '</td>' +
-                      '<td>' + fnAddElement("", "thirdItemName"+index , "") + '</td>' +
-                      '<td>' + fnAddElement("", "fourthItemName"+index , "") + '</td>' +
+                      '<td>' + fnAddElement("", "thirdItemName"+index , "number") + '</td>' +
+                      '<td>' + fnAddElement("", "fourthItemName"+index , "number") + '</td>' +
                       '<td>' + fnAddElement("", "fifthItemName"+index , "amountClass") + '</td>' +
                       '<td>' + actions + '</td>' +
                       '</tr>';
@@ -683,8 +683,10 @@
 
     //add an input field
     function fnAddElement(value,idNo,Class) {
-
-        if(Class == 'amountClass')
+        if(Class == 'number'){
+            var ele = "<input style='width: 100%;' id='"+ idNo +"' type='number' value='"+value+"' class='"+Class+"' />";
+        }
+        else if(Class == 'amountClass')
         {
             var ele = "<input style='width: 100%;' id='"+ idNo +"' type='text' value='"+value+"' class='"+Class+"' readonly/>";
         }
@@ -772,20 +774,20 @@
 
     function fnGetModelList(){
         var arrList = [];
-    $(".addEditRow").each(function(index){
+        $(".addEditRow").each(function(index){
 
-                 var model = {
-                    itemId: $(".addEditRow").eq(index).find('input[type="number"]').eq(0).val(),
-                    expenseId:  $('#expenseId').val(),
-                    itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
-                    expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
-                    itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
-                    itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
-                    itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val()
-                            };
-                    arrList.push(model);
-                });
-            return arrList;
+         var model = {
+            itemId: $(".addEditRow").eq(index).find('input[type="number"]').eq(0).val(),
+            expenseId:  $('#expenseId').val(),
+            itemName: $(".addEditRow").eq(index).find('input[type="text"]').eq(1).val(),
+            expenseType: $(".addEditRow").eq(index).find('input[type="text"]').eq(0).val(),
+            itemPrice: $(".addEditRow").eq(index).find('input[type="text"]').eq(3).val(),
+            itemQuantity: $(".addEditRow").eq(index).find('input[type="text"]').eq(2).val(),
+            itemAmount: $(".addEditRow").eq(index).find('input[type="text"]').eq(4).val()
+                    };
+            arrList.push(model);
+        });
+        return arrList;
     };
 
     function fnGetItemDetailModel(){
@@ -813,17 +815,16 @@
     };
 
     function fnModelSave(){
-        var isFirstRowInValid = fnValidateAddEditRow();
-        console.log(isFirstRowInValid);
-        var isZeroNoOfItems = false;
-        if($(".addEditRow:last-child").index() <0)
-        {
-            isZeroNoOfItems = true;
-        }
 
+        var isRecommendationValid= falseamo
+        var IsExpenseItemInvalid = fnValidateAddEditRow();
+        if($("#IsRecommendedId").val() == 'on'){
+
+            isRecommendationInvalid = validateTextBoxesCM('departmentId,recommenderId');
+        }
         var validationStatus = validateTextBoxesCM('ExpenseBy,ExpenseTitle,descId');
 
-        if(validationStatus == true & isZeroNoOfItems == false & isFirstRowInValid== false){
+        if(validationStatus == true & isRecommendationInvalid== true & IsExpenseItemInvalid== false){
             $.ajax({
                 url: WebApiUri + "/Expense/SaveExpense",
                 type: 'POST',
@@ -854,7 +855,7 @@
             toastr.error("Required field or alteast one item is mandatory..!!!");
         }
         
-        };
+    };
 
     function fileUpload(){
         
@@ -1075,25 +1076,26 @@
     function fnValidateAddEditRow(){
 
         var returnValue = false;
-        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(0).val().length == 0)
-        {
-            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(0).addClass("clsRedBox");
+        var rowCount = $(".addEditRow:last-child").index();
+        if(rowCount>=0){
+            for(var i=0;i<=rowCount;i++){
+                for(var j=0;j<=3;j++){
+                    if($(".addEditRow").eq(i).find('input[type="text"]').eq(j).val().length == 0)
+                    {
+                        $(".addEditRow").eq(i).find('input[type="text"]').eq(j).addClass("clsRedBox");
+                        returnValue = true;
+                    }
+                    else{
+                        $(".addEditRow").eq(i).find('input[type="text"]').eq(j).removeClass("clsRedBox");
+                    }
+                }
+            }
+        }
+        else{
             returnValue = true;
         }
-        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(1).val().length == 0)
-        {
-            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(1).addClass("clsRedBox");
-            returnValue = true;
-        }
-        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(2).val().length == 0)
-        {
-            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(2).addClass("clsRedBox");
-            returnValue = true;
-        }
-        if($(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(3).val().length == 0){
-            $(".addEditRow").parents().find('.addEditRow input[type="text"]').eq(3).addClass("clsRedBox");
-            returnValue = true;
-        }
+        
+        
 
         return returnValue ;
     };

@@ -114,16 +114,6 @@ namespace ExpenseManagement.BLL.Expense
             
             }
 
-            //var list = new List<ItemModel>();
-            //try
-            //{
-            //    list = db.Query<ItemModel>("[EXP].[usp_Expense_Get]", new { expenseId = ExpenseId }, commandType: CommandType.StoredProcedure).ToList();
-            //}
-            //catch (Exception ex)
-            //{
-            //
-            //}
-
             return list2;
         }
 
